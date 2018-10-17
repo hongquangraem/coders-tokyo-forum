@@ -1,0 +1,18 @@
+extends ../layouts/common.pug
+
+block content
+    h1 Login
+
+    if errors
+        each error in errors
+            .alert.alert-danger #{error}
+
+
+    form(action="/auth/login" method="POST")
+        label Email
+        input#email(name="email" type="text" class="ml-2" value= values? values.email : "")
+        br
+        label Password
+        input#password(name="password" type="password" class="ml-1" value= values? values.password : "") 
+        br
+        button(class="btn btn-primary") Login

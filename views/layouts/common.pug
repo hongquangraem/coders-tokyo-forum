@@ -11,12 +11,14 @@ html
         #navbarNavAltMarkup.collapse.navbar-collapse
             .navbar-nav
                 a.nav-item.nav-link.active(href='/').ml-4.pl-3.pr-3 Home
-                a.nav-item.nav-link(href='./users').pl-3.pr-3 User
-                a.nav-item.nav-link(href='./users/create').pl-3.pr-3 Create
-                a.nav-item.nav-link(href='./products').pl-3.pr-3 Products
-        if user
-            p #{user.name}
+                a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
+                a.nav-item.nav-link(href='./users/create').pl-3.pr-3 Stream
+                a.nav-item.nav-link(href='./products').pl-3.pr-3 Wall
+                if user
+                    a.nav-item.nav-link.user-name hongquangraem
+                    img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")
+        
 
-    .container.mt-4
+    .container.pt-4.main
         block content
      
