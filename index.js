@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 	res.render('index');
 })
 
-app.use('/users', userRouter);
+app.use('/users', authMiddleware.requireAuth, userRouter);
 app.use('/auth', authRouter);
 
 

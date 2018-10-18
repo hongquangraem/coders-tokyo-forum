@@ -6,54 +6,58 @@ module.exports.login = function(req, res) {
 };
 
 module.exports.postLogin = function(req, res) {
+	// console.log(req.body);
 	var email = req.body.email;
 	var password = req.body.password;
 	var user = db.get('users').find({ email : email }).value();
 
-	if(email && !password) {
-		res.render('auth/login', {
-			errors : [
-				'Password is required.'
-			],
-			values : req.body
-		});
-		return;
-	}
+	var errors = [];
 
-	if(password && !email) {
+	if (!email && !password) {		// empty 
+		errors.push('Type your account');
 		res.render('auth/login', {
-			errors : [
-				'Email is required.'
-			],
-			values : req.body
-		});
-		return;
-	}
-
-	if (!user) {
-		res.render('auth/login', {
-			errors : [
-				'User does not exist.'
-			],
-			values : req.body
-		});
-		return;
-	};
-
-	var hashedPassword = md5(password);
-	
-	if (user.password !== hashedPassword ) {
-		res.render('auth/login', {
-			errors : [
-				'Wrong password.'
-			],
-			values : req.body
+			errors: errors,
+			values: req.body
 		})
-		return;
-	};
-	
-	res.cookie('userId', user.id, {
+	}
+
+	if (!email) {		// empty email
+		errors.push('Email required');
+		res.render('auth/login', {
+			errors: errors,
+			values: req.body
+		})
+	}
+
+	if (!password) {  // empty password
+		errors.push('Password required');
+		res.render('auth/login', {
+			errors: errors,
+			values: req.body
+		})
+	}
+
+	if (!user) {	// user doesn't register
+			errors.push('User doesn\'t exists');
+			res.render('auth/login', {
+				errors: errors,
+				values: req.body
+			})
+		}
+
+	var hashedPassword = md5(password); // wrong password
+
+	if (hashedPassword !== user.password) {
+		errors.push('wrong password');
+		res.render('auth/login', {
+			errors: errors,
+			values: req.body
+		})
+	}
+
+	res.cookie('userId', user.id, { //success
 		signed: true
 	});
-	res.redirect('/users'); //success
-};
+
+	res.redirect('/users');
+}
