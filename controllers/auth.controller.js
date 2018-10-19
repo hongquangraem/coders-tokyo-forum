@@ -59,5 +59,5 @@ module.exports.postLogin = function(req, res) {
 		signed: true
 	});
 
-	res.redirect('/users');
+	res.redirect('/users/books');
 }

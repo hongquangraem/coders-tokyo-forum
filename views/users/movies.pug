@@ -1,3 +1,5 @@
+//- extends ../layouts/common.pug
+
 html
     head 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -21,13 +23,20 @@ html
 
     .container.pt-4.main
         block content
-            .container-books.visible
+            select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3
+              option() Type 
+              option(value='books') Books
+              option(value='movies') Movies
+              option(value='songs') Songs
+              option(value='blogs') Blogs
+            
+            .container-movies.visible                
                 .d-flex.align-items-center.mb-3
                     h1 
-                        span.mr-2 Users
+                        span.mr-2 Movies
                         a.btn.btn-primary(href='/users/create') New
 
-                    form.ml-auto(action="/users/search", method="GET")
+                    form.ml-auto(action="/users/movies/search", method="GET")
                         input(type="text", name="q" id="searchInput")
                         button.btn.btn-info Search
 
@@ -37,19 +46,19 @@ html
                         th STT
                         th Cover
                         th Name
-                        th Author
+                        th(style='padding: 12px 34px 0px 32px') Actors
                         th(style='padding-left: 85px') Option
-                    each user, index in users
+                    each movie, index in movies
                         tr
                             td= index + 1
                             td
-                                img(src=user.image style="width: 34")
-                            td= user.name
-                            td.preview-user(style='width: 30px')= user.email
+                                img(src=movie.image style="width: 34")
+                            td= movie.name
+                            td.preview-movie(style='width: 30px')= movie.actors
                             td
-                                a.btn.btn-danger.mr-3(href="/users/edit/" + user.id) Edit
-                                a.btn.btn-info.mr-3(href="/users/" + user.id) View
-                                a.btn.btn-danger.mr-3(href="/users/delete/" + user.id) Delete
+                                a.btn.btn-danger.mr-3(href="/users/edit/" + movie.id) Edit
+                                a.btn.btn-info.mr-3(href="/users/" + movie.id) View
+                                a.btn.btn-danger.mr-3(href="/users/delete/" + movie.id) Delete
 
             script.
                 var input = document.getElementById('searchInput');
@@ -57,4 +66,29 @@ html
                 input.addEventListener('change', updateSessionStorage);
                 function updateSessionStorage(){
                     sessionStorage.setItem('draft', input.value)
+                }
+            script.
+                var choice = 'choice';
+                document.addEventListener('DOMContentLoaded',function() {
+                document.querySelector('select[name="type"]').onchange=changeEventHandler;
+                },false);
+                function changeEventHandler(event) {
+                    var index;
+                    choice = event.target.value;
+                    if (choice === 'Books') {
+                        index = 0;
+                        //render
+                        }
+                    if (choice === 'Movies') {
+                        index = 1;
+                        //render
+                        }
+                    if (choice === 'Songs') {
+                        index = 2;
+                        //render
+                        }
+                    else {
+                        index = 3;
+                        //render
+                        }
                 }
