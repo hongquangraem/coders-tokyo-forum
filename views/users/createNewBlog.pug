@@ -1,0 +1,26 @@
+extends ../layouts/common.pug
+
+block content
+    h1 Add new blog
+
+    if errors
+        each error in errors
+            .alert.alert-danger #{error}
+
+
+    form(action="/users/blogs/create" method="POST" enctype="multipart/form-data")
+        label(for="title" require) Title
+        input(name="title" type="text" class="ml-2" value= blog? blog.name : "" require)
+        br
+        label(for="author") Author
+        input(name="author" type="text" class="ml-1" value= blog? blog.author : "" require) 
+        br
+        label(for='description') Description
+        textarea#description.form-control.z-depth-1(name="description" rows='3', placeholder='Write description for your book' value= blog? blog.description : "")
+        label(for="file") File
+        input(name="file" type="file" class="m-3")
+        br
+        label(for="cover") Cover
+        input(name="cover" type="file" class="m-3")
+        br
+        button.btn.btn-primary(type='submit' id="submit") Submit

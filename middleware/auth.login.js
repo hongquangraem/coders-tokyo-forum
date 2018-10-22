@@ -19,7 +19,7 @@ module.exports.requireAuth = function(req, res, next) {
 module.exports.requireAuthAdmin = function(req, res, next) {
 	var user = db.get('users').find({ id : req.signedCookies.userId }).value();
 	userId = user.id;
-	if(userId !== '123') {
+	if(userId !== 'lj1YjnpYB') {
 		res.redirect('/users/books')
 	}
 	next();

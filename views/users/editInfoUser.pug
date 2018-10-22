@@ -1,0 +1,33 @@
+extends ../layouts/common.pug
+
+block content
+    h1 Edit Info and Change Password
+
+    if errors
+        each error in errors
+            .alert.alert-danger #{error}
+
+
+    .card.text-white.bg-dark.mb-3(style='max-width: 18rem;')
+        .card-header User info
+        .card-body
+            p.card-text User name: #{user.name}
+            |Email: #{user.email}
+                
+            //- |Avatar: 
+                //- img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")
+
+    form(method="POST")
+        label User Name
+        input(name="name" type="text" class="ml-2" value= user? user.name : "")
+        br
+        label Password
+        input(id="password" name="password" type="password" class="ml-1" : "" placeholder="Type your password") 
+        br
+        label Your new Password
+        input(name="newPassword" type="password" class="ml-1" : "") 
+        br
+        button(class="btn btn-primary" id="confirm") Confirm
+
+
+    

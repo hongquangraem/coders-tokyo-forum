@@ -13,7 +13,8 @@ html
                 a.nav-item.nav-link.active(href='/').ml-4.pl-3.pr-3 Home
                 a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
                 a.nav-item.nav-link(href='./users/create').pl-3.pr-3 Stream
-                a.nav-item.nav-link(href='./products').pl-3.pr-3 Wall
+                a.nav-item.nav-link(href='./users/books').pl-3.pr-3 Closet
+                a.nav-item.nav-link(href='./logout').pl-3.pr-3 Log out
                 if user
                     a.nav-item.nav-link.user-name= user.name
                     img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")
@@ -21,5 +22,5 @@ html
 
     .container.pt-4.main
         block content
-         h1 Main page
+            h1 Main page
      

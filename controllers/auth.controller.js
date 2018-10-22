@@ -5,6 +5,15 @@ module.exports.login = function(req, res) {
 	res.render('auth/login')
 };
 
+// LogOut
+
+module.exports.logOut = (req, res) => {
+	res.clearCookie('userId', req.signedCookies, { // xoa cookie co ten la userId, value: signeCookies
+		signed: false
+	});
+	res.redirect('auth/login');
+}
+
 module.exports.postLogin = function(req, res) {
 	// console.log(req.body);
 	var email = req.body.email;

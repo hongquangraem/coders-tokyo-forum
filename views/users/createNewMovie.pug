@@ -1,0 +1,23 @@
+extends ../layouts/common.pug
+
+block content
+    h1 Add new movie
+
+    if errors
+        each error in errors
+            .alert.alert-danger #{error}
+
+
+    form(action="/users/movies/create" method="POST" enctype="multipart/form-data")
+        label(for="name" require) Name
+        input(name="name" type="text" class="ml-2" value= values? values.name : "" require)
+        br
+        label(for="actors") Actors
+        input(name="actors" type="text" class="ml-1" value= values? values.author : "" require) 
+        br
+        label(for='preview') Preview
+        textarea#description.form-control.z-depth-1(name="preview" rows='3', placeholder='Write description for your book' value= values? values.preview : "")
+        label(for="cover") Cover
+        input(name="cover" type="file" class="m-3")
+        br
+        button.btn.btn-primary(type='submit' id="submit") Submit

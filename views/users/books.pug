@@ -13,7 +13,8 @@ html
                 a.nav-item.nav-link.active(href='/').ml-4.pl-3.pr-3 Home
                 a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
                 a.nav-item.nav-link(href='./users/create').pl-3.pr-3 Stream
-                a.nav-item.nav-link(href='./products').pl-3.pr-3 Wall
+                a.nav-item.nav-link(href='./books').pl-3.pr-3 Closet
+                a.nav-item.nav-link(href='./logout').pl-3.pr-3 Log out
                 if user
                     a.nav-item.nav-link.user-name= user.name
                     img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")
@@ -33,7 +34,7 @@ html
                 .d-flex.align-items-center.mb-3
                     h1 
                         span.mr-2 Books
-                        a.btn.btn-primary(href='/users/create') New
+                        a.btn.btn-primary(href='/users/books/create') New
 
                     form.ml-auto(action="/users/books/search", method="GET")
                         input(type="text", name="q" id="searchInput")
@@ -51,13 +52,13 @@ html
                         tr
                             td= index + 1
                             td
-                                img(src=book.image style="width: 34")
+                                img(src=book.cover style="width: 34")
                             td= book.name
                             td.preview-book(style='width: 30px')= book.author
                             td
-                                a.btn.btn-danger.mr-3(href="/users/edit/" + book.id) Edit
+                                a.btn.btn-danger.mr-3(href="/users/books/edit/" + book.id) Edit
                                 a.btn.btn-info.mr-3(href="/users/" + book.id) View
-                                a.btn.btn-danger.mr-3(href="/users/delete/" + book.id) Delete
+                                a.btn.btn-danger.mr-3(href="/users/books/delete/" + book.id) Delete
 
             script.
                 var input = document.getElementById('searchInput');

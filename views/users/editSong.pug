@@ -1,0 +1,24 @@
+extends ../layouts/common.pug
+
+block content
+    h1 Edit song
+
+    if errors
+        each error in errors
+            .alert.alert-danger #{error}
+
+
+    form(method="POST")
+        label(for="name" require) Name
+        input(name="name" type="text" class="ml-2" value= song? song.name : "" require)
+        br
+        label(for="composers") Composers
+        input(name="composers" type="text" class="ml-1" value= song? song.composers : "" require) 
+        br
+        label(for="singers") Singers
+        input(name="singers" type="text" class="ml-1" value= song? song.singers : "" require) 
+        br
+        label(for='lyrics') Lyrics
+        textarea#lyrics.form-control.z-depth-1(name="lyrics" rows='3', placeholder='Write lyrics for your song')
+        br
+        button.btn.btn-primary(type='submit' id="submit") Submit

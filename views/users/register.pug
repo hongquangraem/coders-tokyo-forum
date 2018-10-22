@@ -1,0 +1,41 @@
+extends ../layouts/common.pug
+
+block content
+    h1 Register
+
+    if errors
+        each error in errors
+            .alert.alert-danger #{error}
+
+
+    form(action="/users/create" method="POST" enctype="multipart/form-data")
+      label(for="name" require) Name
+      input(name="name" type="text" class="ml-2" value= values? values.name : "" require)
+      br
+      label(for="email") Email
+      input(name="email" type="text" class="ml-1" value= values? values.email : "" require) 
+      br
+      label(for="password") Password
+      input#password.ml-1(name='password', type='password', placeholder='Password' require)
+      br
+      label(for='confirmPassword') Confirm Password
+      input#confirm_password.m-3(name='confirmPassword', type='password', placeholder='ConfirmPassword')
+      br
+      label(for="avatar") Avatar
+      input(name="avatar" type="file" class="m-3")
+      br
+      button.btn.btn-primary(type='submit') Submit
+
+
+    script.
+      var password = document.getElementById("password");
+      var confirm_password = document.getElementById("confirm_password");
+      function validatePassword(){
+        if(password.value != confirm_password.value) {
+          confirm_password.setCustomValidity("Passwords Don't Match");
+      } else {
+        confirm_password.setCustomValidity('');
+        }
+      }
+      confirm_password.onkeyup = validatePassword;
+

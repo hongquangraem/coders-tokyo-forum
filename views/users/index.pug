@@ -13,7 +13,8 @@ html
                 a.nav-item.nav-link.active(href='/').ml-4.pl-3.pr-3 Home
                 a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
                 a.nav-item.nav-link(href='./users/create').pl-3.pr-3 Stream
-                a.nav-item.nav-link(href='./products').pl-3.pr-3 Wall
+                a.nav-item.nav-link(href='./users/books').pl-3.pr-3 Closet
+                a.nav-item.nav-link(href='./logout').pl-3.pr-3 Log out
                 if user
                     a.nav-item.nav-link.user-name= user.name
                     img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")
@@ -37,19 +38,19 @@ html
                         th STT
                         th Cover
                         th Name
-                        th Author
+                        th Email
                         th(style='padding-left: 85px') Option
                     each user, index in users
                         tr
                             td= index + 1
                             td
-                                img(src=user.image style="width: 34")
+                                img(src=user.avatar style="width: 34")
                             td= user.name
                             td.preview-user(style='width: 30px')= user.email
                             td
-                                a.btn.btn-danger.mr-3(href="/users/edit/" + user.id) Edit
-                                a.btn.btn-info.mr-3(href="/users/" + user.id) View
-                                a.btn.btn-danger.mr-3(href="/users/delete/" + user.id) Delete
+                                a.mr-3(href="/users/edit/" + user.id class="btn btn-danger") Edit
+                                a.mr-3(href="/users/" + user.id class="btn btn-info disabled") View
+                                a.mr-3(href="/users/delete/" + user.id class="btn btn-danger") Delete
 
             script.
                 var input = document.getElementById('searchInput');

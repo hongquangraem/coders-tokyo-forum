@@ -13,7 +13,8 @@ html
                 a.nav-item.nav-link.active(href='/').ml-4.pl-3.pr-3 Home
                 a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
                 a.nav-item.nav-link(href='./users/create').pl-3.pr-3 Stream
-                a.nav-item.nav-link(href='./products').pl-3.pr-3 Wall
+                a.nav-item.nav-link(href='./books').pl-3.pr-3 Closet
+                a.nav-item.nav-link(href='./logout').pl-3.pr-3 Log out
                 if user
                     a.nav-item.nav-link.user-name= user.name
                     img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")
@@ -32,7 +33,7 @@ html
                 .d-flex.align-items-center.mb-3
                     h1 
                         span.mr-2 Songs
-                        a.btn.btn-primary(href='/users/create') New
+                        a.btn.btn-primary(href='/users/songs/create') New
 
                     form.ml-auto(action="/users/songs/search", method="GET")
                         input(type="text", name="q" id="searchInput")
@@ -50,13 +51,13 @@ html
                         tr
                             td= index + 1
                             td
-                                img(src=song.image style="width: 34")
+                                img(src=song.cover style="width: 34")
                             td= song.name
                             td.preview-song(style='width: 30px')= song.singers
                             td
-                                a.btn.btn-danger.mr-3(href="/users/edit/" + song.id) Edit
+                                a.btn.btn-danger.mr-3(href="/users/songs/edit/" + song.id) Edit
                                 a.btn.btn-info.mr-3(href="/users/" + song.id) View
-                                a.btn.btn-danger.mr-3(href="/users/delete/" + song.id) Delete
+                                a.btn.btn-danger.mr-3(href="/users/songs/delete/" + song.id) Delete
 
             script.
                 var input = document.getElementById('searchInput');
@@ -64,29 +65,4 @@ html
                 input.addEventListener('change', updateSessionStorage);
                 function updateSessionStorage(){
                     sessionStorage.setItem('draft', input.value)
-                }
-            script.
-                var choice = 'choice';
-                document.addEventListener('DOMContentLoaded',function() {
-                document.querySelector('select[name="type"]').onchange=changeEventHandler;
-                },false);
-                function changeEventHandler(event) {
-                    var index;
-                    choice = event.target.value;
-                    if (choice === 'Books') {
-                        index = 0;
-                        //render
-                        }
-                    if (choice === 'Movies') {
-                        index = 1;
-                        //render
-                        }
-                    if (choice === 'Songs') {
-                        index = 2;
-                        //render
-                        }
-                    else {
-                        index = 3;
-                        //render
-                        }
                 }

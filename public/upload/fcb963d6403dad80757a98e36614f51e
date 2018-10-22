@@ -1,0 +1,253 @@
+﻿# Hiểu về Execution Context và Excution Stack trong Javascript
+
+Nếu bạn đã, đang và muốn trở thành 1 JavaScript developer, thì bạn phải biết JavaScript program được *executed* bên trong như thế nào. Việc hiểu những nội dung như **execution context** và **execution stack** là rất quan trọng, vì nó giúp ta hiểu được các khái niệm khác nữa trong JavaScript như *Hoisting*, *Scope* và *Closures*.
+
+Việc hiểu rõ các khái niệm *execution context* và *execution stack* sẽ khiến bạn trở thành 1 JavaScript developer giỏi hơn rất nhiều.
+
+Vậy thì ta bắt đầu thôi nào :) !!!
+
+## What is Execution Context?
+
+Ta hiểu đơn giản rằng, 1 *execution context* là 1 khái niệm trừu tượng của môi trường - nơi mà các đoạn mã JavaScript được *evaluated* và *executed*. Bất kì đoạn mã nào run trong JavaScript, nó sẽ chạy bên trong *execution context*.
+
+### Types of Execution Context
+
+Execution context trong JavaScript được chia thành 3 loại:
+
+ - **Global Execution Context** - Đây là execution context mặc định hay còn là base execution context. Những đoạn code không trong bất cứ function nào sẽ được *executed* trong global execution context. Nó làm 2 nhiêm vụ: 1, Tạo global object - gọi là window object ( Trong trường hợp là browsers ) và thứ 2 là gắn *value* của `this` với global object này. Điều cuối cùng là chỉ có **duy nhất** 1 global execution context trong 1 chương trình.
+ - **Function Execution Context** - Mỗi lần 1 function được *invoked*, 1 excution context mới sẽ được tạo ra cho function đó. Mỗi function thì lại có execution context riêng của nó, nhưng chỉ được tạo ra khi function được *invoked* hoặc được *called*. Và có thể có rất nhiều *function execution context*. Bất kể khi nào 1 execution context mới được gọi, nó sẽ trải qua 1 chuỗi các *steps* theo thứ tự xác định - ta sẽ thảo luận nó sau.
+ - **Eval Function Execution Context** - Code mà được *executed* bên trong 1 `eval` function cũng có những execuution context riêng của nó, nhưng vì `eval` không được sử dụng nhiều bởi các developers JavaScript, nên ta sẽ không thảo luận nó trong bài này.
+
+## Execution Stack
+
+Execution stack, còn được biết đến là "calling stack" trong các ngôn ngữ lập trình khác, là 1 stackk với cấu trúc **LIFO** ( Last in, First Out ) - được dùng để lưu giữ tất cả execution context đã được tạo ra trong suốt chương trình của chúng ta.
+
+Khi JavaScript engine *encounter* những đoạn *script* cuar bạn lần đầu tiên, nó sẽ tạo ra global execution context và đẩy nó vào trong execution stack hiện tại. Và mỗi khi mà engine tìm thất 1 *function invocation*, nó sẽ tạo ra 1 execution context mới cho function đó rồi đẩy nó lên trên đỉnh của stack.
+
+Engine sẽ thực thi function mà execution context ở trên đỉnh của stack trước. Sau khi function này *complete* nó ẽ bị đẩy ra khỏi stack, và control sẽ đi tới context phía dưới trong stack.
+
+Để hiểu rõ hơn ta sẽ cùng xem đoạn code phía dưới:
+
+```javascript
+let a = 'Hello World!';
+
+function first() {  
+  console.log('Inside first function');  
+  second();  
+  console.log('Again inside first function');  
+}
+
+function second() {  
+  console.log('Inside second function');  
+}
+
+first();  
+console.log('Inside Global Execution Context');
+```
+
+![Call Stack](https://res.cloudinary.com/djeghcumw/image/upload/v1536998351/blog/1_ACtBy8CIepVTOSYcVwZ34Q.png)
+
+*Credit: [Sukhjinder Arora](https://blog.bitsrc.io/@Sukhjinder?source=post_header_lockup)*
+
+Khi đoạn code phía trên *load* trong browser, JavaScript engine tạo ra 1 global execution context rồi đẩy nó vào execuution stack hiện tại. Khi lần gọi `first()`  diễn ra, JavaScript engines tọa ra 1 execution context cho function đó và đẩy nó lên trên đỉnh của execution stack.
+
+Khi `second()` function được gọi trong `first()` function, JavaScript engine lại tạo ra 1 execution context mới cho function này rồi tiếp tục đẩy nó lên trên đỉnh của excuution stack. Sau khi `second()` function kết thúc, nó bị *pop* ra khỏi stack, và control lại đi tiếp tới execution context bên dưới - đó là `first()` execution context.
+
+Khi `first()` function kết thúc, execution stack của nó bị xóa khỏi stack và control đi tiếp tới global execution context. Khi tất cả code được *executed* JavaScipt engine xóa gloabl execution context khỏi stack.
+
+## How is the Execution Context create?
+
+Đến đây, ta đã thấy JavaScript engine đã quản lí những execution context như thế nào. Bây giờ, chúng ta sẽ tìm hiểu xem 1 execution context được tạo ra kiểu gì bởi JavaScript engine.
+
+Execution context được tạo ra qua 2 giai đoạn:
+**1) Create Phase** và **2) Execution Phase**
+
+### The Create Phase
+
+Trước khi code JavaScript được *executed*, execution context đi qua giai đoạn *creation phase*. 3 điều xảy ra trong suốt giai đoạn *creation phase* là:
+1. Value of **this** được xác định, còn được gọi là **This Binding**.
+2. **LexicalEnvironment** component được khởi tạo
+3. **VariableEnvironment** component được khởi tạo
+
+```
+ExecutionContext = {  
+  ThisBinding = <this value>,  
+  LexicalEnvironment = { ... },  
+  VariableEnvironment = { ... },  
+}
+```
+
+#### This Binding
+
+Trong global execution context, value of `this` tham chiếu tới global object. ( `this` tham chiếu tới Window Object ).
+
+Trong function execution context, value of `this` phụ thuộc vào cách function được gọi như thế nào. Nếu nó được gọi bởi 1 object reference, thì value of `this` được gán vào object đó, nếu không thì value of `this` được gán vào global object hoặc `undefined`` ( in strict mode ). Ví dụ:
+
+```javascript
+let person = {  
+  name: 'peter',  
+  birthYear: 1994,  
+  calcAge: function() {  
+    console.log(2018 - this.birthYear);  
+  }  
+}
+
+person.calcAge();   
+// 'this' refers to 'person', because 'calcAge' was called with //'person' object reference
+
+let calculateAge = person.calcAge;  
+calculateAge();  
+// 'this' refers to the global window object, because no object reference was given
+```
+
+#### Lexical Environment
+
+Docs của bản ES6 chính thức đã định nghĩa Lexical Environmnet như sau:
+> Lexical Environment là 1 "loại kỹ thuật" được dùng để *define* sự kết hợp của *Identifiers* tới các variables riêng biệt và những functions dựa trên **lexical nesting structure of ECMAScript code**. 1 Lexical Environment bao gồm 1 Environment Record và 1 biến null có thể tham chiếu tới Lexical Environment bên ngoài.
+
+Ta hiểu đơn giản hơn như sau: `Lexical Environment là 1 cấu trúc giữ **identifier-variable mapping**. ( ở đây **identifier** tham chiếu tới tên của variables/function, và **variable** là 1 tham chiếu tới những actual object. [bao gồm function type object] hoặc [primitive value]`
+
+Trong Lexical Environment, được chia ra thành 2 components: (1) **environment record** và (2) là 1 **reference to outer environment**
+
+1. **Environment record** là 1 nơi mà variable và function declaration được lưu trữ.
+2. **Refernce to the outer environment** có nghĩa là nó truy cập tới lexical environment bên ngoài của nó.
+
+Lexical environment lại được chia tiếp ra thành 2 loại:
+
+ - **Global environment** ( trong global execution context ) là 1 Lexical Environment - không có outer environment.  Outer environment reference của *global environment* là `null`. Nó có global object (window object ) và những methods hay properties ( vd. array methods ) bên trong **environment record** như các variables được người dùng định nghĩa. Và value of `this` sẽ tham chiếu tới global object.
+ - **Function environment**, tại đây, các variables được người dùng định nghĩa bên trong function sẽ được lưu giữ tại **environment record**. Và sự tham chiếu tới outer environment có thể là global environment, hoặc 1 **outer function environment** đang chứa **inner function**
+
+**Chú ý** - Với **function environment**, *environment record* còn chứa 1 `arguments` object mà nó *contain* mapping giữa các *index* và các *argument* được truyền vào function và *length(number* của những arguments đó nữa. Ví dụ 1 argument object của function phía dưới được thể hiện như sau:
+
+```javascript
+function foo(a, b) {  
+  var c = a + b;  
+}  
+foo(2, 3);
+
+// argument object  
+Arguments: {0: 2, 1: 3, length: 2},
+```
+Trong **environment record** lại được chia tiếp ra thành 2 loại:
+
+- **Declarative environment record**: lưu trữ những variables, functions, và các parameters. 1 *function environment* chứa *declarative environment record*.
+- **Object environment record**: được dùng để xác định mối liên kết giữa những variables và functions xuất hiện trong *global execution context*. 1 *global environment* chứa *object environment record*.
+
+1 cách trừu tương, lexical environment sẽ được biểu diễn như sau:
+
+```javascript
+GlobalExectionContext = {  
+  LexicalEnvironment: {  
+    EnvironmentRecord: {  
+      Type: "Object",  
+      _// Identifier bindings go here_ }  
+    outer: <null>  
+  }  
+}
+
+FunctionExectionContext = {  
+  LexicalEnvironment: {  
+    EnvironmentRecord: {  
+      Type: "Declarative",  
+      _// Identifier bindings go here_ }  
+    outer: <Global or outer function environment reference>  
+  }  
+}
+```
+
+#### Variable Environment:
+
+Nó cũng được coi là Lexical Environment - mà Environment record của nó sẽ giữ những bindings được tạo ra bởi các VariableStatements trong execution context.
+
+Như đã nói bên trên, variable environment cũng là 1 lexical environment. Vì thế nó cũng có những properties của 1 lexical environment.
+
+Trong ES6, 1 điều khác biệt giữa **LexicalEnvironmet** component và **VariableEnvironment** là "the former" được sử dụng để lưu giữ function declaration và các variables ( `let` và `const` ), sau này thì nó chỉ được dùng để lư giữ variable ( `var` ) bindings thôi.
+
+Hãy cùng nhìn đoạn code ví dụ bên dưới để hiểu rõ hơn những gì chúng ta vừa thảo luận bên trên:
+
+```javascript
+let a = 20;  
+const b = 30;  
+var c;
+
+function multiply(e, f) {  
+ var g = 20;  
+ return e * f * g;  
+}
+
+c = multiply(20, 30);
+```
+The execution context sẽ được biểu diễn như sau:
+
+```javascript
+GlobalExectionContext = {
+
+  ThisBinding: <Global Object>,
+
+  LexicalEnvironment: {  
+    EnvironmentRecord: {  
+      Type: "Object",  
+      // Identifier bindings go here  
+      a: < uninitialized >,  
+      b: < uninitialized >,  
+      multiply: < func >  
+    }  
+    outer: <null>  
+  },
+
+  VariableEnvironment: {  
+    EnvironmentRecord: {  
+      Type: "Object",  
+      // Identifier bindings go here  
+      c: undefined,  
+    }  
+    outer: <null>  
+  }  
+}
+
+FunctionExectionContext = {  
+   
+  ThisBinding: <Global Object>,
+
+  LexicalEnvironment: {  
+    EnvironmentRecord: {  
+      Type: "Declarative",  
+      // Identifier bindings go here  
+      Arguments: {0: 20, 1: 30, length: 2},  
+    },  
+    outer: <GlobalLexicalEnvironment>  
+  },
+
+VariableEnvironment: {  
+    EnvironmentRecord: {  
+      Type: "Declarative",  
+      // Identifier bindings go here  
+      g: undefined  
+    },  
+    outer: <GlobalLexicalEnvironment>  
+  }  
+}
+```
+**Chú ý** - Function execution context chỉ được tạo ra khi lời gọi `multiply` functon được *encountered*.
+
+Như bạn thấy, `let` và `const` variables được định nghĩa những lại không có bất kì value assoiated nào, nhưng khi `var` variables được định nghĩa thì lại được gán là `undifined`.
+
+Lý do là vì trong suốt quá trình *creation phase*, các mã code của ta sẽ được **scanned** cho các variable và function declarations, trong khi function declaration được lưu giữ trong environment của riêng nó, thì các variables được khởi tạo lại được gán là `undefined` ( trong trường hợp `var` ) hoặc là `uninitialized` ( trong trường hợp `let` và `const` ).
+
+Đó là lý do vì sao bạn có thể truy cập những `var` variables được *defined* trước khi mà chúng được *declared* ( mặc dù vẫn là `undefined` ) nhưng bạn sẽ gặp phải lỗi tham chiếu khi truy cập các `let` và `const` variables trước khi chúng được *declaraed*.
+
+**This is, what we call hoisting**.
+
+### Execution Phase
+
+Đây là phần đơn giản nhất trong bài. Trong giai đoạn này, khi các assignments tới tất cả các variables đã xong, mã code của chúng ta sẽ được executed.
+
+**Chú ý* - Trong suốt giai đoạn execution*, nếu Javascript engine không thể tìm thế value of `let` variable mà đã được daclared trong source code, nó sẽ gán value đó là `undefined`
+
+## Conclusion
+
+Vậy là chúng ta đã cùng thảo luận chương trình JavaScript được executed bên trong ra sao. Điều tôi muốn nói là: Bạn không cần phải học hết tất cả các khái niệm trên để trở thành 1 JavaScript developer giỏi, nhưng nếu bạn hiểu chúng - thì các khái niệm như **Hoisting**, **Scope**, **Closures** sẽ không thể làm khó bạn nhiều, rồi bạn có thể đi sâu hơn vào nó nữa.
+
+> P/s: 
+> 1. Với 1 newbie như mình, mặc dù bài này không có giá trị về giải thuật, hay giúp trình code có thể tăng lên được nhiều sau khi đọc. Nhưng mình lại rất thích và luôn muốn tìm hiểu thể loại này, không biết có ai giống mình không. 1 lí do rất chủ quan đối với mình: khi mình hiểu được bản chất rằng mình gõ 1 dòng code, đơn giản chỉ là việc khởi tạo 1 variable thôi thì máy tính, engine nó sẽ hoạt động và xử lí chúng ra sao. Xa hơn nếu mình viết 1 function hay 1 thuật toán gì đó, mình không chỉ control function này sẽ giải quyết bài toán nào và đưa ra output gì, mình còn control được ở bên trong engine nó thực thi ra sao - tự nhiên mình cảm thấy tự tin hơn hẳn - như thể hiện rằng mình biết rõ mình đang làm gì, viết gì và engine đang làm gì nữa. 
+> 2. Nếu bạn cảm thấy, bối rối, khó hiểu sau khi đọc xong bài này thì đừng lo lắng quá, mình cũng vậy. Lần đầu tiên đọc chả hiểu cái mô tê gì luôn. Lần 2, úi giời sao cái này chia ra 2, trong cái này 2 chia ra thành 2 cái khác nữa, rồi cái khác lại chia ra 2 cái cháu chắt chút chít gì gì nữa vậy.... Cứ bình tĩnh nghiền ngẫm và nhai từ từ ^^, mình cũng vậy đọc và nhai chắc cũng phải trên dưới 5 lần mới dám dịch cho các bạn.
