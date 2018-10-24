@@ -33,9 +33,9 @@ block content
                     td= movie.name
                     td.preview-movie(style='width: 30px')= movie.actors
                     td
-                        a.btn.btn-danger.mr-3(href="/users/movies/edit/" + movie.id) Edit
+                        a.btn.btn-danger.mr-3(href="/users/movie/edit/" + movie.id) Edit
                         a.btn.btn-info.mr-3(href="/users/" + movie.id) View
-                        a.btn.btn-danger.mr-3(href="/users/movies/delete/" + movie.id) Delete
+                        a.btn.btn-danger.mr-3(href="/users/delete/movie/" + movie.id) Delete
 
     script.
         var input = document.getElementById('searchInput');

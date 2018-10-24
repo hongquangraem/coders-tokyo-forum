@@ -33,9 +33,9 @@ block content
                     td= song.name
                     td.preview-song(style='width: 30px')= song.singers
                     td
-                        a.btn.btn-danger.mr-3(href="/users/songs/edit/" + song.id) Edit
+                        a.btn.btn-danger.mr-3(href="/users/song/edit/" + song.id) Edit
                         a.btn.btn-info.mr-3(href="/users/" + song.id) View
-                        a.btn.btn-danger.mr-3(href="/users/" + user.id + "/songs/delete/" + song.id) Delete
+                        a.btn.btn-danger.mr-3(href="/users/delete/song/" + song.id) Delete
 
     script.
         var input = document.getElementById('searchInput');

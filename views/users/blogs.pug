@@ -34,9 +34,9 @@ block content
                     td= blog.title
                     td.preview-blog(style='width: 30px')= blog.author
                     td(style='padding-left: 85px')
-                        a.btn.btn-danger.mr-3(href="/users/blogs/edit/" + blog.id) Edit
+                        a.btn.btn-danger.mr-3(href="/users/blog/edit/" + blog.id) Edit
                         a.btn.btn-info.mr-3(href="/users/" + blog.id) View
-                        a.btn.btn-danger.mr-3(href="/users/blogs/delete/" + blog.id) Delete
+                        a.btn.btn-danger.mr-3(href="/users/delete/blog/" + blog.id) Delete
 
     script.
         var input = document.getElementById('searchInput');

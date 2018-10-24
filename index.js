@@ -22,10 +22,7 @@ app.use(express.static('public')); // setup public folder to save css, images, .
 app.use(cookieParser('process.env.SESSION_SECRET'));
 
 app.get('/', (req, res) => {
-	if(!req.signedCookies) {
-		res.render('index')
-	}
-	res.render('index2');
+	res.render('index2')
 })
 
 app.use('/users', authMiddleware.requireAuth, userRouter);

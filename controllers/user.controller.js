@@ -22,6 +22,13 @@ module.exports.booksOfUser = (req, res) => {
 }
 
 module.exports.books = (req, res) => {
+	// var user = db.get('users')
+	// 					   .find({id : req.params.id})
+	// 					   .value()
+	// var books = user.closet[0].books;
+	// res.render('users/books', {
+	// 	books: books
+	// })
 	var closet = db.get('users')
 									.value()[0] //mac dinh la nguoi dung dau tien
 									.closet[0].books
@@ -230,26 +237,30 @@ module.exports.deleteBook = (req, res) => {
 }
 
 module.exports.editBook = (req, res) => {
+	var id = req.signedCookies.userId;
 	var bookId = req.params.id;
-	var book = db.get('users').first() // mac dinh add sach vao user dau tien === admin
-	.get('closet').first()  
-	.value().books
-	.find(book => book.id === bookId);
-  res.render('users/editBook', {
-  	book: book
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()
+	var bookToEdit = user.closet[0].books
+			.find(book => book.id === bookId);
+	res.render('users/editBook', {
+  	book: bookToEdit
   });
 }
 
 module.exports.postEditBook = (req, res) => {
-	var id = req.params.id;
+	var id = req.signedCookies.userId;
+	var bookId = req.params.id;
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()
+	var bookToEdit = user.closet[0].books
+			.find(book => book.id === bookId);
+
 	var newName = req.body.name;
 	var newAuthor = req.body.author;
 	var newDescription = req.body.description;
-
-	let bookToEdit = db.get('users').first()
-										 .get('closet').first()
-										 .value().books
-									   .find((e => e.id === id))
 
 	bookToEdit.name = newName;
 	bookToEdit.author = newAuthor;
@@ -259,7 +270,7 @@ module.exports.postEditBook = (req, res) => {
 		bookToEdit.description = newDescription;
 	}
   db.write();
-  res.redirect('../../books')
+  res.redirect('../../' + user.id + '/books')
 }
 
 // End Books
@@ -305,14 +316,15 @@ module.exports.deleteMovie = (req, res) => {
 }
 
 module.exports.editMovie= (req, res) => {
+	var id = req.signedCookies.userId;
 	var movieId = req.params.id;
-	var movie = db.get('users')
-							  .value()[0]
-							  .closet[1]
-							  .movies
-								.find(movie => movie.id === movieId);
-  res.render('users/editMovie', {
-  	movie: movie
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()
+	var movieToEdit = user.closet[1].movies
+			.find(movie => movie.id === movieId);
+	res.render('users/editMovie', {
+  	movie: movieToEdit
   });
 }
 
@@ -322,11 +334,13 @@ module.exports.postEditMovie = (req, res) => {
 	var newActors = req.body.actors;
 	var newPreview = req.body.preview;
 
-	let movieToEdit = db.get('users')
-										  .value()[0]
-										  .closet[1]
-										  .movies
-											.find(movie => movie.id === movieId);
+	var id = req.signedCookies.userId;
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()
+	var movieToEdit = user.closet[1].movies
+			.find(movie => movie.id === movieId);
+
 	movieToEdit.name = newName;
 	movieToEdit.actors = newActors;
 	if (newPreview === ''){
@@ -334,8 +348,9 @@ module.exports.postEditMovie = (req, res) => {
 	} else {	
 		movieToEdit.preview = newPreview;
 	}
+
   db.write();
-  res.redirect('../../movies')
+  res.redirect('../../' + user.id + '/movies')
 }
 
 // End Movies
@@ -385,29 +400,31 @@ module.exports.deleteBlog = (req, res) => {
 }
 
 module.exports.editBlog = (req, res) => {
+	var id = req.signedCookies.userId;
 	var blogId = req.params.id;
-	var blog = db.get('users')
-							  .value()[0]
-							  .closet[3]
-							  .blogs
-								.find(blog => blog.id === blogId);
-  res.render('users/editBlog', {
-  	blog: blog
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()
+	var blogToEdit = user.closet[3].blogs
+			.find(blog => blog.id === blogId);
+	res.render('users/editBlog', {
+  	blog: blogToEdit
   });
 }
 
-module.exports.postEditBlog = (req, res) => {
+module.exports.postEditBlog = (req, res) => {	
 	var blogId = req.params.id;
 	var newTitle = req.body.title;
 	var newAuthor = req.body.author;
 	var newDescription = req.body.description;
 
-	let blogToEdit = db.get('users')
-										  .value()[0]
-										  .closet[3]
-										  .blogs
-											.find(blog => blog.id === blogId);
-											
+	var id = req.signedCookies.userId;
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()						// tim song cua user do
+	var blogToEdit = user.closet[3].blogs
+			.find(blog => blog.id === blogId);
+
 	blogToEdit.title = newTitle;
 	blogToEdit.author = newAuthor;
 	if (newDescription === ''){
@@ -415,8 +432,9 @@ module.exports.postEditBlog = (req, res) => {
 	} else {	
 		blogToEdit.description = newDescription;
 	}
+
   db.write();
-  res.redirect('../../blogs')
+  res.redirect('../../' + user.id + '/blogs')
 }
 
 // End Blogs
@@ -464,14 +482,15 @@ module.exports.deleteSong = (req, res) => {
 }
 
 module.exports.editSong = (req, res) => {
+	var id = req.signedCookies.userId;
 	var songId = req.params.id;
-	var song = db.get('users')
-							  .value()[0]
-							  .closet[2]
-							  .songs
-								.find(song => song.id === songId);
-  res.render('users/editSong', {
-  	song: song
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()
+	var songToEdit = user.closet[2].songs
+			.find(song => song.id === songId);
+	res.render('users/editSong', {
+  	song: songToEdit
   });
 }
 
@@ -482,21 +501,22 @@ module.exports.postEditSong = (req, res) => {
 	var newSingers = req.body.singers;
 	var newLyrics = req.body.lyrics
 
-	let songToEdit = db.get('users')
-										  .value()[0]
-										  .closet[2]
-										  .songs
-											.find(song => song.id === songId);
-											
+	var id = req.signedCookies.userId;
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()						// tim song cua user do
+	var songToEdit = user.closet[2].songs
+			.find(song => song.id === songId);
+
 	songToEdit.name = newName;
 	songToEdit.composers = newComposers;
 	songToEdit.singers = newSingers;
-	songToEdit.lyrics = newLyrics;
 	if (newLyrics === ''){
 		newLyrics = songToEdit.lyrics;
 	} else {	
 		songToEdit.lyrics = newLyrics;
 	}
+
   db.write();
-  res.redirect('../../songs')
+  res.redirect('../../' + user.id + '/songs')
 }
