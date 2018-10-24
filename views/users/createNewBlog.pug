@@ -1,4 +1,4 @@
-extends ../layouts/common.pug
+extends createNewBook.pug
 
 block content
     h1 Add new blog
@@ -8,7 +8,7 @@ block content
             .alert.alert-danger #{error}
 
 
-    form(action="/users/blogs/create" method="POST" enctype="multipart/form-data")
+    form(action="/users/" + user.id + "/blogs/create" method="POST" enctype="multipart/form-data")
         label(for="title" require) Title
         input(name="title" type="text" class="ml-2" value= blog? blog.name : "" require)
         br

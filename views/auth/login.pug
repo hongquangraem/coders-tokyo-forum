@@ -1,18 +1,44 @@
-extends ../layouts/common.pug
+html
+    head 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="/styles/style.css">
+    body
 
-block content
-    h1 Login
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        a.logo-link(href='/')
+            img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
+        a.coders-tokyo.ml-2(href='/') Coders.Tokyo
+        #navbarNavAltMarkup.collapse.navbar-collapse
+            .navbar-nav
+                a.nav-item.nav-link.active(href='/users').ml-4.pl-3.pr-3 Admin
+                a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
+                a.nav-item.nav-link(href='../stream').pl-3.pr-3 Stream
+                a.nav-item.nav-link(href='../users/books').pl-3.pr-3 Closet
+                a.nav-item.nav-link.products(href='../../products').pl-3.pr-3 Products
+                if user
+                    a.nav-item.nav-link.user-name= user.name
+                    img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
+            a.nav-item.nav-link.log-out(href='./login').pl-3.pr-3 Login
 
-    if errors
-        each error in errors
-            .alert.alert-danger #{error}
+    .container.pt-4.main
+        block content
+            if errors
+                each error in errors
+                    .alert.alert-danger #{error}
+            .login    
+                form.login-form(action="/auth/login" method="POST" accept-charset='utf-8')
+                  img.avatar(src='/images/logo.png', alt='')
+                  p.title coders.tokyo
+                  .input
+                    input#email(name="email" type='text' class="ml-2" value= values? values.email : "" required='')
+                    label(for='email') Email
+                  .input
+                    input#password(name="password" type='password' class="ml-1" value= values? values.password : "" required='')
+                    label(for='password') Password
+                  button.login-button(type='submit' class="btn btn-primary") Login
+                  p.sign-up
+                    | Don&apos;t have an account? 
+                    a.signUp(href='/register', title='Signup') Sign up
 
 
-    form(action="/auth/login" method="POST")
-        label Email
-        input#email(name="email" type="text" class="ml-2" value= values? values.email : "")
-        br
-        label Password
-        input#password(name="password" type="password" class="ml-1" value= values? values.password : "") 
-        br
-        button(class="btn btn-primary") Login
+            

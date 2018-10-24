@@ -68,5 +68,5 @@ module.exports.postLogin = function(req, res) {
 		signed: true
 	});
 
-	res.redirect('/users/books');
+	res.redirect('/users/' + user.id + '/books');
 }

@@ -1,24 +1,25 @@
 html
     head 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="/styles/style.css">
     body
 
     nav.navbar.navbar-expand-lg.navbar-light.bg-light
         a.logo-link(href='/')
-            img.navbar-avatar(src='.././pucblic/images/logo.png', alt='avatar', class="rounded-circle")
+            img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
         a.coders-tokyo.ml-2(href='/') Coders.Tokyo
         #navbarNavAltMarkup.collapse.navbar-collapse
             .navbar-nav
-                a.nav-item.nav-link.active(href='/').ml-4.pl-3.pr-3 Home
+                a.nav-item.nav-link.active(href='../users').ml-4.pl-3.pr-3 Admin
                 a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
-                a.nav-item.nav-link(href='./users/create').pl-3.pr-3 Stream
+                a.nav-item.nav-link(href='../../../stream').pl-3.pr-3 Stream
                 a.nav-item.nav-link(href='../../books').pl-3.pr-3 Closet
-                a.nav-item.nav-link(href='./logout').pl-3.pr-3 Log out
+                a.nav-item.nav-link.products(href='../../products').pl-3.pr-3 Products
                 if user
                     a.nav-item.nav-link.user-name= user.name
-                    img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")
+                    img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
                     //- img.user-logo(src=user.avatar, alt='avatar', class="rounded-circle")
+            a.nav-item.nav-link.log-out(href='../../logout').pl-3.pr-3 Log out
     .container.pt-4.main
         block content
             h1 Edit book

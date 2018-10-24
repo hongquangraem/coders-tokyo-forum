@@ -14,32 +14,34 @@ var uploadMd = multer({ dest: './public/mdFile' });
 
 router.get('/', authMiddeware.requireAuthAdmin, controller.index);
 
+router.get('/:id/logout', authController.logOut);
 router.get('/logout', authController.logOut);
 
 // End login logout
 
+router.get('/:id/books', controller.booksOfUser)
 
 router.get('/books', controller.books);
 
-router.get('/movies', controller.movies);
+router.get('/:id/movies', controller.moviesOfUser);
 
-router.get('/songs', controller.songs);
+router.get('/:id/songs', controller.songsOfUser);
 
-router.get('/blogs', controller.blogs);
+router.get('/:id/blogs', controller.blogsOfUser);
 
 router.get('/search', controller.searchUser);
 
-router.get('/books/search', controller.searchBooks);
+router.get('/:id/books/search', controller.searchBooks);
 
-router.get('/movies/search', controller.searchMovies);
+router.get('/:id/movies/search', controller.searchMovies);
 
-router.get('/songs/search', controller.searchSongs);
+router.get('/:id/songs/search', controller.searchSongs);
 
-router.get('/blogs/search', controller.searchBlogs);
+router.get('/:id/blogs/search', controller.searchBlogs);
 
 //User 
 
-router.get('/create', controller.createUser);
+router.get('/register', controller.createUser);
 
 router.get('/delete/:id', controller.deleteUser);
 
@@ -60,7 +62,7 @@ router.post('/create',
 
 // Books 
 
-router.get('/books/create', controller.createNewBook);
+router.get('/:id/books/create', controller.createNewBook);
 
 router.get('/books/delete/:id', controller.deleteBook);
 
@@ -68,7 +70,7 @@ router.get('/books/edit/:id', controller.editBook);
 
 router.post('/books/edit/:id', controller.postEditBook);
 
-router.post('/books/create', 
+router.post('/:id/books/create', 
 	upload.single('cover'),
 	controller.postCreateNewBook
 );
@@ -77,7 +79,7 @@ router.post('/books/create',
 
 // Movies 
 
-router.get('/movies/create', controller.createNewMovie);
+router.get('/:id/movies/create', controller.createNewMovie);
 
 router.get('/movies/delete/:id', controller.deleteMovie);
 
@@ -85,7 +87,7 @@ router.get('/movies/edit/:id', controller.editMovie);
 
 router.post('/movies/edit/:id', controller.postEditMovie);
 
-router.post('/movies/create', 
+router.post('/:id/movies/create', 
 	upload.single('cover'),
 	controller.postCreateNewMovie
 );
@@ -94,7 +96,7 @@ router.post('/movies/create',
 
 // Blogs 
 
-router.get('/blogs/create', controller.createNewBlog);
+router.get('/:id/blogs/create', controller.createNewBlog);
 
 router.get('/blogs/delete/:id', controller.deleteBlog);
 
@@ -102,7 +104,7 @@ router.get('/blogs/edit/:id', controller.editBlog);
 
 router.post('/blogs/edit/:id', controller.postEditBlog);
 
-router.post('/blogs/create',
+router.post('/:id/blogs/create',
 	upload.fields([{ name: 'file', maxCount: 1 }, { name: 'cover', maxCount: 1 }]),
 	controller.postCreateNewBlog
 );
@@ -111,7 +113,7 @@ router.post('/blogs/create',
 
 // Songs 
 
-router.get('/songs/create', controller.createNewSong);
+router.get('/:id/songs/create', controller.createNewSong);
 
 router.get('/songs/delete/:id', controller.deleteSong);
 
@@ -119,11 +121,12 @@ router.get('/songs/edit/:id', controller.editSong);
 
 router.post('/songs/edit/:id', controller.postEditSong);
 
-router.post('/songs/create', 
+router.post('/:id/songs/create', 
 	upload.fields([{ name: 'mp3File', maxCount: 1 }, { name: 'cover', maxCount: 1 }]),
 	controller.postCreateNewSong
 );
 
 // End Songs
+
 
 module.exports = router;

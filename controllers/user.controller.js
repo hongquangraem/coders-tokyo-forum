@@ -8,6 +8,16 @@ module.exports.index = (req, res) => {
 									.value()
 	res.render('users/index', {
 		users: users
+	});
+}
+
+module.exports.booksOfUser = (req, res) => {
+	var user = db.get('users')
+						   .find({id : req.params.id})
+						   .value()
+	var books = user.closet[0].books;
+	res.render('users/books', {
+		books: books
 	})
 }
 
@@ -20,32 +30,36 @@ module.exports.books = (req, res) => {
 	})
 }
 
-
-module.exports.movies = (req, res) => {
-	var closet = db.get('users')
-									.value()[0] //mac dinh la nguoi dung dau tien
-									.closet[1].movies
+module.exports.moviesOfUser = (req, res) => {
+	var user = db.get('users')
+						   .find({id : req.params.id})
+						   .value()
+	var movies = user.closet[1].movies;
 	res.render('users/movies', {
-		movies: closet
-	});
+		movies: movies
+	})
 }
 
-module.exports.songs = (req, res) => {
-	var closet = db.get('users')
-									.value()[0] //mac dinh la nguoi dung dau tien
-									.closet[2].songs;
+module.exports.songsOfUser = (req, res) => {
+	var user = db.get('users')
+						   .find({id : req.params.id})
+						   .value()
+	var songs = user.closet[2].songs;
 	res.render('users/songs', {
-		songs: closet
-	});
+		songs: songs
+	})
 }
 
-module.exports.blogs = (req, res) => {
-	var closet = db.get('users')
-									.value()[0] //mac dinh la nguoi dung dau tien
-									.closet[3].blogs
+
+
+module.exports.blogsOfUser = (req, res) => {
+	var user = db.get('users')
+						   .find({id : req.params.id})
+						   .value()
+	var blogs = user.closet[3].blogs;
 	res.render('users/blogs', {
-		blogs: closet
-	});
+		blogs: blogs
+	})
 }
 
 //  Search feature
@@ -64,10 +78,11 @@ module.exports.searchUser = (req, res) => {
 
 module.exports.searchBooks = (req, res) => {
 	var q = req.query.q;
-	var matchedBooks = db.get('users')
-													.value()[0]  // mac dinh search books in closet cua nguoi dung 1
-													.closet[0].books
-													.filter(book => book.name.toLowerCase().indexOf(q.toLowerCase()) !== -1 )
+	var user = db.get('users')
+						   .find({id : req.params.id})
+						   .value()
+	var matchedBooks = user.closet[0].books
+												 .filter(book => book.name.toLowerCase().indexOf(q.toLowerCase()) !== -1 )
 	res.render('users/books', {
 		books: matchedBooks
 	})
@@ -75,10 +90,11 @@ module.exports.searchBooks = (req, res) => {
 
 module.exports.searchMovies = (req, res) => {
 	var q = req.query.q;
-	var matchedMovies = db.get('users')
-													.value()[0]  // mac dinh search books in closet cua nguoi dung 1
-													.closet[1].movies
-													.filter(movie => movie.name.toLowerCase().indexOf(q.toLowerCase()) !== -1 )
+	var user = db.get('users')
+						   .find({id : req.params.id})
+						   .value()
+	var matchedMovies = user.closet[1].movies
+												  .filter(movie => movie.name.toLowerCase().indexOf(q.toLowerCase()) !== -1 )
 	res.render('users/movies', {
 		movies: matchedMovies
 	})
@@ -86,10 +102,11 @@ module.exports.searchMovies = (req, res) => {
 
 module.exports.searchSongs = (req, res) => {
 	var q = req.query.q;
-	var matchedSongs = db.get('users')
-													.value()[0]  // mac dinh search books in closet cua nguoi dung 1
-													.closet[2].songs
-													.filter(song => song.name.toLowerCase().indexOf(q.toLowerCase()) !== -1 )
+	var user = db.get('users')
+						   .find({id : req.params.id})
+						   .value()
+	var matchedSongs = user.closet[2].songs
+												  .filter(song => song.name.toLowerCase().indexOf(q.toLowerCase()) !== -1 )
 	res.render('users/songs', {
 		songs: matchedSongs
 	})
@@ -97,15 +114,15 @@ module.exports.searchSongs = (req, res) => {
 
 module.exports.searchBlogs = (req, res) => {
 	var q = req.query.q;
-	var matchedBlogs = db.get('users')
-													.value()[0]  // mac dinh search books in closet cua nguoi dung 1
-													.closet[3].blogs
-													.filter(blog => blog.title.toLowerCase().indexOf(q.toLowerCase()) !== -1 )
+	var user = db.get('users')
+						   .find({id : req.params.id})
+						   .value()
+	var matchedBlogs = user.closet[3].blogs
+												  .filter(blog => blog.title.toLowerCase().indexOf(q.toLowerCase()) !== -1 )
 	res.render('users/blogs', {
 		blogs: matchedBlogs
 	})
 }
-
 
 //  Create user
 
@@ -115,7 +132,12 @@ module.exports.createUser =(req, res) => {
 
 module.exports.postCreateUser = (req, res) => {
 	req.body.id = shortid.generate();
-	req.body.closet = [];
+	req.body.closet = [
+											{ "books" : [] },
+											{ "movies": [] },
+											{ "songs" : [] },
+											{ "blogs" : [] }
+										];
 	req.body.password = md5(req.body.password);
 	if (Object.keys(req).indexOf('file') === -1) {
 		req.body.avatar = 'upload/2261c205c93b9aa7059d9c3fe7febdd4'
@@ -174,43 +196,37 @@ module.exports.createNewBook = (req, res) => {
 }
 
 module.exports.postCreateNewBook = (req, res) => {
+	var id = req.params.id;
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()			// tim user de push sach
+
 	req.body.id = shortid.generate();
 	if (Object.keys(req).indexOf('file') === -1) {   // neu ko chon gui anh len thi set default cover la anh kia
 		req.body.cover = 'upload/2261c205c93b9aa7059d9c3fe7febdd4'
 	} else {
 		req.body.cover = req.file.path.split('/').slice(1).join('/');
 	}
-	// db.get('users')
-	//   .value()[0] // mac dinh add sach vao user dau tien === admin
-	//   .closet[0]
-	//   .books
-	//   .push(req.body)
-	// db.write()
-
-// code ben duoi nhin se clean hon ben tren
-	db.get('users').first() // mac dinh add sach vao user dau tien === admin
-	.get('closet').first()  
-	.value().books
-	.push(req.body)
-	db.write()
-  res.redirect('/users/books');
+	user.closet[0].books
+			.push(req.body)
+	db.write();
+  res.redirect('/users/' + user.id + '/books');
 }
 
 module.exports.deleteBook = (req, res) => {
-	var id = req.params.id;
-	var bookWillbeRemove = db.get('users').first()
-												   .get('closet').first()
-												   .value().books
-													 .find(book => book.id === id); // tim ra book co id trung voi id muon delete
-	var books = db.get('users').first()
-  							.get('closet').first()
-  							.value().books  // lay books array trong db
-  
+	var id = req.signedCookies.userId;
+	var bookId = req.params.id;
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()
+	var bookWillbeRemove = user.closet[0].books
+														 .find(book => book.id === bookId)
+	var books = user.closet[0].books
+
   _.remove(books, bookWillbeRemove) // lodash library deleting book in books array
   db.write();
 
-  res.redirect('/users/books')
-
+  res.redirect('/users/' + user.id +'/books')
 }
 
 module.exports.editBook = (req, res) => {
@@ -255,37 +271,37 @@ module.exports.createNewMovie = (req, res) => {
 }
 
 module.exports.postCreateNewMovie = (req, res) => {
+	var id = req.params.id;
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()			// tim user de push sach
+
 	req.body.id = shortid.generate();
 	if (Object.keys(req).indexOf('file') === -1) {   // neu ko chon gui anh len thi set default cover la anh kia
 		req.body.cover = 'upload/2261c205c93b9aa7059d9c3fe7febdd4'
 	} else {
 		req.body.cover = req.file.path.split('/').slice(1).join('/');
 	}
-	db.get('users')
-  .value()[0]
-  .closet[1]
-  .movies
-  .push(req.body)
-  db.write();
-  res.redirect('../movies');
+	user.closet[1].movies
+			.push(req.body)
+	db.write();
+  res.redirect('/users/' + user.id + '/movies');
 }
 
 module.exports.deleteMovie = (req, res) => {
-	var id = req.params.id;
-	var movieWillbeRemove = db.get('users')
-													  .value()[0]
-													  .closet[1]
-													  .movies
-													 .find(book => book.id === id); // tim ra book co id trung voi id muon delete
-	var movies = db.get('users')
-							  .value()[0]
-							  .closet[1]
-							  .movies // lay movies array trong db
-  _.remove(movies, movieWillbeRemove) // lodash library deleting movie in movies array
+	var id = req.signedCookies.userId;
+	var movieId = req.params.id;
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()
+	var movieWillbeRemove = user.closet[1].movies
+														 .find(movie => movie.id === movieId)
+	var movies = user.closet[1].movies
 
+  _.remove(movies, movieWillbeRemove) // lodash library deleting book in books array
   db.write();
-  res.redirect('../../movies');
 
+  res.redirect('/users/' + user.id +'/movies')
 }
 
 module.exports.editMovie= (req, res) => {
@@ -331,6 +347,11 @@ module.exports.createNewBlog = (req, res) => {
 }
 
 module.exports.postCreateNewBlog = (req, res) => {
+	var id = req.params.id;
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()			// tim user de push sach
+
 	req.body.id = shortid.generate();
 	if (Object.keys(req.files).indexOf('cover') === -1) {   // neu ko chon gui anh len thi set default cover la anh kia
 		req.body.cover = 'upload/2261c205c93b9aa7059d9c3fe7febdd4'
@@ -338,32 +359,29 @@ module.exports.postCreateNewBlog = (req, res) => {
 		req.body.cover = req.files["cover"][0].path.split('/').slice(1).join('/');
 	}
 	req.body.article= req.files["file"][0].path.split('/').slice(1).join('/');
-	
-	db.get('users')
-  .value()[0]
-  .closet[3]
-  .blogs
-  .push(req.body)
-  db.write();
-  res.redirect('../blogs');
+
+	user.closet[3].blogs
+			.push(req.body)
+	db.write();
+  res.redirect('/users/' + user.id + '/blogs');
 }
 
 module.exports.deleteBlog = (req, res) => {
+	var id = req.signedCookies.userId;
 	var blogId = req.params.id;
-	var blogWillbeRemove = db.get('users')
-													  .value()[0]
-													  .closet[3]
-													  .blogs
-													 .find(blog => blog.id === blogId ); // tim ra book co id trung voi id muon delete
-	var blogs = db.get('users')
-							  .value()[0]
-							  .closet[3]
-							  .blogs // lay movies array trong db
-  _.remove(blogs, blogWillbeRemove) // lodash library deleting movie in movies array
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()
+	var blogWillBeRemove = user.closet[3].blogs
+														 .find(movie => movie.id === blogId)
+	var blogs = user.closet[3].blogs
 
+  _.remove(blogs, blogWillBeRemove) // lodash library deleting book in books array
   db.write();
-  res.redirect('../../blogs');
 
+  res.redirect('/users/' + user.id +'/blogs')
+
+	var blogId = req.params.id;
 }
 
 module.exports.editBlog = (req, res) => {
@@ -410,6 +428,11 @@ module.exports.createNewSong = (req, res) => {
 }
 
 module.exports.postCreateNewSong = (req, res) => {
+	var id = req.params.id;
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()			// tim user de push sach
+
 	req.body.id = shortid.generate();
 	if (Object.keys(req.files).indexOf('cover') === -1) {   // neu ko chon gui anh len thi set default cover la anh kia
 		req.body.cover = 'upload/2261c205c93b9aa7059d9c3fe7febdd4'
@@ -417,31 +440,27 @@ module.exports.postCreateNewSong = (req, res) => {
 		req.body.cover = req.files["cover"][0].path.split('/').slice(1).join('/');
 	}
 	req.body.mp3File= req.files["mp3File"][0].path.split('/').slice(1).join('/');
-	db.get('users')
-  .value()[0]
-  .closet[2]
-  .songs
-  .push(req.body)
-  db.write();
-  res.redirect('../songs');
+	user.closet[2].songs
+			.push(req.body)
+	db.write();
+
+  res.redirect('/users/' + user.id + '/songs');
 }
 
 module.exports.deleteSong = (req, res) => {
+	var id = req.signedCookies.userId;
 	var songId = req.params.id;
-	var songWillbeRemove = db.get('users')
-													  .value()[0]
-													  .closet[2]
-													  .songs
-													 .find(song => song.id === songId ); // tim ra book co id trung voi id muon delete
-	var songs = db.get('users')
-							  .value()[0]
-							  .closet[2]
-							  .songs // lay movies array trong db
-  _.remove(songs, songWillbeRemove) // lodash library deleting movie in movies array
+	var user = db.get('users')
+						   .find({id : id})
+						   .value()
+	var songWillBeRemove = user.closet[2].songs
+														 .find(movie => movie.id === songId)
+	var songs = user.closet[2].songs
 
+  _.remove(songs, songWillBeRemove) // lodash library deleting book in books array
   db.write();
-  res.redirect('../../songs');
 
+  res.redirect('/users/' + user.id +'/songs')
 }
 
 module.exports.editSong = (req, res) => {

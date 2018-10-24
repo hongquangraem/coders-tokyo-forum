@@ -24,16 +24,21 @@ body {
 }
 
 .navbar .navbar-avatar {
-    max-width: 40px;
-    margin-right: 30px;
+  max-width: 40px;
+  margin-right: 30px;
+}
+
+.navbar .navbar-nav {
+	width: 79%;
+	display: flex;
 }
 
 .navbar .navbar-nav a:hover {
   color: #fff !important;
 }
 
-.navbar-nav .user-name {
-	margin-left: 480px;
+.navbar-nav .products {
+	flex-grow: 1;
 }
 
 .navbar-nav .user-logo {
@@ -41,9 +46,135 @@ body {
 	height: 40px;
 }
 
+.navbar-collapse .log-out {
+	margin-left: 170px;
+	color: #444;
+	text-decoration: none;
+}
+
+.navbar-collapse .log-out:hover {
+	color: #fff;
+}
+
+
+
 /****************** MAIN ***************************/
 
 .main {
 	background-color: #fff;
-	height: 800px;
+	height: 1000px;
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
 }
+
+/**************** STREAM *********************/
+
+.user-profile {
+	background: linear-gradient(90deg, rgba(255,255,255,1) 18%, rgba(31,200,17,1) 69%);
+	margin: 30px 0 15px;
+	padding-left: 0;
+	height: 210px;
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	border-radius: 15px;
+	border: 1px solid #000;
+}
+
+.user-profile .user-closet {
+	grid-column: 1/4;
+	overflow: hidden;
+}
+
+.user-profile .closet-preview {
+	grid-column: 4/13;
+	overflow: hidden;
+}
+
+.container .row .aside-bar {
+	border-left: 1px solid #ddd;
+	margin-top: 30px;
+}
+
+
+/********** LOGIN FORM *****************/
+
+.login {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+	height: 900px;
+	border-radius: 10px;
+}
+
+.login-form {
+	height: 360px;
+  width: 290px;
+	border: 1px solid #000;
+	box-shadow: 2px 2px 15px #888;
+	border: none;
+	border-radius: 20px;
+	position: relative;
+	margin-top: -200px;
+	background-color: #fff;
+}
+
+.login-form .avatar {
+	max-width: 100px;
+	position: absolute;
+	border-radius: 50px;
+	transform: translate(95%,-80%);
+}
+
+.login-form .title{
+	font-size: 20px;
+	font-weight: bold;
+	margin: 30px 80px 35px;
+	text-transform: capitalize;
+}
+
+.login-form .input {
+	position: relative;
+	margin: 33px 40px;
+}
+
+.login-form .input input{
+	width: 200px;
+	border: none;
+	border-bottom: 2px solid dodgerblue;
+	outline: none;
+
+}
+
+.login-form .input label {
+	position: absolute;
+	left: 0px;
+	color: gray;
+}
+
+.login-form .input input:focus +label, .login-form .input input:valid +label{
+	top: -15px;
+	left: -3px;
+	font-size: 13px;
+	color: dodgerblue;
+}
+
+.login-form .login-button {
+	padding: 8px 88px;
+	margin: 0px 37px;
+	border-radius: 20px;
+	border: none;
+	color: #fff;
+	background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+	cursor: pointer;
+}
+
+.login-form .sign-up {
+	margin: 45px 30px;
+}
+
+.login-form .signUp {
+	color: dodgerblue;
+	font-style: italic;
+}
+
