@@ -1,26 +1,40 @@
 extends createNewBook.pug
 
 block content
-    h1 Add new blog
-
     if errors
         each error in errors
             .alert.alert-danger #{error}
 
-
-    form(action="/users/" + user.id + "/blogs/create" method="POST" enctype="multipart/form-data")
-        label(for="title" require) Title
-        input(name="title" type="text" class="ml-2" value= blog? blog.name : "" require)
-        br
-        label(for="author") Author
-        input(name="author" type="text" class="ml-1" value= blog? blog.author : "" require) 
-        br
-        label(for='description') Description
-        textarea#description.form-control.z-depth-1(name="description" rows='3', placeholder='Write description for your book' value= blog? blog.description : "")
-        label(for="file") File
-        input(name="file" type="file" class="m-3")
-        br
-        label(for="cover") Cover
-        input(name="cover" type="file" class="m-3")
-        br
-        button.btn.btn-primary(type='submit' id="submit") Submit
+    .form-input.border.p-4.rounded
+                h1.text-center Add new blog
+                form(action="/users/" + user.id + "/blogs/create" method="POST" enctype="multipart/form-data")
+                  .form-row
+                    .form-group.col-md-6
+                      label(for='title' require) Title
+                      input#inputTitle.form-control(name='title', type='text' placeholder='Title' require)
+                    .form-group.col-md-6
+                      label(for='author' require) Writer
+                      input#inputTitle.form-control(name='author', type='text' placeholder='Writer' require)
+                  .form-row
+                    .form-group.col-md-6
+                      label(for='file' require) File
+                      .input-group-prepend
+                        span.input-group-text Upload
+                        .custom-file
+                          input.custom-file-input(name='file', type='file')
+                          label.custom-file-label(for='chooseFile') Choose file
+                    .form-group.col-md-6
+                      label(for='cover' require) Cover
+                      .input-group-prepend
+                        span.input-group-text Upload
+                        .custom-file
+                          input.custom-file-input(name='cover', type='file')
+                          label.custom-file-label(for='chooseFile') Choose cover
+                  .form-row
+                    .form-group.col-md-2
+                    .form-group.col-md-8
+                        label(for='description') Description
+                        textarea#description.form-control.z-depth-1(name="lyrics" rows='5', placeholder='Write description for your blog')
+                    .form-group.col-md-2
+                  button#submit.btn.btn-primary(type='submit') Create
+                  input.btn.btn-danger.ml-3(type='reset')

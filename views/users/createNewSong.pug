@@ -1,30 +1,44 @@
 extends createNewBook.pug
 
 block content
-    h1 Add new song
-
     if errors
         each error in errors
             .alert.alert-danger #{error}
 
-
-    form(action="/users/" + user.id + "/songs/create" method="POST" enctype="multipart/form-data")
-        label(for="name" require) Name
-        input(name="name" type="text" class="ml-2" value= song? song.name : "" require)
-        br
-        label(for="composers") Composers
-        input(name="composers" type="text" class="ml-1" value= song? song.composers : "" require) 
-        br
-        label(for="singers") Singers
-        input(name="singers" type="text" class="ml-1" value= song? song.singers : "" require) 
-        br
-        label(for="mp3File") Song
-        input(name="mp3File" type="file" class="m-3")
-        br
-        label(for="cover") Cover
-        input(name="cover" type="file" class="m-3")
-        br
-        label(for='lyrics') Lyrics
-        textarea#lyrics.form-control.z-depth-1(name="lyrics" rows='3', placeholder='Write lyrics for your song')
-        br
-        button.btn.btn-primary(type='submit' id="submit") Submit
+    .form-input.border.p-4.rounded
+                h1.mb-3.text-center Add new song
+                form(action="/users/" + user.id + "/songs/create" method="POST" enctype="multipart/form-data")
+                  .form-row
+                    .form-group.col-md-4
+                      label(for='name' require) Name
+                      input#inputSongName.form-control(name='name', type='text' placeholder='Song Name')
+                    .form-group.col-md-4
+                      label(for='composers' require) Composers
+                      input#inputComposers.form-control(name='composers', type='text' placeholder='Composers' require)
+                    .form-group.col-md-4
+                      label(for='singers' require) Singers
+                      input#inputSingers.form-control(name='singers', type='text' placeholder='Singers' require)
+                  .form-row
+                    .form-group.col-md-6
+                      label(for='mp3File' require) Song
+                      .input-group-prepend
+                        span.input-group-text Upload
+                        .custom-file
+                          input.custom-file-input(name='mp3File', type='file')
+                          label.custom-file-label(for='chooseFile') Choose song
+                    .form-group.col-md-6
+                      label(for='cover' require) Song
+                      .input-group-prepend
+                        span.input-group-text Upload
+                        .custom-file
+                          input.custom-file-input(name='cover', type='file')
+                          label.custom-file-label(for='chooseFile') Choose banner
+                  .form-row
+                    .form-group.col-md-2
+                    .form-group.col-md-8
+                        label(for='lyrics') Lyrics
+                        textarea#lyrics.form-control.z-depth-1(name="lyrics" rows='5', placeholder='Write lyrics for your song')
+                    .form-group.col-md-2
+                  
+                  button#submit.btn.btn-primary(type='submit') Create
+                  input.btn.btn-danger.ml-3(type='reset')

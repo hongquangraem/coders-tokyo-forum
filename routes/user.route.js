@@ -15,7 +15,7 @@ var uploadMd = multer({ dest: './public/mdFile' });
 router.get('/', authMiddeware.requireAuthAdmin, controller.index);
 
 router.get('/:id/logout', authController.logOut);
-router.get('/logout', authController.logOut);
+// router.get('/logout', authController.logOut);
 
 // End login logout
 

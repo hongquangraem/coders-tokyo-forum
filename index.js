@@ -11,6 +11,7 @@ var userRouter = require('./routes/user.route');
 var streamRouter = require('./routes/stream.route');
 var authRouter = require('./routes/auth.route');
 var registerRouter = require('./routes/register.route');
+var authController = require('./controllers/auth.controller');
 var authMiddleware = require('./middleware/auth.login');
 
 app.set('views', './views');
@@ -29,6 +30,7 @@ app.use('/users', authMiddleware.requireAuth, userRouter);
 app.use('/auth', authRouter);
 app.use('/stream', streamRouter);
 app.use('/register', registerRouter);
+app.use('/logout', authController.logOut);
 
 
 app.listen(port, () => console.log('Server listening or port ' + port));

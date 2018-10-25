@@ -1,21 +1,38 @@
 extends editBook.pug
 
 block content
-    h1 Edit movie
-
     if errors
         each error in errors
             .alert.alert-danger #{error}
 
+    .form-input.border.p-4.rounded
+                h1.text-center.mb-5 Edit movie
+                .row
+                    .col-md-6
+                        .card.border-success.mb-3(style='max-width: 30rem;').ml-2.mt-4
+                          .card-header.bg-transparent.border-success Movie detail
+                          .card-body.text-success
+                            p.card-title Movie Name: #{movie.name}
+                            p.card-text
+                              | Actors: #{movie.actors}
+                            p.cart-text
+                                |Preview: #{movie.preview}
+                          .card-footer.bg-transparent.border-success Movie detail
 
-    form(method="POST")
-        label(for="name" require) Name
-        input(name="name" type="text" class="ml-2" value= movie? movie.name : "" require)
-        br
-        label(for="actors") Actors
-        input(name="actors" type="text" class="ml-1" value= movie? movie.actors : "" require) 
-        br
-        label(for='preview') Preview
-        textarea#description.form-control.z-depth-1(name="preview" rows='3', placeholder='Write description for your book' value= movie? movie.preview : "")
-        br
-        button.btn.btn-primary(type='submit' id="submit") Submit
+                    .col-md-6
+                        form(method="POST")
+                          .form-row
+                            .form-group.col-md-6
+                              label(for='name' require) Movie Name
+                              input#inputName.form-control(name='name', type='text', value= movie? movie.name : "", style="width: 200%")
+                          .form-row
+                            .form-group.col-md-6
+                              label(for='actors') Actors
+                              input#actors.form-control(name='actors', type='text', value= movie? movie.actors : "" require, style="width: 200%")
+                          .form-row
+                            .form-group.col-md-12
+                                label(for='preview') Preview
+                                textarea#description.form-control.z-depth-1(name="preview" rows='3') #{movie.preview}
+                            button#confirm.btn.btn-primary.mt-2.ml-1(type="submit") Change
+                            //- |Avatar: 
+                                //- img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")

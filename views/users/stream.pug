@@ -31,27 +31,30 @@ html
 										- var totalMovies = user.closet[1].movies.length
 										- var totalSongs = user.closet[2].songs.length
 										- var totalBlogs = user.closet[3].blogs.length
-						
-										.user-profile
-											.user-closet
-												.header.pl-2.pt-3
-													a(href='/')
-														img.rounded-circle.ml-2(src=user.avatar, style="max-width: 20%")
-													a(href='/', style="color: #000; text-decoration: none")
-														h6.d-inline.pl-2= user.name
-												.body.mt-3
-														ul(style="list-style:none").m-0
-															li Books: #{totalBooks}
-															li Movies: #{totalMovies}
-															li Songs: #{totalSongs}
-															li Blogs: #{totalBlogs}
-											.closet-preview
-												.container.d-flex.mt-5
-													each book,index in user.closet[0].books
-														if index < 3
-															.product(style="width: 150px").d-flex.flex-column.align-items-center
-																img(src=book.cover style="max-width: 100px;; height: 50%")
-																span.mt-1= book.name
+										if totalBooks === 0 && totalMovies === 0 && totalSongs === 0 && totalBlogs === 0
+											return 
+											// do nothing
+										else 
+											.user-profile
+												.user-closet
+													.header.pl-2.pt-3
+														a(href='/')
+															img.rounded-circle.ml-2(src=user.avatar, style="max-width: 20%")
+														a(href='/', style="color: #000; text-decoration: none")
+															h6.d-inline.pl-2= user.name
+													.body.mt-3
+															ul(style="list-style:none").m-0
+																li Books: #{totalBooks}
+																li Movies: #{totalMovies}
+																li Songs: #{totalSongs}
+																li Blogs: #{totalBlogs}
+												.closet-preview
+													.container.d-flex.mt-5
+														each book,index in user.closet[0].books
+															if index < 3
+																.product(style="width: 150px").d-flex.flex-column.align-items-center
+																	img(src=book.cover style="max-width: 100px;; height: 50%")
+																	span.mt-1= book.name
 										
 								.col-md-4.aside-bar
 									p.mb-3.h3.border-bottom Recomended

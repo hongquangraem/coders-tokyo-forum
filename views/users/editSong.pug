@@ -1,24 +1,42 @@
 extends editBook.pug
 
 block content
-    h1 Edit song
-
     if errors
         each error in errors
             .alert.alert-danger #{error}
 
+    .form-input.border.p-4.rounded
+                h1.text-center.mb-5 Edit song
+                .row
+                    .col-md-6
+                        .card.border-success.mb-3(style='max-width: 30rem;').ml-2.mt-4
+                          .card-header.bg-transparent.border-success Song detail
+                          .card-body.text-success
+                            p.card-title Song Name: #{song.name}
+                            p.card-text
+                              | Composers: #{song.composers}
+                            p.cart-text
+                                |Singers: #{song.singers}
+                          .card-footer.bg-transparent.border-success Song detail
 
-    form(method="POST")
-        label(for="name" require) Name
-        input(name="name" type="text" class="ml-2" value= song? song.name : "" require)
-        br
-        label(for="composers") Composers
-        input(name="composers" type="text" class="ml-1" value= song? song.composers : "" require) 
-        br
-        label(for="singers") Singers
-        input(name="singers" type="text" class="ml-1" value= song? song.singers : "" require) 
-        br
-        label(for='lyrics') Lyrics
-        textarea#lyrics.form-control.z-depth-1(name="lyrics" rows='3', placeholder='Write lyrics for your song')
-        br
-        button.btn.btn-primary(type='submit' id="submit") Submit
+                    .col-md-6
+                        form(method="POST")
+                          .form-row
+                            .form-group.col-md-6
+                              label(for='name' require) Song Name
+                              input#inputName.form-control(name='name', type='text', value= song? song.name : "", style="width: 200%")
+                          .form-row
+                            .form-group.col-md-6
+                              label(for='composers') Composers
+                              input#composers.form-control(name='composers', type='text', value= song? song.composers : "" require, style="width: 200%").form-row
+                          .form-row
+                            .form-group.col-md-6
+                              label(for='singers') Singers
+                              input#singers.form-control(name='singers', type='text', value= song? song.singers : "" require, style="width: 200%")
+                          .form-row
+                            .form-group.col-md-12
+                                label(for='lyrics') Lyrics
+                                textarea#lyrics.form-control.z-depth-1(name="lyrics" rows='3') #{song.lyrics}
+                            button#confirm.btn.btn-primary.mt-2.ml-1(type="submit") Change
+                            //- |Avatar: 
+                                //- img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")
