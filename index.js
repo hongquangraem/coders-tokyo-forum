@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 var db = require('./db');
+var path = require('path');
 var express = require('express');
 var app = express();
 var port = 3000;
@@ -21,9 +22,15 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-
 app.use(express.static('public')); // setup public folder to save css, images, ...
 app.use(cookieParser('process.env.SESSION_SECRET'));
+// app.use(express.static(__dirname + '/views/html'));
 
 app.get('/', (req, res) => {
-	res.render('index2')
+	// res.sendFile(path.join('index.html'), {
+	// 	userId : req.signedCookies.userId
+	// });
+	res.render('index', {
+		userId : req.signedCookies.userId
+	})
 })
 
 app.use('/users', authMiddleware.requireAuth, userRouter);

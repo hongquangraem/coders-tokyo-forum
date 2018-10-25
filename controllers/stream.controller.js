@@ -5,5 +5,6 @@ module.exports.stream = (req, res) => {
 								.value();
 	res.render('users/stream', {
 		users: users,
+		userId: req.signedCookies.userId
 	})
 }
