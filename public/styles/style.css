@@ -37,7 +37,7 @@ body {
   color: #fff !important;
 }
 
-.navbar-nav .products {
+.navbar-nav .closet {
 	flex-grow: 1;
 }
 
@@ -62,7 +62,7 @@ body {
 
 .main {
 	background-color: #fff;
-	height: 1000px;
+	height: 2000px;
 	border-right: 1px solid #ddd;
 	border-left: 1px solid #ddd;
 }
@@ -70,15 +70,17 @@ body {
 /**************** STREAM *********************/
 
 .user-profile {
-	background: linear-gradient(90deg, rgba(255,255,255,1) 18%, rgba(31,200,17,1) 69%);
+	background: linear-gradient(90deg, rgba(255,255,255,1) 23%, rgba(143,136,145,1) 84%);
 	margin: 30px 0 15px;
 	padding-left: 0;
 	height: 210px;
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
 	border-radius: 15px;
-	border: 1px solid #000;
+	/*border: 1px solid #000;*/
+	box-shadow: 5px 6px 10px 4px #ccc;
 }
+
 
 .user-profile .user-closet {
 	grid-column: 1/4;
@@ -88,12 +90,22 @@ body {
 .user-profile .closet-preview {
 	grid-column: 4/13;
 	overflow: hidden;
+	position: relative;
+}
+
+.user-profile .closet-preview .fa-star{
+	position: absolute;
+	top: 13px;
+  left: 493px;
+  font-size: 22px;
+  color: yellow;
 }
 
 .container .row .aside-bar {
 	border-left: 1px solid #ddd;
 	margin-top: 30px;
 }
+
 
 
 /********** LOGIN FORM *****************/
@@ -178,3 +190,118 @@ body {
 	font-style: italic;
 }
 
+/********** PRODUCT BOOKS ***********/
+
+.book-info-container.book-cover {
+	position: relative;
+}
+
+.fa-heart,
+.fa-search-plus,
+.fa-shopping-cart {
+	position: absolute;
+	border: 1px solid #666;
+}
+
+.fa-heart:hover {
+	background-color: red;
+	color: #fff;
+	transition: all ease 500ms;
+	border: none;
+}
+
+.fa-search-plus:hover {
+	background-color: red;
+	color: #fff;
+	border: none;
+	transition: all ease 500ms;
+}
+
+.fa-shopping-cart:hover {
+	background-color: red;
+	color: #fff;
+	border: none;
+	transition: all ease 500ms;
+}
+
+.image-cover:hover ~.fa-heart{
+	bottom: 80;
+	opacity: 1;
+	transition: all ease 1s;
+}
+
+.image-cover:hover ~.fa-search-plus{
+	bottom: 80;
+	opacity: 1;
+	transition: all ease 1.5s;
+}
+
+.image-cover:hover ~.fa-shopping-cart{
+	bottom: 80;
+	opacity: 1;
+	transition: all ease 2s;
+}
+
+.book-cover {
+	position: relative;
+}
+
+.book-cover:before {
+	position: absolute;
+  content: '';
+  width: 61%;
+  height: 50px;
+  bottom: 72px;
+	background: linear-gradient(180deg, rgba(152,152,152,0.15) 23%, rgba(8,7,9,0.4) 84%);
+	z-index: -1;
+}
+
+.fa-heart {
+	bottom: 38px;
+  right: 213px;
+  opacity: 0;
+}
+
+.fa-search-plus {
+	bottom: 38px;
+  right: 265px;
+  opacity: 0;
+}
+
+.fa-shopping-cart {
+	bottom: 38px;
+	right: 155px;
+	opacity: 0;
+}
+
+.rotate {
+	-webkit-animation: rotation 3s infinite linear;
+}
+
+@-webkit-keyframes rotation {
+		from {
+				-webkit-transform: rotate(0deg);
+		}
+		to {
+				-webkit-transform: rotate(359deg);
+		}
+}
+
+.songPlaylist .changeColor {
+	-webkit-animation: backgroundChangation 3s infinite linear;
+}
+
+@-webkit-keyframes backgroundChangation {
+		from {
+				background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+		}
+		to {
+				background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+		}
+}
+
+.songPlaylist .song #playBtn:hover {
+	background-color: #000 !important;
+	color: #fff !important;
+	transition: ease 1s;
+}

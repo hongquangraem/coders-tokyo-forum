@@ -13,8 +13,7 @@ html
                 a.nav-item.nav-link.active(href='../../users').ml-4.pl-3.pr-3 Admin
                 a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
                 a.nav-item.nav-link(href='../../stream').pl-3.pr-3 Stream
-                a.nav-item.nav-link(href='./books').pl-3.pr-3 Closet
-                a.nav-item.nav-link.products(href='./products').pl-3.pr-3 Products
+                a.nav-item.nav-link.closet(href='./books').pl-3.pr-3 Closet
                 if user
                     a.nav-item.nav-link.user-name= user.name
                     img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
@@ -33,10 +32,11 @@ html
 
 
             .container-books.visible
-                .d-flex.align-items-center.mb-3
+                .d-flex.align-items-center.mb-4
                     h1 
                         span.mr-2 Books
                         a.btn.btn-primary(href='/users/' + user.id + '/books/create') New
+                    h1(style="margin-left:200px") Your Closet
 
                     form.ml-auto(action="/users/" + user.id + "/books/search", method="GET")
                         input(type="text", name="q" id="searchInput")
@@ -51,10 +51,12 @@ html
                         th Author
                         th(style='padding-left: 155px') Option
                     each book, index in books
+                        - var bookCover = book.cover.split('/').slice(1).join('/');
                         tr
                             td= index + 1
                             td
-                                img(src=book.cover style="width: 34")
+                                img(src='/' + book.cover style="width: 34")
+                                // phai co '/' vi vao them 1 dg link
                             td= book.name
                             td.preview-book(style='width: 30px')= book.author
                             td(style='padding-left: 85px')

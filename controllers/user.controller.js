@@ -21,22 +21,6 @@ module.exports.booksOfUser = (req, res) => {
 	})
 }
 
-module.exports.books = (req, res) => {
-	// var user = db.get('users')
-	// 					   .find({id : req.params.id})
-	// 					   .value()
-	// var books = user.closet[0].books;
-	// res.render('users/books', {
-	// 	books: books
-	// })
-	var closet = db.get('users')
-									.value()[0] //mac dinh la nguoi dung dau tien
-									.closet[0].books
-	res.render('users/books', {
-		books: closet
-	})
-}
-
 module.exports.moviesOfUser = (req, res) => {
 	var user = db.get('users')
 						   .find({id : req.params.id})

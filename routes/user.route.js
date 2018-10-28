@@ -15,13 +15,11 @@ var uploadMd = multer({ dest: './public/mdFile' });
 router.get('/', authMiddeware.requireAuthAdmin, controller.index);
 
 router.get('/:id/logout', authController.logOut);
-// router.get('/logout', authController.logOut);
 
 // End login logout
 
 router.get('/:id/books', controller.booksOfUser)
 
-router.get('/books', controller.books);
 
 router.get('/:id/movies', controller.moviesOfUser);
 

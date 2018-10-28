@@ -1,0 +1,111 @@
+html
+		head 
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+			<link rel="stylesheet" href="/styles/style.css">
+		body
+
+		nav.navbar.navbar-expand-lg.navbar-light.bg-light
+				a.logo-link(href='/')
+					img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
+				a.coders-tokyo.ml-2(href='/') Coders.Tokyo
+				#navbarNavAltMarkup.collapse.navbar-collapse
+					.navbar-nav
+						a.nav-item.nav-link.active(href='../../users').ml-4.pl-3.pr-3 Admin
+						a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
+						a.nav-item.nav-link(href='../../stream').pl-3.pr-3 Stream
+						a.nav-item.nav-link.closet(href='./books').pl-3.pr-3 Closet
+						if user
+							a.nav-item.nav-link.user-name= user.name
+							img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
+							//- img.user-logo(src=user.avatar, alt='avatar', class="rounded-circle")
+
+
+		.container.pt-4.main(style='height: 800px')
+
+			block content
+				select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3
+					option() Type 
+					option(value='books') Books
+					option(value='movies') Movies
+					option(value='songs') Songs
+					option(value='blogs') Blogs
+
+				if user
+					- var userId = user.id
+					h2.mb-5 Here is #{user.name} songs collection 
+					.row
+						.songPlaylist.col-md-5
+							each song, index in songs
+								.song#song.border.d-flex.align-items-center.mb-5.ml-4(style='border-radius: 40px; height: 100px; width: 370px; overflow: hidden')
+									img#songBanner(src='/' + song.cover).ml-3.rounded-circle(style='width: 50px; height: 50px')
+									.song-info.ml-5.mt-3(style='flex-grow: 1')
+										p(style='font-size: 16px').mb-1= song.name
+										p(style='font-size: 12px')= song.singers
+									i#playBtn.btn.fas.fa-play.p-3.border.rounded-circle(style='margin-right: 50px; color: red; background-color: #fff')
+
+						.lyrics.col-md-6.ml-5.border(style='border-radius: 15px; overflow:auto; height: 560px')
+							if songs
+								h2#songNameLyrics.text-center.mt-3 Lyrics
+								//- p#contentLyrics.ml-2= songs[0].lyrics
+
+					.player(style='margin: -15px 50px')
+						audio(controls='')
+							source(src='./songs/1.mp3', type='audio/ogg')
+
+
+				script.
+					var songName = document.getElementById('songNameLyrics');
+					var content = document.getElementById('contentLyrics');
+					var playBtn = document.getElementById("playBtn");
+					var songBanner = document.getElementById("songBanner");
+					var song = document.getElementById("song");
+					playBtn.addEventListener('click', function(e) {
+						songBanner.setAttribute('class', 'ml-3 rotate');
+						song.setAttribute('class', 'border d-flex align-items-center mb-5 ml-4 changeColor');
+					})
+
+				script.
+					var lyricsSongs = document.getElementById('')
+					var songName = document.getElementById('songNameLyrics');
+					var playBtn = document.getElementById("playBtn");
+					playBtn.addEventListener('click', loadLyrics);
+					function loadLyrics() {
+						//- var xhttp = new XMLHttpRequest();
+						//- xhttp.onreadystatechange = function() {
+						//- 	if (this.readyState == 4 && this.status == 200) {
+						//- 		document.getElementById("contentLyrics").innerHTML =
+						//- 		this.responseText;
+						//- 	}
+						//- };
+						//- xhttp.open("GET", "ajax_info.txt", true);
+						//- xhttp.send();
+						console.log(lyrics );
+						songName.innerHTML = 'fdsfsdfd'
+					}
+
+
+					
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
