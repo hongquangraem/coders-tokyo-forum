@@ -23,6 +23,9 @@ html
 
     .container.pt-4.main
         block content
+            if errors
+                each error in errors
+                    .alert.alert-danger #{error}
             select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3
               option() Type 
               option(value='books') Books

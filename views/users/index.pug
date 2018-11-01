@@ -13,8 +13,7 @@ html
                 a.nav-item.nav-link.active(href='../../users').ml-4.pl-3.pr-3 Admin
                 a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
                 a.nav-item.nav-link(href='../../stream').pl-3.pr-3 Stream
-                a.nav-item.nav-link(href='./users/' + user.id + '/books').pl-3.pr-3 Closet
-                a.nav-item.nav-link.products(href='./products').pl-3.pr-3 Products
+                a.nav-item.nav-link.closet(href='./users/' + user.id + '/books').pl-3.pr-3 Closet
                 if user
                     a.nav-item.nav-link.user-name= user.name
                     img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")

@@ -11,7 +11,7 @@ block content
                   .form-row
                     .form-group.col-md-4
                       label(for='name' require) Name
-                      input#inputSongName.form-control(name='name', type='text' placeholder='Song Name')
+                      input#inputSongName.form-control(name='name', type='text' placeholder='Song Name' require)
                     .form-group.col-md-4
                       label(for='composers' require) Composers
                       input#inputComposers.form-control(name='composers', type='text' placeholder='Composers' require)
@@ -24,20 +24,20 @@ block content
                       .input-group-prepend
                         span.input-group-text Upload
                         .custom-file
-                          input.custom-file-input(name='mp3File', type='file')
+                          input.custom-file-input(name='mp3File', type='file' require)
                           label.custom-file-label(for='chooseFile') Choose song
                     .form-group.col-md-6
-                      label(for='cover' require) Song
+                      label(for='cover' require) Banner
                       .input-group-prepend
                         span.input-group-text Upload
                         .custom-file
-                          input.custom-file-input(name='cover', type='file')
+                          input.custom-file-input(name='cover', type='file' require)
                           label.custom-file-label(for='chooseFile') Choose banner
                   .form-row
                     .form-group.col-md-2
                     .form-group.col-md-8
                         label(for='lyrics') Lyrics
-                        textarea#lyrics.form-control.z-depth-1(name="lyrics" rows='5', placeholder='Write lyrics for your song')
+                        textarea#lyrics.form-control.z-depth-1(name="lyrics" rows='5', placeholder='Write lyrics for your song' require)
                     .form-group.col-md-2
                   
                   button#submit.btn.btn-primary(type='submit') Create

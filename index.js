@@ -25,8 +25,12 @@ app.use(express.static('public')); // setup public folder to save css, images, .
 app.use(cookieParser('process.env.SESSION_SECRET'));
 
 app.get('/', (req, res) => {
+	let user = db.get('users')
+							 .find({ id : req.signedCookies.userId})
+							 .value()
 	res.render('index', {
-		userId : req.signedCookies.userId
+		userId : req.signedCookies.userId,
+		user: user
 	})
 })
 

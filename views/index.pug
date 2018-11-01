@@ -13,9 +13,14 @@ html
                 a.nav-item.nav-link.active(href='./users').ml-4.pl-3.pr-3 Admin
                 a.nav-item.nav-link(href='./').pl-3.pr-3 Rank
                 a.nav-item.nav-link(href='./stream').pl-3.pr-3 Stream
-                a.nav-item.nav-link(href='./users/' + userId + '/books').pl-3.pr-3 Closet
-
-            a.nav-item.nav-link.log-out(href='./auth/login').pl-3.pr-3 Login
+                a.nav-item.nav-link.closet(href='./users/' + userId + '/books').pl-3.pr-3 Closet
+                if user
+                    a.nav-item.nav-link.user-name= user.name
+                    img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
+            if !userId
+                a.nav-item.nav-link.log-out(href='./auth/login').pl-3.pr-3 Login
+            else 
+                a.nav-item.nav-link.log-out(href='/logout').pl-3.pr-3 Log out
 
     .container.pt-4.main
         block content

@@ -7,7 +7,8 @@ module.exports.index = (req, res) => {
 	var users = db.get('users')
 									.value()
 	res.render('users/index', {
-		users: users
+		users: users,
+		userId : req.signedCookies.userId
 	});
 }
 
@@ -199,7 +200,7 @@ module.exports.postCreateNewBook = (req, res) => {
 		req.body.cover = req.file.path.split('/').slice(1).join('/');
 	}
 	user.closet[0].books
-			.push(req.body)
+			.unshift(req.body)
 	db.write();
   res.redirect('/users/' + user.id + '/books');
 }
@@ -278,7 +279,7 @@ module.exports.postCreateNewMovie = (req, res) => {
 		req.body.cover = req.file.path.split('/').slice(1).join('/');
 	}
 	user.closet[1].movies
-			.push(req.body)
+			.unshift(req.body)
 	db.write();
   res.redirect('/users/' + user.id + '/movies');
 }
@@ -360,7 +361,7 @@ module.exports.postCreateNewBlog = (req, res) => {
 	req.body.article= req.files["file"][0].path.split('/').slice(1).join('/');
 
 	user.closet[3].blogs
-			.push(req.body)
+			.unshift(req.body)
 	db.write();
   res.redirect('/users/' + user.id + '/blogs');
 }
@@ -389,8 +390,7 @@ module.exports.editBlog = (req, res) => {
 	var user = db.get('users')
 						   .find({id : id})
 						   .value()
-	var blogToEdit = user.closet[3].blogs
-			.find(blog => blog.id === blogId);
+	var blogToEdit = user.closet[3].blogs.find(blog => blog.id === blogId);
 	res.render('users/editBlog', {
   	blog: blogToEdit
   });
@@ -443,7 +443,7 @@ module.exports.postCreateNewSong = (req, res) => {
 	}
 	req.body.mp3File= req.files["mp3File"][0].path.split('/').slice(1).join('/');
 	user.closet[2].songs
-			.push(req.body)
+			.unshift(req.body)
 	db.write();
 
   res.redirect('/users/' + user.id + '/songs');

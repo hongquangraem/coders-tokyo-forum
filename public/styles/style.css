@@ -224,54 +224,8 @@ body {
 	transition: all ease 500ms;
 }
 
-.image-cover:hover ~.fa-heart{
-	bottom: 80;
-	opacity: 1;
-	transition: all ease 1s;
-}
-
-.image-cover:hover ~.fa-search-plus{
-	bottom: 80;
-	opacity: 1;
-	transition: all ease 1.5s;
-}
-
-.image-cover:hover ~.fa-shopping-cart{
-	bottom: 80;
-	opacity: 1;
-	transition: all ease 2s;
-}
-
-.book-cover {
-	position: relative;
-}
-
-.book-cover:before {
-	position: absolute;
-  content: '';
-  width: 61%;
-  height: 50px;
-  bottom: 72px;
-	background: linear-gradient(180deg, rgba(152,152,152,0.15) 23%, rgba(8,7,9,0.4) 84%);
-	z-index: -1;
-}
-
-.fa-heart {
-	bottom: 38px;
-  right: 213px;
-  opacity: 0;
-}
-
-.fa-search-plus {
-	bottom: 38px;
-  right: 265px;
-  opacity: 0;
-}
-
-.fa-shopping-cart {
-	bottom: 38px;
-	right: 155px;
-	opacity: 0;
+.song {
+	background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);
 }
 
 .rotate {

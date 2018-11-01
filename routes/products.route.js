@@ -13,4 +13,8 @@ router.get('/:id/songs', controller.songsOfUser);
 
 router.get('/:id/blogs', controller.blogsOfUser);
 
+router.get('/:id/playSong/:id', controller.playSong);
+
+router.get('/:id/blogs/:id', controller.readBlog);
+
 module.exports = router;
