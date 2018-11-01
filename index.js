@@ -13,6 +13,7 @@ var streamRouter = require('./routes/stream.route');
 var authRouter = require('./routes/auth.route');
 var registerRouter = require('./routes/register.route');
 var productsRouter = require('./routes/products.route');
+var rankRouter = require('./routes/rank.route');
 var authController = require('./controllers/auth.controller');
 var authMiddleware = require('./middleware/auth.login');
 
@@ -40,6 +41,6 @@ app.use('/stream', streamRouter);
 app.use('/register', registerRouter);
 app.use('/logout', authController.logOut);
 app.use('/products', productsRouter);
-
+app.use('/rank', rankRouter);
 
 app.listen(port, () => console.log('Server listening or port ' + port));
