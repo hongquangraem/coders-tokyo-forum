@@ -5,7 +5,7 @@ html
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     body
 
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
         a.logo-link(href='/')
             img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
         a.coders-tokyo.ml-2(href='/') Coders.Tokyo
@@ -23,27 +23,97 @@ html
             else 
                 a.nav-item.nav-link.log-out(href='/logout').pl-3.pr-3 Log out
 
-    .container.pt-4.main(style='height: auto')
+    .container.pt-4.main.pr-0.pl-0(style='height: auto; border: none;')
         block content
-            .forum
-              .options
-                a.link.books(href='')
-                  .books.choice
-                  .overlay
-                    p.description Read the nice book reviewed
-                a.link.musics(href='')
-                  .musics.choice
-                  .overlay
-                    p.description Listen the best songs reviewed
-                a.link.movies(href='')
-                  .movies.choice
-                  .overlay
-                    p.description Watch the best movies reviewed
-                a.link.blogs(href='')
-                  .blogs.choice
-                  .overlay
-                    p.description Read the best blogs
+            .carousel-container
+                #firstCarousel.carousel.slide.bg-inverse.ml-auto.mr-auto.mt-5(data-ride='carousel', data-interval='5000')   
+                      ol.carousel-indicators
+                        li.active(data-target='#firstCarousel', data-slide-to='0')
+                        li(data-target='#firstCarousel', data-slide-to='1')
+                        li(data-target='#firstCarousel', data-slide-to='2')
+                      .carousel-inner(role='listbox')
+                        .carousel-item.active
+                          img.d-block.w-100(src='/images/Coders.TokyoWallpaperDark.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='First slide', style='width: 1000px; height: 500px;')
+                          .carousel-caption
+                            h3 Join with us
+                            p Learn web programing for free 
+                        .carousel-item
+                          img.d-block.w-100(src='/images/jsland.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Seconde slide', style='width: 1000px; height: 500px')
+                          .carousel-caption
+                            h3(style='color: #000') Best group ever
+                            p(style='color: #000') Share knowledge, help each other
+                        .carousel-item
+                          img.d-block.w-100(src='/images/course.png?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px; height: 500px')
+                          .carousel-caption
+                            h3(style='color: #000') Best courses
+                            p(style='color: #000') Follow these one oyou will be a developer soon
+                      a.carousel-control-prev(href='#firstCarousel', role='button', data-slide='prev')
+                        span.carousel-control-prev-icon(aria-hidden='true')
+                        span.sr-only Previous
+                      a.carousel-control-next(href='#firstCarousel', role='button', data-slide='next')
+                        span.carousel-control-next-icon(aria-hidden='true')
+                        span.sr-only Next
+
+            .forum-container
+                .forum(style='margin-top: 30px')
+                  .options
+                    a.link.books(href='')
+                      .books.choice
+                      .overlay
+                        p.description Read the nice book reviewed
+                    a.link.musics(href='')
+                      .musics.choice
+                      .overlay
+                        p.description Listen the best songs reviewed
+                    a.link.movies(href='')
+                      .movies.choice
+                      .overlay
+                        p.description Watch the best movies reviewed
+                    a.link.blogs(href='')
+                      .blogs.choice
+                      .overlay
+                        p.description Read the best blogs
      
+            .carousel-container(style='margin-top: 30px')
+                #secondCarousel.carousel.slide.bg-inverse.ml-auto.mr-auto.mt-5(data-ride='carousel', data-interval='5000')   
+                      ol.carousel-indicators
+                        li.active(data-target='#secondCarousel', data-slide-to='0')
+                        li(data-target='#secondCarousel', data-slide-to='1')
+                        li(data-target='#secondCarousel', data-slide-to='2')
+                        li(data-target='#secondCarousel', data-slide-to='3')
+                        li(data-target='#secondCarousel', data-slide-to='4')
+                      .carousel-inner(role='listbox')
+                        .carousel-item.active
+                          img.d-block.w-100(src='/images/coderstokyohanoi.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='First slide', style='width: 1000px; height: 500px;')
+                          .carousel-caption
+                            h3 Coders.Tokyo Ha Noi
+                            p Join with us
+                        .carousel-item
+                          img.d-block.w-100(src='/images/coderstokyohochiminh.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Seconde slide', style='width: 1000px; height: 500px')
+                          .carousel-caption
+                            h3 Coders.Tokyo Ho Chi Minh
+                            p Join with us
+                        .carousel-item
+                          img.d-block.w-100(src='/images/coderstokyonhatrang.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px; height: 500px')
+                          .carousel-caption
+                            h3 Coders.Tokyo Nha Trang
+                            p Join with us
+                        .carousel-item
+                          img.d-block.w-100(src='/images/coderstokyodanang.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px; height: 500px')
+                          .carousel-caption
+                            h3 Coders.Tokyo Da Nang
+                            p Join with us
+                        .carousel-item
+                          img.d-block.w-100(src='/images/coderstokyocantho.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px; height: 500px')
+                          .carousel-caption
+                            h3 Coders.Tokyo Can Tho
+                            p Join with us
+                      a.carousel-control-prev(href='#secondCarousel', role='button', data-slide='prev')
+                        span.carousel-control-prev-icon(aria-hidden='true')
+                        span.sr-only Previous
+                      a.carousel-control-next(href='#secondCarousel', role='button', data-slide='next')
+                        span.carousel-control-next-icon(aria-hidden='true')
+                        span.sr-only Next
 
             footer
               .contact
@@ -94,3 +164,12 @@ html
                   ul
                     li.text Tearms of service
                     li.text Privacy
+
+        
+        
+
+            script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js', integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN', crossorigin='anonymous')
+
+            script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl', crossorigin='anonymous')
+
+

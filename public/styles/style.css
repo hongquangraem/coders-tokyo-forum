@@ -393,7 +393,7 @@ body {
 
 .options .blogs { 
 	background-image: url("../images/blogs.jpg");
-	background-position-y: -76px;
+	background-position-y: -60px;
 }
 
 .options .stream {
@@ -525,3 +525,14 @@ footer {
 	color: #fff
 }
 
+
+
+/* Carousel */
+
+.carousel-container {
+	padding: 55px;
+}
+
+.forum-container {
+	padding: 55px;
+}
