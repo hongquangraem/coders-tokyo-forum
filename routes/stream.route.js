@@ -9,6 +9,8 @@ router.get('/', controller.stream);
 
 router.get('/logout', authController.logOut);
 
-router.get('/vote/:id/:id', authMiddleware.requireAuth, controller.voteStar);
+router.get('/voteUp/:id/:id', authMiddleware.requireAuth, controller.voteUpStar);
+
+router.get('/voteDown/:id/:id', authMiddleware.requireAuth, controller.voteDownStar);
 
 module.exports = router;

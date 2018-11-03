@@ -2,6 +2,7 @@ html
     head 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="/styles/style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     body
 
     nav.navbar.navbar-expand-lg.navbar-light.bg-light
@@ -10,7 +11,7 @@ html
         a.coders-tokyo.ml-2(href='/') Coders.Tokyo
         #navbarNavAltMarkup.collapse.navbar-collapse
             .navbar-nav
-                a.nav-item.nav-link.active(href='./users').ml-4.pl-3.pr-3 Admin
+                a.nav-item.nav-link(href='./users').ml-4.pl-3.pr-3 Admin
                 a.nav-item.nav-link(href='./rank').pl-3.pr-3 Rank
                 a.nav-item.nav-link(href='./stream').pl-3.pr-3 Stream
                 a.nav-item.nav-link.closet(href='./users/' + userId + '/books').pl-3.pr-3 Closet
@@ -22,7 +23,74 @@ html
             else 
                 a.nav-item.nav-link.log-out(href='/logout').pl-3.pr-3 Log out
 
-    .container.pt-4.main
+    .container.pt-4.main(style='height: auto')
         block content
-            h1 Main page
+            .forum
+              .options
+                a.link.books(href='')
+                  .books.choice
+                  .overlay
+                    p.description Read the nice book reviewed
+                a.link.musics(href='')
+                  .musics.choice
+                  .overlay
+                    p.description Listen the best songs reviewed
+                a.link.movies(href='')
+                  .movies.choice
+                  .overlay
+                    p.description Watch the best movies reviewed
+                a.link.blogs(href='')
+                  .blogs.choice
+                  .overlay
+                    p.description Read the best blogs
      
+
+            footer
+              .contact
+                span.title Contact with us
+                span.title-2 Products 
+                .list.d-flex
+                  .list-1.list
+                    ul.list-group
+                      li
+                        span.facebook
+                          img.logo.rounded-circle(src='/images/logo.png', alt='')
+                        a(href='') Coders.Tokyo
+                      li
+                        span.facebook
+                          i.fab.fa-facebook
+                        a(href='') Coders.Tokyo
+                      li
+                        span.facebook
+                          i.fas.fa-envelope
+                        a(href='') Gmail
+                  .list-2.list
+                    ul.list-group
+                      li
+                        span.facebook
+                          img.logo.rounded-circle(src='/images/logo.png', alt='')
+                        a(href='') School
+                      li
+                        span.facebook
+                          i.fab.fa-facebook
+                        a(href='') Coder.Tokyo Ha Noi
+                      li(style='position: relative;')
+                        span.slack
+                          i.fab.fa-slack
+                        a(href='', style='position: absolute; top: 5px; margin-left: 15px') Slack
+                  .list-3.list
+                    .list
+                      ul.list-group
+                        li.product(style='margin-top: 20px')
+                          a(href='') Support
+                        li.product
+                          a(href='') Sponsor
+                        li.product
+                          a(href='') Sponsor
+              .rights.row
+                .col1.col-md-6.mt-1
+                  span.text Coders.Tokyo 2018
+                .col1.col-md-6
+                  ul
+                    li.text Tearms of service
+                    li.text Privacy

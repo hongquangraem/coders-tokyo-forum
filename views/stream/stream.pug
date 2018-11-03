@@ -5,14 +5,14 @@ html
 			<link rel="stylesheet" href="/styles/style.css">
 		body
 
-		nav.navbar.navbar-expand-lg.navbar-light.bg-light
+		nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
 				a.logo-link(href='/')
 					img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
 				a.coders-tokyo.ml-2(href='/') Coders.Tokyo
 				#navbarNavAltMarkup.collapse.navbar-collapse
 						.navbar-nav
-							a.nav-item.nav-link.active(href='../users').ml-3.pl-4.pr-3 Admin
-							a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
+							a.nav-item.nav-link(href='../users').ml-3.pl-4.pr-3 Admin
+							a.nav-item.nav-link(href='./rank').pl-3.pr-3 Rank
 							a.nav-item.nav-link(href='../stream').pl-3.pr-3 Stream
 							a.nav-item.nav-link.closet(href='./users/' + userId + '/books').pl-3.pr-3 Closet
 							if user
@@ -24,10 +24,10 @@ html
 							a.nav-item.nav-link.log-out(href='/auth/login').pl-3.pr-3 Login
 
 
-		.container.pt-4.main(style='height: 1000px')
+		.container.pt-4.main(style='height: auto')
 			block content
 				
-				.container(style='margin-top:-24px')
+				.container(style='margin-top:-24px;')
 							.row
 								.col-md-8.main-stream.mt-5
 									span(style="font-size: 35px;").badge.badge-warning.border-bottom Stream
@@ -56,9 +56,18 @@ html
 																li Blogs: #{totalBlogs}
 												.closet-preview
 													.container.d-flex.mt-5
-														p(style='position: absolute; left: 471px; top: 14px;')= user.star
-														a(href='stream/vote/' + user.id + '/' + userId)
-															i.fas.fa-star
+														if user.star !== 0
+															p(style='position: absolute; left: 470px; top: 20px;')= user.star
+														a(href='stream/voteUp/' + user.id + '/' + userId)
+															if user.usersVotedUp.indexOf(userId) !== -1
+																i.fas.fa-chevron-up(style="color: yellow ")
+															else
+																i.fas.fa-chevron-up(style="color: #eee")
+														a(href='stream/voteDown/' + user.id + '/' + userId)
+															if user.usersVotedDown.indexOf(userId) !== -1
+																i.fas.fa-chevron-down(style="color: yellow ")
+															else 
+																i.fas.fa-chevron-down(style="color: #eee")
 														each book,index in user.closet[0].books
 															if index < 3
 																.product(style="width: 150px").mr-2.d-flex.flex-column.align-items-center

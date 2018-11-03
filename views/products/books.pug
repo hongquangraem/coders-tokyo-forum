@@ -6,13 +6,13 @@ html
 
     body
 
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
         a.logo-link(href='/')
             img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
         a.coders-tokyo.ml-2(href='/') Coders.Tokyo
         #navbarNavAltMarkup.collapse.navbar-collapse
             .navbar-nav
-                a.nav-item.nav-link.active(href='../../users').ml-4.pl-3.pr-3 Admin
+                a.nav-item.nav-link(href='../../users').ml-4.pl-3.pr-3 Admin
                 a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
                 a.nav-item.nav-link(href='../../stream').pl-3.pr-3 Stream
                 a.nav-item.nav-link.closet(href='../../users/' + user.id + '/books').pl-3.pr-3 Closet
@@ -34,24 +34,26 @@ html
               option(value='blogs') Blogs
 
             if user
-                h2 Here is #{user.name}'s movies collection
+                h2 Here is #{user.name}'s books collection
 
             each book, index in books
-                .book-info-container.row.mt-5.ml-4(style='margin-bottom: 150px')
-                    .book-cover.mt-0.col-md-5.d-flex.flex-column.justify-content-center.align-items-center
+                .book-info-container.row.mt-5.ml-4(style='margin-bottom: 100px')
+                    .book-cover.pr-0.mt-0.col-md-5.d-flex.flex-column.justify-content-center.align-items-center
                         .image-cover
-                            a(style='background-color: red; margin-left: 75px')(href='')
-                                img.mb-4(src='/' + book.cover)(style='width: 65%; box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); border-radius: 10px')
+                            a.image-link(style='background-color: red; margin-left: 75px')(href='')
+                                img.img-cover.mb-4(src='/' + book.cover)(style='width: 65%; box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px    12px rgba(0,0,0,0.22); border-radius: 10px;')
+                                .button-group.d-flex.justify-content-center.align-items-center
+                                    i.btn.mr-4.ml-4.fab.fa-facebook.p-0(style='font-size: 20px;')
+                                    i.btn.mr-4.fab.fa-google.p-0(style='font-size: 20px;')
+                                    i.btn.mr-4.fab.fa-twitter.p-0(style='font-size: 20px;')
                         a.btn.btn-primary(href='') Borrow
-                    .book-introducion.col-md-6.ml-5.d-flex.flex-column(style='height: 488px')
-                        .book-detail.border.p-3(style='border-radius: 15px; ; overflow: auto')
-                            h2.mb-4.text-center= book.name
-                            p.ml-3 Author: #{book.author}
-                            p.ml-3= book.description
-                            .btn-group.d-flex.justify-content-center.align-items-center
-                                i.btn.btn-primary.pt-2.pb-2.mr-2.fas.fa-share  Facebook
-                                i.btn.btn-danger.pt-2.pb-2.mr-2.fas.fa-share  Google
-                                i.btn.btn-info.pt-2.pb-2.mr-2.fas.fa-share  Twitter
+                    .book-introducion.col-md-6.d-flex.flex-column.p-0(style='height: 488px')
+                        .book-detail.p-3(style='overflow: auto')
+                            h2.mb-1.ml-3= book.name
+                            hr.mt-2(style='width: 500px; margin-left: 15px;')
+                            h5.ml-3.mb-4 Author: #{book.author}
+                            p.ml-3(style='font-style: italic; font-size: 16px; color: #888')= book.description
+                            
             
             
             nav(aria-label='Page navigation example').d-flex.justify-content-center.align-items-center

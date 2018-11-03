@@ -11,20 +11,19 @@ html
         #navbarNavAltMarkup.collapse.navbar-collapse
             .navbar-nav
                 a.nav-item.nav-link.active(href='/users').ml-4.pl-3.pr-3 Admin
-                a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
+                a.nav-item.nav-link(href='../rank').pl-3.pr-3 Rank
                 a.nav-item.nav-link(href='../stream').pl-3.pr-3 Stream
                 a.nav-item.nav-link(href='../users/books').pl-3.pr-3 Closet
-                a.nav-item.nav-link.products(href='../../products').pl-3.pr-3 Products
                 if user
                     a.nav-item.nav-link.user-name= user.name
                     img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
             a.nav-item.nav-link.log-out(href='./login').pl-3.pr-3 Login
 
-    .container.pt-4.main
+    .container.p-0.d-flex.justify-content-center.align-items-center.flex-column.main(style='height: 800px; border: none; border-radius: 10px')
         block content
             if errors
                 each error in errors
-                    .alert.alert-danger #{error}
+                    .alert.alert-danger(style='margin-top: -66px') #{error}
             .login    
                 form.login-form(action="/auth/login" method="POST" accept-charset='utf-8')
                   img.avatar(src='/images/logo.png', alt='')

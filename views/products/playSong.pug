@@ -5,7 +5,7 @@ html
 			<link rel="stylesheet" href="/styles/style.css">
 		body
 
-		nav.navbar.navbar-expand-lg.navbar-light.bg-light
+		nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
 				a.logo-link(href='/')
 					img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
 				a.coders-tokyo.ml-2(href='/') Coders.Tokyo
@@ -25,7 +25,7 @@ html
 						a.nav-item.nav-link.log-out(href='/auth/login').pl-3.pr-3 Login
 
 
-		.container.pt-4.main(style='height: 800px')
+		.container.pt-4.main(style='height: auto')
 
 			block content
 				select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3

@@ -119,7 +119,10 @@ module.exports.searchBlogs = (req, res) => {
 //  Create user
 
 module.exports.createUser =(req, res) => {
-	res.render('users/register')
+	let userId = req.signedCookies.userId;
+	res.render('users/register', {
+		userId: userId
+	})
 }
 
 module.exports.postCreateUser = (req, res) => {
@@ -230,7 +233,8 @@ module.exports.editBook = (req, res) => {
 	var bookToEdit = user.closet[0].books
 			.find(book => book.id === bookId);
 	res.render('users/editBook', {
-  	book: bookToEdit
+  	book: bookToEdit,
+  	userId: id
   });
 }
 
@@ -309,7 +313,8 @@ module.exports.editMovie= (req, res) => {
 	var movieToEdit = user.closet[1].movies
 			.find(movie => movie.id === movieId);
 	res.render('users/editMovie', {
-  	movie: movieToEdit
+  	movie: movieToEdit,
+  	userId: id
   });
 }
 
@@ -392,7 +397,8 @@ module.exports.editBlog = (req, res) => {
 						   .value()
 	var blogToEdit = user.closet[3].blogs.find(blog => blog.id === blogId);
 	res.render('users/editBlog', {
-  	blog: blogToEdit
+  	blog: blogToEdit,
+  	userId: id
   });
 }
 
@@ -474,7 +480,8 @@ module.exports.editSong = (req, res) => {
 	var songToEdit = user.closet[2].songs
 			.find(song => song.id === songId);
 	res.render('users/editSong', {
-  	song: songToEdit
+  	song: songToEdit,
+  	userId: id
   });
 }
 

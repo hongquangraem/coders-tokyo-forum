@@ -6,7 +6,7 @@ html
 
     body
 
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
         a.logo-link(href='/')
             img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
         a.coders-tokyo.ml-2(href='/') Coders.Tokyo
@@ -34,22 +34,25 @@ html
               option(value='blogs') Blogs
 
             if user
-                h2 Here is #{user.name}'s books collection
+                h2 Here is #{user.name}'s movies collection
 
             each movie, index in movies
-                .movie-info-container.row.mt-5.ml-4(style='margin-bottom: 150px')
-                    .movie-cover.mt-0.col-md-5.d-flex.flex-column.justify-content-center.align-items-center
-                        img.image-cover.mb-4(src='/' + movie.cover)(style='width: 65%')
+                .movie-info-container.row.mt-5.ml-4(style='margin-bottom: 120px')
+                    .movie-cover.pr-0.mt-0.col-md-5.d-flex.flex-column.justify-content-end.align-items-center
+                        .image-cover
+                            a.image-link(style='margin-left: 75px')(href='')
+                                img.img-cover.mb-4(src='/' + movie.cover)(style='width: 65%; box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)')
+                            .button-group.button-group-movie.d-flex.justify-content-center.align-items-center
+                                i.btn.mr-4.ml-4.fab.fa-facebook.p-0(style='font-size: 20px;')
+                                i.btn.mr-4.fab.fa-google.p-0(style='font-size: 20px;')
+                                i.btn.mr-4.fab.fa-twitter.p-0(style='font-size: 20px;')
                         a.btn.btn-primary(href='') Watch
-                    .movie-introducion.col-md-6.ml-5.d-flex.flex-column(style='height: 488px')
-                        .movie-detail.border.p-3(style='border-radius: 15px; overflow: auto; height: 470px')
-                            h2.mb-4.text-center= movie.name
-                            p.ml-3 Actors: #{movie.actors}
-                            p.ml-3= movie.preview
-                            .btn-group.d-flex.justify-content-center.align-items-center
-                                i.btn.btn-primary.pt-2.pb-2.mr-2.fas.fa-share  Facebook
-                                i.btn.btn-danger.pt-2.pb-2.mr-2.fas.fa-share  Google
-                                i.btn.btn-info.pt-2.pb-2.mr-2.fas.fa-share  Twitter
+                    .movie-introducion.col-md-6.d-flex.flex-column.p-0(style='height: 488px')
+                        .movie-detail.pt-3.mt-5(style='overflow: auto; height: 470px;')
+                            h2.mb-1.ml-3= movie.name
+                            hr.mt-2(style='width: 500px; margin-left: 15px;')
+                            h3.ml-3.mb-4 Actors: #{movie.actors}
+                            p.ml-3(style='font-style: italic; font-size: 16px; color: #888')= movie.preview
             
             
             nav(aria-label='Page navigation example').d-flex.justify-content-center.align-items-center
