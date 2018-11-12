@@ -7,6 +7,8 @@ router.get('/', controller.products);
 
 router.get('/:id/books', controller.booksOfUser);
 
+// router.get(':id/books/?page', controller.booksPagination);
+
 router.get('/:id/movies', controller.moviesOfUser);
 
 router.get('/:id/songs', controller.songsOfUser);

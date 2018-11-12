@@ -11,13 +11,13 @@ html
 				a.coders-tokyo.ml-2(href='/') Coders.Tokyo
 				#navbarNavAltMarkup.collapse.navbar-collapse
 					.navbar-nav
-						a.nav-item.nav-link.active(href='../../users').ml-4.pl-3.pr-3 Admin
-						a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
-						a.nav-item.nav-link(href='../../../stream').pl-3.pr-3 Stream
+						a.nav-item.nav-link.active(href='/users').ml-4.pl-3.pr-3 Admin
+						a.nav-item.nav-link(href='/users').pl-3.pr-3 Rank
+						a.nav-item.nav-link(href='/stream').pl-3.pr-3 Stream
 						if userWall
-							a.nav-item.nav-link.closet(href='../../../users/' + userWall.id +'/books').pl-3.pr-3 Closet
+							a.nav-item.nav-link.closet(href='/users/' + userWall.id +'/books').pl-3.pr-3 Closet
 						else
-							a.nav-item.nav-link.closet(href='../../../users/books').pl-3.pr-3 Closet
+							a.nav-item.nav-link.closet(href='/users/books').pl-3.pr-3 Closet
 						if userWall
 							a.nav-item.nav-link.user-name= userWall.name
 							img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")

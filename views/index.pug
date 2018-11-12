@@ -14,7 +14,7 @@ html
                 a.nav-item.nav-link(href='./users').ml-4.pl-3.pr-3 Admin
                 a.nav-item.nav-link(href='./rank').pl-3.pr-3 Rank
                 a.nav-item.nav-link(href='./stream').pl-3.pr-3 Stream
-                a.nav-item.nav-link.closet(href='./users/' + userId + '/books').pl-3.pr-3 Closet
+                a.nav-item.nav-link.closet(href='/users/' + userId + '/books').pl-3.pr-3 Closet
                 if user
                     a.nav-item.nav-link.user-name= user.name
                     img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
@@ -23,14 +23,13 @@ html
             else 
                 a.nav-item.nav-link.log-out(href='/logout').pl-3.pr-3 Log out
 
-    .container.pt-4.main.pr-0.pl-0(style='height: auto; border: none;')
+    .container.pt-4.main.pr-0.pl-0(style='height: auto;')
         block content
             .carousel-container
                 #firstCarousel.carousel.slide.bg-inverse.ml-auto.mr-auto.mt-5(data-ride='carousel', data-interval='5000')   
                       ol.carousel-indicators
                         li.active(data-target='#firstCarousel', data-slide-to='0')
                         li(data-target='#firstCarousel', data-slide-to='1')
-                        li(data-target='#firstCarousel', data-slide-to='2')
                       .carousel-inner(role='listbox')
                         .carousel-item.active
                           img.d-block.w-100(src='/images/Coders.TokyoWallpaperDark.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='First slide', style='width: 1000px; height: 500px;')
@@ -42,11 +41,6 @@ html
                           .carousel-caption
                             h3(style='color: #000') Best group ever
                             p(style='color: #000') Share knowledge, help each other
-                        .carousel-item
-                          img.d-block.w-100(src='/images/course.png?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px; height: 500px')
-                          .carousel-caption
-                            h3(style='color: #000') Best courses
-                            p(style='color: #000') Follow these one oyou will be a developer soon
                       a.carousel-control-prev(href='#firstCarousel', role='button', data-slide='prev')
                         span.carousel-control-prev-icon(aria-hidden='true')
                         span.sr-only Previous
@@ -57,24 +51,24 @@ html
             .forum-container
                 .forum(style='margin-top: 30px')
                   .options
-                    a.link.books(href='')
+                    a.link.books(href='products/' + randomUserId + '/books')
                       .books.choice
                       .overlay
                         p.description Read the nice book reviewed
-                    a.link.musics(href='')
+                    a.link.musics(href='products/' + randomUserId + '/songs')
                       .musics.choice
                       .overlay
                         p.description Listen the best songs reviewed
-                    a.link.movies(href='')
+                    a.link.movies(href='products/' + randomUserId + '/movies')
                       .movies.choice
                       .overlay
                         p.description Watch the best movies reviewed
-                    a.link.blogs(href='')
+                    a.link.blogs(href='products/' + randomUserId + '/movies')
                       .blogs.choice
                       .overlay
                         p.description Read the best blogs
      
-            .carousel-container(style='margin-top: 30px')
+            .carousel-container(style='margin-top: 30px; padding: 120px')
                 #secondCarousel.carousel.slide.bg-inverse.ml-auto.mr-auto.mt-5(data-ride='carousel', data-interval='5000')   
                       ol.carousel-indicators
                         li.active(data-target='#secondCarousel', data-slide-to='0')
@@ -84,27 +78,27 @@ html
                         li(data-target='#secondCarousel', data-slide-to='4')
                       .carousel-inner(role='listbox')
                         .carousel-item.active
-                          img.d-block.w-100(src='/images/coderstokyohanoi.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='First slide', style='width: 1000px; height: 500px;')
+                          img.d-block.w-100(src='/images/coderstokyohanoi.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='First slide', style='width: 1000px;')
                           .carousel-caption
                             h3 Coders.Tokyo Ha Noi
                             p Join with us
                         .carousel-item
-                          img.d-block.w-100(src='/images/coderstokyohochiminh.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Seconde slide', style='width: 1000px; height: 500px')
+                          img.d-block.w-100(src='/images/coderstokyohochiminh.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Seconde slide', style='width: 1000px')
                           .carousel-caption
                             h3 Coders.Tokyo Ho Chi Minh
                             p Join with us
                         .carousel-item
-                          img.d-block.w-100(src='/images/coderstokyonhatrang.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px; height: 500px')
+                          img.d-block.w-100(src='/images/coderstokyonhatrang.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px')
                           .carousel-caption
                             h3 Coders.Tokyo Nha Trang
                             p Join with us
                         .carousel-item
-                          img.d-block.w-100(src='/images/coderstokyodanang.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px; height: 500px')
+                          img.d-block.w-100(src='/images/coderstokyodanang.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px')
                           .carousel-caption
                             h3 Coders.Tokyo Da Nang
                             p Join with us
                         .carousel-item
-                          img.d-block.w-100(src='/images/coderstokyocantho.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px; height: 500px')
+                          img.d-block.w-100(src='/images/coderstokyocantho.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px;')
                           .carousel-caption
                             h3 Coders.Tokyo Can Tho
                             p Join with us
@@ -158,8 +152,8 @@ html
                         li.product
                           a(href='') Sponsor
               .rights.row
-                .col1.col-md-6.mt-1
-                  span.text Coders.Tokyo 2018
+                .col1.col-md-6.mt-2
+                  span.ml-3.text Coders.Tokyo 2018
                 .col1.col-md-6
                   ul
                     li.text Tearms of service

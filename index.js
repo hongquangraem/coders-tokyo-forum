@@ -29,9 +29,14 @@ app.get('/', (req, res) => {
 	let user = db.get('users')
 							 .find({ id : req.signedCookies.userId})
 							 .value()
+	let allUsers = db.get('users')
+													.value()
+	let randomUserId = allUsers[Math.floor(Math.random() * allUsers.length)].id
+
 	res.render('index', {
 		userId : req.signedCookies.userId,
-		user: user
+		user: user,
+		randomUserId: randomUserId
 	})
 })
 

@@ -1,12 +1,12 @@
 extends books.pug
 
 block content
-    select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3
-      option() Type 
+    select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3.btn
+      option(value='blogs') Blogs
       option(value='books') Books
       option(value='movies') Movies
       option(value='songs') Songs
-      option(value='blogs') Blogs
+      
     
     .container-movies.visible                
         .d-flex.align-items-center.mb-4

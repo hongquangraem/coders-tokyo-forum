@@ -5,15 +5,15 @@ html
 			<link rel="stylesheet" href="/styles/style.css">
 		body
 
-		nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+		nav.navbar.navbar-expand-lg.navbar-light.bg-light
 				a.logo-link(href='/')
 					img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
 				a.coders-tokyo.ml-2(href='/') Coders.Tokyo
 				#navbarNavAltMarkup.collapse.navbar-collapse
 						.navbar-nav
-							a.nav-item.nav-link.active(href='../users').ml-3.pl-4.pr-3 Admin
-							a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
-							a.nav-item.nav-link(href='../stream').pl-3.pr-3 Stream
+							a.nav-item.nav-link.active(href='/users').ml-3.pl-4.pr-3 Admin
+							a.nav-item.nav-link(href='/users').pl-3.pr-3 Rank
+							a.nav-item.nav-link(href='/stream').pl-3.pr-3 Stream
 							a.nav-item.nav-link.closet(href='./users/' + userId + '/books').pl-3.pr-3 Closet
 							if user
 								a.nav-item.nav-link.user-name= user.name

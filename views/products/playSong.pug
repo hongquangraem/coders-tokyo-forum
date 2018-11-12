@@ -11,10 +11,10 @@ html
 				a.coders-tokyo.ml-2(href='/') Coders.Tokyo
 				#navbarNavAltMarkup.collapse.navbar-collapse
 					.navbar-nav
-						a.nav-item.nav-link.active(href='../../users').ml-4.pl-3.pr-3 Admin
-						a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
-						a.nav-item.nav-link(href='../../../stream').pl-3.pr-3 Stream
-						a.nav-item.nav-link.closet(href='../../../users/' + userWall.id +'/books').pl-3.pr-3 Closet
+						a.nav-item.nav-link.active(href='/users').ml-4.pl-3.pr-3 Admin
+						a.nav-item.nav-link(href='/users').pl-3.pr-3 Rank
+						a.nav-item.nav-link(href='/stream').pl-3.pr-3 Stream
+						a.nav-item.nav-link.closet(href='/users/books').pl-3.pr-3 Closet
 						if userWall
 							a.nav-item.nav-link.user-name= userWall.name
 							img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
@@ -25,15 +25,15 @@ html
 						a.nav-item.nav-link.log-out(href='/auth/login').pl-3.pr-3 Login
 
 
-		.container.pt-4.main(style='height: auto')
+		.container.pt-4.main(style='height: auto').mt-5
 
 			block content
 				select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3
 					option() Type 
-					option(value='books') Books
-					option(value='movies') Movies
-					option(value='songs') Songs
-					option(value='blogs') Blogs
+					option(value='../' + 'books') Books
+					option(value='../' + 'movies') Movies
+					option(value='../' + 'songs') Songs
+					option(value='../' + 'blogs') Blogs
 
 				if user
 					- var userId = user.id
@@ -41,8 +41,8 @@ html
 					.row
 						.songPlayList#songPlayList.col-md-5
 							each song, index in songs
-								.song#song.border.d-flex.align-items-center.mb-5.ml-4.changeColor(style='border-radius: 40px; height: 100px; width: 370px; overflow: hidden')
-									img#songBanner.rotate(src='/' + song.cover).ml-3.rounded-circle(style='width: 50px; height: 50px')
+								#song.song.border.d-flex.align-items-center.mb-5.ml-4(style='border-radius: 40px; height: 100px; width: 370px; overflow: hidden')
+									img#songBanner.songBanner(src='/' + song.cover).ml-3.rounded-circle(style='width: 50px; height: 50px')
 									.song-info.ml-5.mt-3(style='flex-grow: 1')
 										p(style='font-size: 16px').mb-1= song.name
 										p(style='font-size: 12px')= song.singers
@@ -57,41 +57,47 @@ html
 							audio#audio(controls='' autoplay)
 								source#source(src='../../../' + songToPlay.mp3File, type='audio/ogg')
 
-						#player
 
 				nav(aria-label='Page navigation example').d-flex.justify-content-center.align-items-center
 					form(action = "POST")
-							ul.pagination
+						ul.pagination
+							if page <= totalPages
+								li.page-item 
+									a.page-link(href='/products/' + user.id + '/songs/?page='+ (page - 1)) Previous
+							if page -1 <= totalPages && page - 1 !== 0
 								li.page-item
-									a.page-link(href='/products/' + user.id + '/playSong/'+ songToPlay.id + '?page='+ (page - 1)) Previous
-								li.page-item    
-									a.page-link(href='/products/' + user.id + '/playSong/'+ songToPlay.id + '?page=' + page)= page
-								if page + 1 <= totalPages
-									li.page-item
-										a.page-link(href='/products/' + user.id + '/playSong/'+ songToPlay.id + '?page=' + eval(page + 1))= page + 1
-								if page + 2 <= totalPages
-									li.page-item
-										a.page-link(href='/products/' + user.id + '/playSong/'+ songToPlay.id + '?page=' + eval(page + 2))= page + 2
-								if page + 1 <= totalPages
-									li.page-item
-										a.page-link(href='/products/' + user.id + '/playSong/'+ songToPlay.id + '?page='+ (page + 1)) Next
+									a.page-link(href='/products/' + user.id + '/songs/?page=' + eval(page - 1))= page - 1
+							if page <= totalPages
+								li.page-item.active   
+									a.page-link(href='/products/' + user.id + '/songs/?page=' + page)= page
+							if page + 1 <= totalPages
+								li.page-item
+									a.page-link(href='/products/' + user.id + '/songs/?page=' + eval(page + 1))= page + 1
+							if page + 1 <= totalPages
+								li.page-item
+									a.page-link(href='/products/' + user.id + '/songs/?page='+ (page + 1)) Next
+							else 
+								li.page-item
+									a.page-link(href='/products/' + user.id + '/songs/?page='+ page) Next
 
-				
-				script.
-					var playBtn = document.getElementById("playBtn");
-					var songBanner = document.getElementById("songBanner");
-					var song = document.getElementById("song");
-				
-				
-				script(src='https://code.jquery.com/jquery-1.12.4.min.js', integrity='sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ', crossorigin='anonymous')
-				script(src='https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-				script(type='text/javascript', src='./lib/vpplayer.js')
-				link(rel='stylesheet', type='text/css', href='./css/vpplayer.css')
 
-				script.
-					$(document).ready(function(){
-						$("#player").vpplayer({
-							src: "audio.mp3",
-							trackName: "sample audio",
-						});
-					});
+					//- script.
+					//- 	var playBtn = document.getElementById("playBtn");
+					//- 	var songBanner = document.getElementsByClassName("songBanner");
+					//- 	var song = document.getElementsByClassName("song");
+					//- 	const clickFunc = function() {
+					//- 		this.style.color = 'red';
+					//- 	  this.style.background = 'blue';
+					//- 	}
+					//- 	for (let i = 0; i < songBanner.length; i++) {
+					//- 		songBanner[i].addEventListener('click', clickFunc);
+					//- 	}
+					//- 	for (let i = 0; i < song.length; i++) {
+					//- 		song[i].addEventListener('click', function() {
+					//- 			song[i].setAttribute('class', 'changeColor song border d-flex align-items-center mb-5 ml-4')
+					//- 		});
+					//- 	}
+					//- 	playBtn.addEventListener('click', function() {
+					//- 		playBtn.setAttribute('class', 'btn fas fa-pause p-3 border rounded-circle')
+					//- 	})
+

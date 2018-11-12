@@ -12,10 +12,11 @@ html
         a.coders-tokyo.ml-2(href='/') Coders.Tokyo
         #navbarNavAltMarkup.collapse.navbar-collapse
             .navbar-nav
-                a.nav-item.nav-link(href='../../users').ml-4.pl-3.pr-3 Admin
-                a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
-                a.nav-item.nav-link(href='../../stream').pl-3.pr-3 Stream
-                a.nav-item.nav-link.closet(href='../../users/' + user.id + '/books').pl-3.pr-3 Closet
+                a.nav-item.nav-link(href='/users').ml-4.pl-3.pr-3 Admin
+                a.nav-item.nav-link(href='/rank').pl-3.pr-3 Rank
+                a.nav-item.nav-link(href='/stream').pl-3.pr-3 Stream
+                a.nav-item.nav-link.closet(href='/users/' + user.id + '/books').pl-3.pr-3 Closet
+                
                 if userWall
                     a.nav-item.nav-link.user-name= userWall.name
                     img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
@@ -25,54 +26,45 @@ html
             else
                 a.nav-item.nav-link.log-out(href='/auth/login').pl-3.pr-3 Login
 
-    .container.pt-4.main(style='height: auto')
+    .container.pt-4.main(style='height: auto').mt-5
             select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3
-              option() Type 
-              option(value='books') Books
-              option(value='movies') Movies
-              option(value='songs') Songs
-              option(value='blogs') Blogs
+              if url.indexOf("?page") != -1
+                option(value='../' + 'books') Books
+                option(value='../' + 'movies') Movies
+                option(value='../' + 'songs') Songs
+                option(value='../' + 'blogs') Blogs
+              else
+                option(value='books') Books
+                option(value='movies') Movies
+                option(value='songs') Songs
+                option(value='blogs') Blogs
 
             if user
-                h2 Here is #{user.name}'s books collection
+                //- h2 Here is #{user.name}'s books collection
 
             each book, index in books
-                .book-info-container.row.mt-5.ml-4(style='margin-bottom: 100px')
+                .book-info-container.row.mt-5
                     .book-cover.pr-0.mt-0.col-md-5.d-flex.flex-column.justify-content-center.align-items-center
                         .image-cover
-                            a.image-link(style='background-color: red; margin-left: 75px')(href='')
-                                img.img-cover.mb-4(src='/' + book.cover)(style='width: 65%; box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px    12px rgba(0,0,0,0.22); border-radius: 10px;')
-                                .button-group.d-flex.justify-content-center.align-items-center
-                                    i.btn.mr-4.ml-4.fab.fa-facebook.p-0(style='font-size: 20px;')
-                                    i.btn.mr-4.fab.fa-google.p-0(style='font-size: 20px;')
-                                    i.btn.mr-4.fab.fa-twitter.p-0(style='font-size: 20px;')
-                        a.btn.btn-primary(href='') Borrow
+                            //- a.image-link(style='background-color: red; margin-left: 75px')(href='')
+                            img.img-cover(src='/' + book.cover)(style='width: 100%; box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); border-radius: 10px;')
+                                //- .button-group.d-flex.justify-content-center.align-items-center
+                                //-     i.btn.mr-4.ml-4.fab.fa-facebook.p-0(style='font-size: 20px;')
+                                //-     i.btn.mr-4.fab.fa-google.p-0(style='font-size: 20px;')
+                                //-     i.btn.mr-4.fab.fa-twitter.p-0(style='font-size: 20px;')
+                            .overlay
+                            a.button(href='') Borrow
                     .book-introducion.col-md-6.d-flex.flex-column.p-0(style='height: 488px')
-                        .book-detail.p-3(style='overflow: auto')
-                            h2.mb-1.ml-3= book.name
+                        .book-detail.p-3
+                            h2.mb-1.ml-3.text-center= book.name
                             hr.mt-2(style='width: 500px; margin-left: 15px;')
-                            h5.ml-3.mb-4 Author: #{book.author}
-                            p.ml-3(style='font-style: italic; font-size: 16px; color: #888')= book.description
+                            h5.ml-3.mb-4(style='font-size: 15px; float: right') Author: #{book.author}
+                            p.ml-3(style='font-style: italic; font-size: 16px; color: #888; clear: both') Review: #{book.description}
                             
             
             
             nav(aria-label='Page navigation example').d-flex.justify-content-center.align-items-center
                 form(action = "POST")
-                    //- ul.pagination
-                    //-     if page <= totalPages
-                    //-         li.page-item 
-                    //-             a.page-link(href='/products/' + user.id + '/books/?page='+ (page - 1)) Previous
-                    //-     li.page-item    
-                    //-         a.page-link(href='/products/' + user.id + '/books/?page=' + page)= page
-                    //-     if page + 1 <= totalPages
-                    //-         li.page-item
-                    //-             a.page-link(href='/products/' + user.id + '/books/?page=' + eval(page + 1))= page + 1
-                    //-     if page + 2 <= totalPages
-                    //-         li.page-item
-                    //-             a.page-link(href='/products/' + user.id + '/books/?page=' + eval(page + 2))= page + 2
-                    //-     if page + 1 <= totalPages
-                    //-         li.page-item
-                    //-             a.page-link(href='/products/' + user.id + '/books/?page='+ (page + 1)) Next
                     ul.pagination
                         if page <= totalPages
                             li.page-item 
@@ -81,7 +73,7 @@ html
                             li.page-item
                                 a.page-link(href='/products/' + user.id + '/books/?page=' + eval(page - 1))= page - 1
                         if page <= totalPages
-                            li.page-item    
+                            li.page-item.active  
                                 a.page-link(href='/products/' + user.id + '/books/?page=' + page)= page
                         if page + 1 <= totalPages
                             li.page-item

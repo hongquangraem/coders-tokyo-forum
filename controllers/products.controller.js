@@ -30,7 +30,8 @@ module.exports.booksOfUser = (req, res) => {
 		userWall: userWall,
 		books: books,
 		page: page,
-		totalPages : totalPages
+		totalPages : totalPages,
+		url: req.originalUrl
 	})
 }
 
@@ -55,7 +56,8 @@ module.exports.moviesOfUser = (req, res) => {
 		userWall: userWall,
 		movies: movies,
 		page: page,
-		totalPages : totalPages
+		totalPages : totalPages,
+		url: req.originalUrl
 	})
 }
 
@@ -79,7 +81,8 @@ module.exports.songsOfUser = (req, res) => {
 		userWall: userWall,
 		songs: songs,
 		page: page,
-		totalPages: totalPages
+		totalPages: totalPages,
+		url: req.originalUrl
 	})
 }
 
@@ -104,7 +107,8 @@ module.exports.blogsOfUser = (req, res) => {
 		userWall: userWall,
 		blogs: blogs,
 		page: page,
-		totalPages: totalPages
+		totalPages: totalPages,
+		url: req.originalUrl
 	})
 }
 

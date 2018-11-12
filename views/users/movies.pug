@@ -1,18 +1,15 @@
 extends books.pug
 block content
     select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3
-      option() Type 
-      option(value='books') Books
       option(value='movies') Movies
+      option(value='books') Books
       option(value='songs') Songs
       option(value='blogs') Blogs
     
     .container-movies.visible                
         .d-flex.align-items-center.mb-4
-            h1 
-                span.mr-2 Movies
-                a.btn.btn-primary(href='/users/' + user.id + '/movies/create') New
-            h1(style="margin-left:200px") Your Closet
+            a(style='padding: 6px')(href='/users/' + user.id + '/movies/create').badge.badge-primary Add new movie
+            h1(style="margin-left:300px") Your Closet
 
             form.ml-auto(action="/users/" + user.id + "/movies/search", method="GET")
                 input(type="text", name="q" id="searchInput")

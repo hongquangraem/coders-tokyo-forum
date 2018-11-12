@@ -12,10 +12,10 @@ html
         a.coders-tokyo.ml-2(href='/') Coders.Tokyo
         #navbarNavAltMarkup.collapse.navbar-collapse
             .navbar-nav
-                a.nav-item.nav-link.active(href='../../users').ml-4.pl-3.pr-3 Admin
-                a.nav-item.nav-link(href='./users').pl-3.pr-3 Rank
-                a.nav-item.nav-link(href='../../stream').pl-3.pr-3 Stream
-                a.nav-item.nav-link.closet(href='../../users/qMZXTv-0p/books').pl-3.pr-3 Closet
+                a.nav-item.nav-link.active(href='/users').ml-4.pl-3.pr-3 Admin
+                a.nav-item.nav-link(href='/users').pl-3.pr-3 Rank
+                a.nav-item.nav-link(href='/stream').pl-3.pr-3 Stream
+                a.nav-item.nav-link.closet(href='/users/qMZXTv-0p/books').pl-3.pr-3 Closet
                 if userWall
                     a.nav-item.nav-link.user-name= userWall.name
                     img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
@@ -25,13 +25,18 @@ html
             else
                 a.nav-item.nav-link.log-out(href='/auth/login').pl-3.pr-3 Login
 
-    .container.pt-4.main(style='height: 1000px')
+    .container.pt-4.main(style='height: 1000px').mt-5
             select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3
-              option() Type 
-              option(value='books') Books
-              option(value='movies') Movies
-              option(value='songs') Songs
-              option(value='blogs') Blogs
+              if url.indexOf("?page") != -1
+                option(value='../' + 'books') Books
+                option(value='../' + 'movies') Movies
+                option(value='../' + 'songs') Songs
+                option(value='../' + 'blogs') Blogs
+              else
+                option(value='books') Books
+                option(value='movies') Movies
+                option(value='songs') Songs
+                option(value='blogs') Blogs
 
             if user
                 h2.mb-5 Here is #{user.name}'s blogs
@@ -46,20 +51,24 @@ html
                   a.ml-2(style='font-size: 14px; text-decoration: none')(href='/products/' + userId + '/blogs/' + blog.id) Read more...         
             
             nav(aria-label='Page navigation example').d-flex.justify-content-center.align-items-center.mt-4
-                form(action = "POST")
+                form(action = "POST")                    
+                    
                     ul.pagination
                         if page <= totalPages
                             li.page-item 
-                                a.page-link(href='/products/' + user.id + '/blogs/?page='+ (page - 1)) Previous
-                        li.page-item    
-                            a.page-link(href='/products/' + user.id + '/blogs/?page=' + page)= page
+                                a.page-link(href='/products/' + user.id + '/books/?page='+ (page - 1)) Previous
+                        if page -1 <= totalPages && page - 1 !== 0
+                            li.page-item
+                                a.page-link(href='/products/' + user.id + '/books/?page=' + eval(page - 1))= page - 1
+                        if page <= totalPages
+                            li.page-item.active
+                                a.page-link(href='/products/' + user.id + '/books/?page=' + page)= page
                         if page + 1 <= totalPages
                             li.page-item
-                                a.page-link(href='/products/' + user.id + '/blogs/?page=' + eval(page + 1))= page + 1
-                        if page + 2 <= totalPages
-                            li.page-item
-                                a.page-link(href='/products/' + user.id + '/blogs/?page=' + eval(page + 2))= page + 2
+                                a.page-link(href='/products/' + user.id + '/books/?page=' + eval(page + 1))= page + 1
                         if page + 1 <= totalPages
                             li.page-item
-                                a.page-link(href='/products/' + user.id + '/blogs/?page='+ (page + 1)) Next
-                    
+                                a.page-link(href='/products/' + user.id + '/books/?page='+ (page + 1)) Next
+                        else 
+                            li.page-item
+                                a.page-link(href='/products/' + user.id + '/books/?page='+ page) Next
