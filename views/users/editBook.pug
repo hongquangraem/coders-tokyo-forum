@@ -4,21 +4,36 @@ html
         <link rel="stylesheet" href="/styles/style.css">
     body
 
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-        a.logo-link(href='/')
-            img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
-        a.coders-tokyo.ml-2(href='/') Coders.Tokyo
-        #navbarNavAltMarkup.collapse.navbar-collapse
-            .navbar-nav
-                a.nav-item.nav-link.active(href='/users').ml-4.pl-3.pr-3 Admin
-                a.nav-item.nav-link(href='/rank').pl-3.pr-3 Rank
-                a.nav-item.nav-link(href='/stream').pl-3.pr-3 Stream
-                a.nav-item.nav-link.closet(href='../../' + userId +'/books').pl-3.pr-3 Closet
-                if user
-                    a.nav-item.nav-link.user-name= user.name
-                    img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
-                    //- img.user-logo(src=user.avatar, alt='avatar', class="rounded-circle")
-            a.nav-item.nav-link.log-out(href='../logout').pl-3.pr-3 Log out
+    nav.nav.fixed-top
+      ul
+        li.logo-item
+          a.logo-link-item(href='#')
+            img.logo(src='/images/logo.png', alt='')
+        li
+          a.coders-tokyo(href='/') Coders.Tokyo
+        li
+          a(href='/users') Admin
+        li
+          a(href='/rank') Rank
+        li
+          a(href='/stream') Stream
+        if !user
+          li(style='flex-grow:1')
+            a(href='/users/' + userId + '/books') Closet
+        else 
+          li
+            a(href='/users/' + userId + '/books') Closet
+        if user
+          li.user-name
+            a.user-name(style='color: #fff')= user.name
+          li(style='flex-grow: 1')
+            img.user-logo(src='/' + user.avatar, alt='avatar', class="rounded-circle")
+        if user
+          li
+            a.login(href='/logout') Log out
+        else 
+          li
+            a.login(href='./auth/login') Login
     .container.pt-4.main.mt-5(style='height: 800px')
         block content
             if errors
@@ -40,19 +55,41 @@ html
                           .card-footer.bg-transparent.border-success Book detail
 
                     .col-md-6
-                        form(method="POST")
+                        form(method="POST" enctype="multipart/form-data")
                           .form-row
                             .form-group.col-md-6
-                              label(for='name' require) Book Name
-                              input#inputName.form-control(name='name', type='text', value= book? book.name : "", placeholder='New Book Name', style="width: 200%")
+                              label(for='name') Book Name
+                              input#inputName.form-control(name='name', type='text', value= book? book.name : "", placeholder='New Book Name', style="width: 200%" autofocus)
                           .form-row
                             .form-group.col-md-6
                               label(for='author') Author
-                              input#author.form-control(name='author', type='text', value= book? book.author : "" require, style="width: 200%")
+                              input#author.form-control(name='author', type='text', value= book? book.author : "", style="width: 200%")
                           .form-row
                             .form-group.col-md-12
-                                label(for='description') Description
-                                textarea#description.form-control.z-depth-1(name="description" rows='3', placeholder='Write description for your book' value= book? book.description : "") #{book.description}
-                            button#confirm.btn.btn-primary.mt-2.ml-1(type="submit") Change
+                              .head.d-flex
+                                label(for='description')(style='flex-grow:1; margin: 0') Description
+                                p#countCharOutput(style='margin: 0')
+                              textarea#description.form-control.z-depth-1(name="description" rows='5', placeholder='Write description for your book about 180 words or less')
+                          .form-row
+                            .form-group.col-md-12
+                              label(for='cover') Cover
+                              .input-group-prepend
+                                span.input-group-text Upload
+                                .custom-file
+                                  input.custom-file-input(name='cover', type='file')
+                                  label.custom-file-label(for='chooseFile') Choose file
+                          button#confirm.btn.btn-primary.mt-2.ml-1(type="submit") Change
                             //- |Avatar: 
                                 //- img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")
+
+            script.
+              var textarea = document.getElementById('description');
+              var countCharOutPut = document.getElementById('countCharOutput');
+              window.onload = function() {
+                let countChar = textarea.value.split(' ').join('').trim().length;
+                countCharOutPut.innerHTML = countChar;
+              }
+              textarea.addEventListener('keyup', function() {
+              let countChar = textarea.value.trim().split(' ').length;
+              countChar === 1 ? countCharOutPut.innerHTML = countChar + ' word' : countCharOutPut.innerHTML = countChar + ' words';
+              })

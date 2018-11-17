@@ -16,9 +16,11 @@ module.exports.booksOfUser = (req, res) => {
 	var user = db.get('users')
 						   .find({id : req.params.id})
 						   .value()
+	var id = req.signedCookies.userId;
 	var books = user.closet[0].books;
 	res.render('users/books', {
-		books: books
+		books: books,
+		userId : id
 	})
 }
 
@@ -26,9 +28,11 @@ module.exports.moviesOfUser = (req, res) => {
 	var user = db.get('users')
 						   .find({id : req.params.id})
 						   .value()
+ var id = req.signedCookies.userId;
 	var movies = user.closet[1].movies;
 	res.render('users/movies', {
-		movies: movies
+		movies: movies,
+		userId : id
 	})
 }
 
@@ -36,9 +40,11 @@ module.exports.songsOfUser = (req, res) => {
 	var user = db.get('users')
 						   .find({id : req.params.id})
 						   .value()
+	var id = req.signedCookies.userId;
 	var songs = user.closet[2].songs;
 	res.render('users/songs', {
-		songs: songs
+		songs: songs,
+		userId: id
 	})
 }
 
@@ -48,9 +54,11 @@ module.exports.blogsOfUser = (req, res) => {
 	var user = db.get('users')
 						   .find({id : req.params.id})
 						   .value()
+	var id = req.signedCookies.userId;
 	var blogs = user.closet[3].blogs;
 	res.render('users/blogs', {
-		blogs: blogs
+		blogs: blogs,
+		userId: id
 	})
 }
 
@@ -187,7 +195,10 @@ module.exports.postEditInfoUser = (req, res) => {
 // Books
 
 module.exports.createNewBook = (req, res) => {
-	res.render('users/createNewBook');
+	let id = req.signedCookies.userId;
+	res.render('users/createNewBook', {
+		userId : id
+	});
 }
 
 module.exports.postCreateNewBook = (req, res) => {
@@ -250,13 +261,15 @@ module.exports.postEditBook = (req, res) => {
 	var newName = req.body.name;
 	var newAuthor = req.body.author;
 	var newDescription = req.body.description;
+	// var newCover = req.body.cover;
 
 	bookToEdit.name = newName;
 	bookToEdit.author = newAuthor;
-	if (newDescription === ''){
-		newDescription = bookToEdit.description;
-	} else {	
-		bookToEdit.description = newDescription;
+	bookToEdit.description = newDescription;
+	if (Object.keys(req).indexOf('file') === -1) {
+		bookToEdit.cover = 'upload/2261c205c93b9aa7059d9c3fe7febdd4'
+	} else {
+		bookToEdit.cover = req.file.path.split('/').slice(1).join('/');
 	}
   db.write();
   res.redirect('../../' + user.id + '/books')
@@ -333,12 +346,12 @@ module.exports.postEditMovie = (req, res) => {
 
 	movieToEdit.name = newName;
 	movieToEdit.actors = newActors;
-	if (newPreview === ''){
-		newPreview = movieToEdit.preview;
-	} else {	
-		movieToEdit.preview = newPreview;
+	movieToEdit.preview = newPreview;
+	if (Object.keys(req).indexOf('file') === -1) {
+		movieToEdit.cover = 'upload/2261c205c93b9aa7059d9c3fe7febdd4'
+	} else {
+		movieToEdit.cover = req.file.path.split('/').slice(1).join('/');
 	}
-
   db.write();
   res.redirect('../../' + user.id + '/movies')
 }
@@ -417,11 +430,13 @@ module.exports.postEditBlog = (req, res) => {
 
 	blogToEdit.title = newTitle;
 	blogToEdit.author = newAuthor;
-	if (newDescription === ''){
-		newDescription = blogToEdit.description;
-	} else {	
-		blogToEdit.description = newDescription;
+	blogToEdit.description = newDescription;
+	if (Object.keys(req).indexOf('file') === -1) {
+		blogToEdit.cover = 'upload/2261c205c93b9aa7059d9c3fe7febdd4'
+	} else {
+		blogToEdit.cover = req.file.path.split('/').slice(1).join('/');
 	}
+
 
   db.write();
   res.redirect('../../' + user.id + '/blogs')
@@ -502,10 +517,11 @@ module.exports.postEditSong = (req, res) => {
 	songToEdit.name = newName;
 	songToEdit.composers = newComposers;
 	songToEdit.singers = newSingers;
-	if (newLyrics === ''){
-		newLyrics = songToEdit.lyrics;
-	} else {	
-		songToEdit.lyrics = newLyrics;
+	songToEdit.lyrics = newLyrics;
+	if (Object.keys(req).indexOf('file') === -1) {
+		songToEdit.cover = 'upload/2261c205c93b9aa7059d9c3fe7febdd4'
+	} else {
+		songToEdit.cover = req.file.path.split('/').slice(1).join('/');
 	}
 
   db.write();

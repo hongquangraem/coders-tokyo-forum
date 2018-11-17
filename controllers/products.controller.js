@@ -15,6 +15,7 @@ module.exports.booksOfUser = (req, res) => {
 	var start = (page - 1) * perPage;
 	var end = page * perPage;
 	let userId = req.params.id;
+	let id = req.signedCookies.userId;
 	let user = db.get('users') // find books of user to load books
 							 .find({ id : userId })
 							 .value()
@@ -27,7 +28,9 @@ module.exports.booksOfUser = (req, res) => {
 	console.log(totalPages);
 	res.render('products/books', {
 		user : user,
+		userId: userId,
 		userWall: userWall,
+		userWallId: userWallId,
 		books: books,
 		page: page,
 		totalPages : totalPages,
@@ -53,7 +56,9 @@ module.exports.moviesOfUser = (req, res) => {
 	console.log(totalPages);
 	res.render('products/movies', {
 		user : user,
+		userId: userId,
 		userWall: userWall,
+		userWallId: userWallId,
 		movies: movies,
 		page: page,
 		totalPages : totalPages,
@@ -78,7 +83,9 @@ module.exports.songsOfUser = (req, res) => {
 										.value()
 	res.render('products/songs', {
 		user : user,
+		userId: userId,
 		userWall: userWall,
+		userWallId: userWallId,
 		songs: songs,
 		page: page,
 		totalPages: totalPages,
@@ -88,7 +95,7 @@ module.exports.songsOfUser = (req, res) => {
 
 module.exports.blogsOfUser = (req, res) => {
 	var page = parseInt(req.query.page) || 1; //n
-	var perPage = 5; // x
+	var perPage = 6; // x
 	var start = (page - 1) * perPage;
 	var end = page * perPage;
 	let userId = req.params.id;
@@ -103,8 +110,9 @@ module.exports.blogsOfUser = (req, res) => {
 										.value()
 	res.render('products/blogs', {
 		user : user,
-		userId : userId,
+		userId: userId,
 		userWall: userWall,
+		userWallId: userWallId,
 		blogs: blogs,
 		page: page,
 		totalPages: totalPages,

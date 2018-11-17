@@ -10,24 +10,24 @@ block content
                 form(action="/users/" + user.id + "/songs/create" method="POST" enctype="multipart/form-data")
                   .form-row
                     .form-group.col-md-4
-                      label(for='name' require) Name
-                      input#inputSongName.form-control(name='name', type='text' placeholder='Song Name' require)
+                      label(for='name' required) Name
+                      input#inputSongName.form-control(name='name', type='text' placeholder='Song Name' required autofocus)
                     .form-group.col-md-4
-                      label(for='composers' require) Composers
-                      input#inputComposers.form-control(name='composers', type='text' placeholder='Composers' require)
+                      label(for='composers' required) Composers
+                      input#inputComposers.form-control(name='composers', type='text' placeholder='Composers' required)
                     .form-group.col-md-4
-                      label(for='singers' require) Singers
-                      input#inputSingers.form-control(name='singers', type='text' placeholder='Singers' require)
+                      label(for='singers' required) Singers
+                      input#inputSingers.form-control(name='singers', type='text' placeholder='Singers' required)
                   .form-row
                     .form-group.col-md-6
-                      label(for='mp3File' require) Song
+                      label(for='mp3File' required) Song
                       .input-group-prepend
                         span.input-group-text Upload
                         .custom-file
-                          input.custom-file-input(name='mp3File', type='file' require)
+                          input.custom-file-input(name='mp3File', type='file' required)
                           label.custom-file-label(for='chooseFile') Choose song
                     .form-group.col-md-6
-                      label(for='cover' require) Banner
+                      label(for='cover' required) Banner
                       .input-group-prepend
                         span.input-group-text Upload
                         .custom-file

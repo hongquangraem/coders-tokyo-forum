@@ -10,21 +10,21 @@ block content
                 form(action="/users/" + user.id + "/blogs/create" method="POST" enctype="multipart/form-data")
                   .form-row
                     .form-group.col-md-6
-                      label(for='title' require) Title
-                      input#inputTitle.form-control(name='title', type='text' placeholder='Title' require)
+                      label(for='title' required) Title
+                      input#inputTitle.form-control(name='title', type='text' placeholder='Title' required autofocus)
                     .form-group.col-md-6
-                      label(for='author' require) Writer
-                      input#inputTitle.form-control(name='author', type='text' placeholder='Writer' require)
+                      label(for='author' required) Writer
+                      input#inputTitle.form-control(name='author', type='text' placeholder='Writer' required)
                   .form-row
                     .form-group.col-md-6
-                      label(for='file' require) File
+                      label(for='file' required) File
                       .input-group-prepend
                         span.input-group-text Upload
                         .custom-file
                           input.custom-file-input(name='file', type='file')
                           label.custom-file-label(for='chooseFile') Choose file
                     .form-group.col-md-6
-                      label(for='cover' require) Cover
+                      label(for='cover' required) Cover
                       .input-group-prepend
                         span.input-group-text Upload
                         .custom-file
@@ -33,8 +33,20 @@ block content
                   .form-row
                     .form-group.col-md-2
                     .form-group.col-md-8
-                        label(for='description') Description
-                        textarea#description.form-control.z-depth-1(name="description" rows='5', placeholder='Write description for your blog')
+                        .head.d-flex
+                          label(for='description')(style='flex-grow:1; margin: 0') Description
+                          p#countCharOutput(style='margin: 0')
+                        textarea#description.form-control.z-depth-1(name="description" rows='5', placeholder='Write description for your blog about 30 words' )
                     .form-group.col-md-2
                   button#submit.btn.btn-primary(type='submit') Create
                   input.btn.btn-danger.ml-3(type='reset')
+
+
+    script.
+      var textarea = document.getElementById('description');
+      var countCharOutPut = document.getElementById('countCharOutput');
+      textarea.addEventListener('keyup', function() {
+      let countChar = textarea.value.trim().split(' ').length;
+      countChar === 1 ? countCharOutPut.innerHTML = countChar + ' word' : countCharOutPut.innerHTML = countChar + ' words';
+      })
+      

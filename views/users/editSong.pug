@@ -20,23 +20,31 @@ block content
                           .card-footer.bg-transparent.border-success Song detail
 
                     .col-md-6
-                        form(method="POST")
+                        form(method="POST" enctype="multipart/form-data")
                           .form-row
                             .form-group.col-md-6
-                              label(for='name' require) Song Name
-                              input#inputName.form-control(name='name', type='text', value= song? song.name : "", style="width: 200%")
+                              label(for='name') Song Name
+                              input#inputName.form-control(name='name', type='text', value= song? song.name : "", style="width: 200%" autofocus)
                           .form-row
                             .form-group.col-md-6
                               label(for='composers') Composers
-                              input#composers.form-control(name='composers', type='text', value= song? song.composers : "" require, style="width: 200%").form-row
+                              input#composers.form-control(name='composers', type='text', value= song? song.composers : "", style="width: 200%").form-row
                           .form-row
                             .form-group.col-md-6
                               label(for='singers') Singers
-                              input#singers.form-control(name='singers', type='text', value= song? song.singers : "" require, style="width: 200%")
+                              input#singers.form-control(name='singers', type='text', value= song? song.singers : "", style="width: 200%")
                           .form-row
                             .form-group.col-md-12
                                 label(for='lyrics') Lyrics
                                 textarea#lyrics.form-control.z-depth-1(name="lyrics" rows='3') #{song.lyrics}
-                            button#confirm.btn.btn-primary.mt-2.ml-1(type="submit") Change
+                          .form-row
+                            .form-group.col-md-12
+                              label(for='cover') Cover
+                              .input-group-prepend
+                                span.input-group-text Upload
+                                .custom-file
+                                  input.custom-file-input(name='cover', type='file')
+                                  label.custom-file-label(for='chooseFile') Choose file
+                          button#confirm.btn.btn-primary.mt-2.ml-1(type="submit") Change
                             //- |Avatar: 
                                 //- img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")

@@ -66,7 +66,9 @@ router.get('/delete/book/:id', controller.deleteBook);
 
 router.get('/book/edit/:id', controller.editBook);
 
-router.post('/book/edit/:id', controller.postEditBook);
+router.post('/book/edit/:id', 
+	upload.single('cover'),
+	controller.postEditBook);
 
 router.post('/:id/books/create', 
 	upload.single('cover'),
@@ -83,7 +85,9 @@ router.get('/delete/movie/:id', controller.deleteMovie);
 
 router.get('/movie/edit/:id', controller.editMovie);
 
-router.post('/movie/edit/:id', controller.postEditMovie);
+router.post('/movie/edit/:id', 
+	upload.single('cover'),
+	controller.postEditMovie);
 
 router.post('/:id/movies/create', 
 	upload.single('cover'),
@@ -100,7 +104,9 @@ router.get('/delete/blog/:id', controller.deleteBlog);
 
 router.get('/blog/edit/:id', controller.editBlog);
 
-router.post('/blog/edit/:id', controller.postEditBlog);
+router.post('/blog/edit/:id', 
+	upload.single('cover'),
+	controller.postEditBlog);
 
 router.post('/:id/blogs/create',
 	upload.fields([{ name: 'file', maxCount: 1 }, { name: 'cover', maxCount: 1 }]),
@@ -117,7 +123,9 @@ router.get('/delete/song/:id', controller.deleteSong);
 
 router.get('/song/edit/:id', controller.editSong);
 
-router.post('/song/edit/:id', controller.postEditSong);
+router.post('/song/edit/:id', 
+	upload.single('cover'),
+	controller.postEditSong);
 
 router.post('/:id/songs/create', 
 	upload.fields([{ name: 'mp3File', maxCount: 1 }, { name: 'cover', maxCount: 1 }]),

@@ -6,69 +6,86 @@ html
 
     body
 
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-        a.logo-link(href='/')
-            img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
-        a.coders-tokyo.ml-2(href='/') Coders.Tokyo
-        #navbarNavAltMarkup.collapse.navbar-collapse
-            .navbar-nav
-                a.nav-item.nav-link.active(href='/users').ml-4.pl-3.pr-3 Admin
-                a.nav-item.nav-link(href='/users').pl-3.pr-3 Rank
-                a.nav-item.nav-link(href='/stream').pl-3.pr-3 Stream
-                a.nav-item.nav-link.closet(href='/users/qMZXTv-0p/books').pl-3.pr-3 Closet
-                if userWall
-                    a.nav-item.nav-link.user-name= userWall.name
-                    img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
-                    //- img.user-logo(src=user.avatar, alt='avatar', class="rounded-circle")
+    nav.nav.fixed-top
+        ul
+            li.logo-item
+                a.logo-link-item(href='#')
+                    img.logo(src='/images/logo.png', alt='')
+            li
+                a.coders-tokyo(href='/') Coders.Tokyo
+            li
+                a(href='/users') Admin
+            li
+                a(href='/rank') Rank
+            li
+                a(href='/stream') Stream
+            if !user
+                    li(style='flex-grow:1')
+                        a(href='/users/' + userWallId + '/books') Closet
+            else 
+                li
+                    a(href='/users/' + userWallId + '/books') Closet
             if userWall
-                a.nav-item.nav-link.log-out(href='/logout').pl-3.pr-3 Log out
-            else
-                a.nav-item.nav-link.log-out(href='/auth/login').pl-3.pr-3 Login
+                li.user-name
+                    a.user-name(style='color: #fff')= userWall.name
+                li(style='flex-grow: 1')
+                    img.user-logo(src='/' + userWall.avatar, alt='avatar', class="rounded-circle")
+            if user
+                li
+                    a.login(href='/logout') Log out
+            else 
+                li
+                    a.login(href='./auth/login') Login
 
-    .container.pt-4.main(style='height: 1000px').mt-5
-            select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3
+    .container.pt-4.main(style='height: 800px').mt-4
+            select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3.btn
               if url.indexOf("?page") != -1
+                option(value='../' + 'blogs') Blogs
                 option(value='../' + 'books') Books
                 option(value='../' + 'movies') Movies
                 option(value='../' + 'songs') Songs
-                option(value='../' + 'blogs') Blogs
               else
+                option(value='blogs') Blogs
                 option(value='books') Books
                 option(value='movies') Movies
                 option(value='songs') Songs
-                option(value='blogs') Blogs
 
-            if user
-                h2.mb-5 Here is #{user.name}'s blogs
-
-            each blog, index in blogs
-              .blog.d-flex.border.ml-4.mr-4.mb-5(style='border-radius: 10px')
-                .cover-blog.border-right.p-2
-                  img(src='../../' + blog.cover)(style='width: 200px; height: 250px')
-                .preview.p-3
-                  h4.ml-2= blog.title
-                  p.ml-2(style='font-size: 14px')= blog.description
-                  a.ml-2(style='font-size: 14px; text-decoration: none')(href='/products/' + userId + '/blogs/' + blog.id) Read more...         
-            
-            nav(aria-label='Page navigation example').d-flex.justify-content-center.align-items-center.mt-4
-                form(action = "POST")                    
+            if blogs.length===0
+                p no blog available
+            else
+                if user
+                    - var userId = user.id
+                    p 
+                    each blog, index in blogs
+                      .blog(style='display: inline-block')
+                        .img-blog
+                            a(href='/products/' + userId + '/blogs/' + blog.id)
+                              img(src='/' + blog.cover)(style='width: 250px; height: 250px; ').rounded-circle
+                            .overlay-blog.rounded-circle.text-center.d-flex.flex-column
+                                .description
+                                    p(style='margin:5px; font-size:17px')= blog.title
+                                    p(style='font-size: 12px')= blog.description
+                                a(href='/products/' + userId + '/blogs/' + blog.id).readmore-btn Read more
                     
-                    ul.pagination
-                        if page <= totalPages
-                            li.page-item 
-                                a.page-link(href='/products/' + user.id + '/books/?page='+ (page - 1)) Previous
-                        if page -1 <= totalPages && page - 1 !== 0
-                            li.page-item
-                                a.page-link(href='/products/' + user.id + '/books/?page=' + eval(page - 1))= page - 1
-                        if page <= totalPages
-                            li.page-item.active
-                                a.page-link(href='/products/' + user.id + '/books/?page=' + page)= page
-                        if page + 1 <= totalPages
-                            li.page-item
-                                a.page-link(href='/products/' + user.id + '/books/?page=' + eval(page + 1))= page + 1
-                        if page + 1 <= totalPages
-                            li.page-item
-                                a.page-link(href='/products/' + user.id + '/books/?page='+ (page + 1)) Next
-                        else 
-                            li.page-item
-                                a.page-link(href='/products/' + user.id + '/books/?page='+ page) Next
+                    //- nav(aria-label='Page navigation example')(style='position: relative;').d-flex.justify-content-center.align-items-center
+                    nav(aria-label='Page navigation example').d-flex.justify-content-center.align-items-center
+                        form(action = "POST")                    
+                            ul.pagination
+                                if page <= totalPages
+                                    li.page-item 
+                                        a.page-link(href='/products/' + user.id + '/blogs/?page='+ (page - 1)) Previous
+                                if page -1 <= totalPages && page - 1 !== 0
+                                    li.page-item
+                                        a.page-link(href='/products/' + user.id + '/blogs/?page=' + eval(page - 1))= page - 1
+                                if page <= totalPages
+                                    li.page-item.active
+                                        a.page-link(href='/products/' + user.id + '/blogs/?page=' + page)= page
+                                if page + 1 <= totalPages
+                                    li.page-item
+                                        a.page-link(href='/products/' + user.id + '/blogs/?page=' + eval(page + 1))= page + 1
+                                if page + 1 <= totalPages
+                                    li.page-item
+                                        a.page-link(href='/products/' + user.id + '/blogs/?page='+ (page + 1)) Next
+                                else 
+                                    li.page-item
+                                        a.page-link(href='/products/' + user.id + '/blogs/?page='+ page) Next

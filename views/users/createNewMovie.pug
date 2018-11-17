@@ -10,20 +10,20 @@ block content
                 form(action="/users/" + user.id + "/movies/create" method="POST" enctype="multipart/form-data")
                   .form-row
                     .form-group.col-md-4
-                      label(for='name' require) Name
-                      input#inputName.form-control(name='name', type='text' placeholder='Movie Name' require)
+                      label(for='name' required) Name
+                      input#inputName.form-control(name='name', type='text' placeholder='Movie Name' required autofocus)
                   .form-row
                     .form-group.col-md-4
-                      label(for='actors' require) Actors
+                      label(for='actors' required) Actors
                       .input-group-prepend
-                        input#inputActors.form-control(name='actors', type='text', placeholder='Movie Actors' require)
+                        input#inputActors.form-control(name='actors', type='text', placeholder='Movie Actors' required)
                   .form-row
                     .form-group.col-md-12
                         label(for='preview') Preview
                         textarea#preview.form-control.z-depth-1(name="preview" rows='5', placeholder='Write preview for your movie')
                   .form-row
                     .form-group.col-md-6
-                      label(for='cover' require) Cover
+                      label(for='cover' required) Cover
                       .input-group-prepend
                         span.input-group-text Upload
                         .custom-file

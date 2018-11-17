@@ -4,51 +4,42 @@ html
         <link rel="stylesheet" href="/styles/style.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     body
-
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-        a.logo-link(href='/')
-            img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
-        a.coders-tokyo.ml-2(href='/') Coders.Tokyo
-        #navbarNavAltMarkup.collapse.navbar-collapse
-            .navbar-nav
-                a.nav-item.nav-link(href='./users').ml-4.pl-3.pr-3 Admin
-                a.nav-item.nav-link(href='./rank').pl-3.pr-3 Rank
-                a.nav-item.nav-link(href='./stream').pl-3.pr-3 Stream
-                a.nav-item.nav-link.closet(href='/users/' + userId + '/books').pl-3.pr-3 Closet
-                if user
-                    a.nav-item.nav-link.user-name= user.name
-                    img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
-            if !userId
-                a.nav-item.nav-link.log-out(href='./auth/login').pl-3.pr-3 Login
-            else 
-                a.nav-item.nav-link.log-out(href='/logout').pl-3.pr-3 Log out
-
+    
+    nav.nav.fixed-top
+      ul
+        li.logo-item
+          a.logo-link-item(href='#')
+            img.logo(src='/images/logo.png', alt='')
+        li
+          a.coders-tokyo(href='/') Coders.Tokyo
+        li
+          a(href='./users') Admin
+        li
+          a(href='./rank') Rank
+        li
+          a(href='./stream') Stream
+        if !user
+          li(style='flex-grow:1')
+            a(href='/users/' + userId + '/books') Closet
+        else 
+          li
+            a(href='/users/' + userId + '/books') Closet
+        if user
+          li.user-name
+            a.user-name(style='color: #fff')= user.name
+          li(style='flex-grow: 1')
+            img.user-logo(src=user.avatar, alt='avatar', class="rounded-circle")
+        if user
+          li
+            a.login(href='/logout') Log out
+        else 
+          li
+            a.login(href='./auth/login') Login
+        
     .container.pt-4.main.pr-0.pl-0(style='height: auto;')
         block content
-            .carousel-container
-                #firstCarousel.carousel.slide.bg-inverse.ml-auto.mr-auto.mt-5(data-ride='carousel', data-interval='5000')   
-                      ol.carousel-indicators
-                        li.active(data-target='#firstCarousel', data-slide-to='0')
-                        li(data-target='#firstCarousel', data-slide-to='1')
-                      .carousel-inner(role='listbox')
-                        .carousel-item.active
-                          img.d-block.w-100(src='/images/Coders.TokyoWallpaperDark.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='First slide', style='width: 1000px; height: 500px;')
-                          .carousel-caption
-                            h3 Join with us
-                            p Learn web programing for free 
-                        .carousel-item
-                          img.d-block.w-100(src='/images/jsland.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Seconde slide', style='width: 1000px; height: 500px')
-                          .carousel-caption
-                            h3(style='color: #000') Best group ever
-                            p(style='color: #000') Share knowledge, help each other
-                      a.carousel-control-prev(href='#firstCarousel', role='button', data-slide='prev')
-                        span.carousel-control-prev-icon(aria-hidden='true')
-                        span.sr-only Previous
-                      a.carousel-control-next(href='#firstCarousel', role='button', data-slide='next')
-                        span.carousel-control-next-icon(aria-hidden='true')
-                        span.sr-only Next
-
             .forum-container
+                h3 what you can do
                 .forum(style='margin-top: 30px')
                   .options
                     a.link.books(href='products/' + randomUserId + '/books')
@@ -67,8 +58,44 @@ html
                       .blogs.choice
                       .overlay
                         p.description Read the best blogs
-     
+
+            .carousel-container.row
+                .col-md-12
+                  h1.mb-4.text-center About us
+                #firstCarousel.carousel.slide.bg-inverse.ml-auto.mr-auto.col-md-8.pr-0(data-ride='carousel', data-interval='5000')   
+                  ol.carousel-indicators
+                    li.active(data-target='#firstCarousel', data-slide-to='0')
+                    li(data-target='#firstCarousel', data-slide-to='1')
+                  .carousel-inner(role='listbox')
+                    .carousel-item.active
+                      img.d-block.w-100(src='/images/Coders.TokyoWallpaperDark.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='First slide', style='width: 1000px; height: 400px;')
+                      .carousel-caption
+                        h3 Join with us
+                        p Learn web programing for free 
+                    .carousel-item
+                      img.d-block.w-100(src='/images/jsland.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Seconde slide', style='width: 1000px; height: 400px')
+                      .carousel-caption
+                        h3(style='color: #000') Best group ever
+                        p(style='color: #000') Share knowledge, help each other
+                .right-col.col-md-4.p-0
+                  .right-col-introduce
+                    a.link.books(href='')
+                      .slack.choice
+                      .overlay-introduce
+                        p.description Join our group to ask
+                    a.link.musics(href='')
+                      .school.choice
+                      .overlay-introduce
+                        p.description Register to become a student of our school
+                    a.link.movies(href='')
+                      .youtube.choice
+                      .overlay-introduce
+                        p.description Follow us on youtube
+            .video-creators
+              p Video creators
+
             .carousel-container(style='margin-top: 30px; padding: 120px')
+                h3.text-center City's group
                 #secondCarousel.carousel.slide.bg-inverse.ml-auto.mr-auto.mt-5(data-ride='carousel', data-interval='5000')   
                       ol.carousel-indicators
                         li.active(data-target='#secondCarousel', data-slide-to='0')

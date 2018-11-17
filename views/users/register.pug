@@ -31,11 +31,11 @@ html
             form(action="/register" method="POST" enctype="multipart/form-data")
               .form-row
                 .form-group.col-md-6
-                  label(for='name' require) Name
-                  input#inputName.form-control(name='name', type='name', value= values? values.name : "", placeholder='Name')
+                  label(for='name' required) Name
+                  input#inputName.form-control(name='name', type='name', value= values? values.name : "", placeholder='Name' autofocus)
               .form-row
                 .form-group.col-md-6
-                  label(for='email' require) Email
+                  label(for='email' required) Email
                   .input-group-prepend
                     .input-group-text @
                     input#inputEmail.form-control(name='email', type='email', placeholder='Email', value= values? values.email : "", )
@@ -44,10 +44,10 @@ html
                   input#password.form-control(name='password', type='password', placeholder='Password')
               .form-row
                 .form-group.col-md-6
-                  label(for='confirmPassword' require) Comfirm Password
+                  label(for='confirmPassword' required) Comfirm Password
                   input#confirm_password.form-control(name= 'confirmPassword', type='password', placeholder='Confirm Password')
                 .form-group.col-md-6
-                  label(for='avatar' require) Avatar
+                  label(for='avatar' required) Avatar
                   .input-group-prepend
                     span.input-group-text Upload
                     .custom-file

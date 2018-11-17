@@ -20,19 +20,27 @@ block content
                           .card-footer.bg-transparent.border-success Movie detail
 
                     .col-md-6
-                        form(method="POST")
+                        form(method="POST" enctype="multipart/form-data")
                           .form-row
                             .form-group.col-md-6
-                              label(for='name' require) Movie Name
-                              input#inputName.form-control(name='name', type='text', value= movie? movie.name : "", style="width: 200%")
+                              label(for='name') Movie Name
+                              input#inputName.form-control(name='name', type='text', value= movie? movie.name : "", style="width: 200%" autofocus)
                           .form-row
                             .form-group.col-md-6
                               label(for='actors') Actors
-                              input#actors.form-control(name='actors', type='text', value= movie? movie.actors : "" require, style="width: 200%")
+                              input#actors.form-control(name='actors', type='text', value= movie? movie.actors : "", style="width: 200%")
                           .form-row
                             .form-group.col-md-12
                                 label(for='preview') Preview
                                 textarea#description.form-control.z-depth-1(name="preview" rows='3') #{movie.preview}
-                            button#confirm.btn.btn-primary.mt-2.ml-1(type="submit") Change
+                          .form-row
+                            .form-group.col-md-12
+                              label(for='cover') Cover
+                              .input-group-prepend
+                                span.input-group-text Upload
+                                .custom-file
+                                  input.custom-file-input(name='cover', type='file')
+                                  label.custom-file-label(for='chooseFile') Choose file
+                          button#confirm.btn.btn-primary.mt-2.ml-1(type="submit") Change
                             //- |Avatar: 
                                 //- img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")

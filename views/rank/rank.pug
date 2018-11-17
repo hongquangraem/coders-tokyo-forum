@@ -5,49 +5,89 @@ html
 			<link rel="stylesheet" href="/styles/style.css">
 		body
 
-		nav.navbar.navbar-expand-lg.navbar-light.bg-light
-				a.logo-link(href='/')
-					img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
-				a.coders-tokyo.ml-2(href='/') Coders.Tokyo
-				#navbarNavAltMarkup.collapse.navbar-collapse
-						.navbar-nav
-							a.nav-item.nav-link.active(href='/users').ml-3.pl-4.pr-3 Admin
-							a.nav-item.nav-link(href='/users').pl-3.pr-3 Rank
-							a.nav-item.nav-link(href='/stream').pl-3.pr-3 Stream
-							a.nav-item.nav-link.closet(href='./users/' + userId + '/books').pl-3.pr-3 Closet
-							if user
-								a.nav-item.nav-link.user-name= user.name
-								img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
-						if user
-							a.nav-item.nav-link.log-out(href='/logout').pl-3.pr-3 Log out
-						else
-							a.nav-item.nav-link.log-out(href='/auth/login').pl-3.pr-3 Login
+		nav.nav.fixed-top
+			ul
+				li.logo-item
+					a.logo-link-item(href='#')
+						img.logo(src='/images/logo.png', alt='')
+				li
+					a.coders-tokyo(href='/') Coders.Tokyo
+				li
+					a(href='/users') Admin
+				li
+					a(href='/rank') Rank
+				li
+					a(href='/stream') Stream
+				if !user
+					li(style='flex-grow:1')
+						a(href='/users/' + userId + '/books') Closet
+				else 
+					li
+						a(href='/users/' + userId + '/books') Closet
+				if user
+					li.user-name
+						a.user-name(style='color: #fff')= user.name
+					li(style='flex-grow:1')
+						img.user-logo(src=user.avatar, alt='avatar', class="rounded-circle")
+				if user
+					li
+						a.login(href='/logout') Log out
+				else 
+					li
+						a.login(href='./auth/login') Login
 
-
-		.container.pt-4.main(style='height: 800px')
+		.container.pt-4.main.rank-page(style='height: 800px;').mt-4
 			block content
-					table.table.table-bordered.mt-4(style='width: 875px; margin-left: 115px')
-						thead
-							tr.bg-success
-								th(scope='col')(style='width: 10px;') #
-								th(scope='col' colspan='3').text-center Top 10 Coders.Tokyo's members
-								th(scope='col')(style='width: 15px;') 
-									i.fas.fa-star(style='color: yellow')
-						tbody.text-center
-							- var rank = 1;  // ko lay index vi co user chua dc vote se van dc cho vao danh sach
+				h3.mb-4.mt-5.text-center(style='color: #fff') Top 10 Coders-Tokyo&apos;s member
+				.table-rank
+						.rank.header-table-rank Rank
+						.user.header-table-rank User
+						.book.header-table-rank Book
+						.movie.header-table-rank Movie
+						.songg.header-table-rank Song
+						.blog.header-table-rank Blog
+						.option.header-table-rank View
+						.star.header-table-rank 
+							i.fas.fa-star(style='color: #ff0000')
+						-var rank = 1
 						each user in users
-							if (!user.star)
-								break
-							else 
-								tr
-									th(colspan='1').text-center.mt-2(scope='row')(style='padding-top: 19px')= rank
-									td(colspan='2' style='padding-top: 19px; width: 410px')= user.name
-									td(colspan='2').d-flex
-										a(href='products/' + user.id + '/books').mt-2(style='margin-left: 15px')
-											i.far.fa-eye
-										a(href='')(style='text-decoration: none').ml-3.mr-3
-											p.m-0.border(style='width: 235px; padding: 5px; border-radius: 20px; text-align: center;') Mess me
-										a(href='products/' + user.id + '/books').mt-2
-											i.far.fa-eye
-									td(colspan='1').text-center(style='padding-top: 19px')= user.star
-								- rank += 1
+							if(!user.star)
+								- rank--
+							else
+								.f=rank
+								.f.user=user.name
+								.f.book=user.closet[0].books.length
+								.f.movie=user.closet[1].movies.length
+								.f.songg=user.closet[2].songs.length
+								.f.blog=user.closet[3].blogs.length
+								.f.option 
+									a(href='') 
+										i.far.fa-eye(style='color: #ff0000')
+								.f.star=user.star
+							- rank++
+
+			//- table.table.table-bordered.mt-4(style='width: 875px; margin-left: 115px')
+					//- 	thead
+					//- 		tr.bg-success
+					//- 			th(scope='col')(sbackground-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);tyle='width: 10px;') #
+					//- 			th(scope='col' colspan='3').text-center Top 10 Coders.Tokyo's members
+					//- 			th(scope='col')(style='width: 15px;') 
+					//- 				i.fas.fa-star(style='color: yellow')
+					//- 	tbody.text-center
+					//- 		- var rank = 1;  // ko lay index vi co user chua dc vote se van dc cho vao danh sach
+					//- 	each user in users
+					//- 		if (!user.star)
+					//- 			break
+					//- 		else 
+					//- 			tr
+					//- 				th(colspan='1').text-center.mt-2(scope='row')(style='padding-top: 19px')= rank
+					//- 				td(colspan='2' style='padding-top: 19px; width: 410px')= user.name
+					//- 				td(colspan='2').d-flex
+					//- 					a(href='products/' + user.id + '/books').mt-2(style='margin-left: 15px')
+					//- 						i.far.fa-eye
+					//- 					a(href='')(style='text-decoration: none').ml-3.mr-3
+					//- 						p.m-0.border(style='width: 235px; padding: 5px; border-radius: 20px; text-align: center;') Mess me
+					//- 					a(href='products/' + user.id + '/books').mt-2
+					//- 						i.far.fa-eye
+					//- 				td(colspan='1').text-center(style='padding-top: 19px')= user.star
+					//- 			- rank += 1

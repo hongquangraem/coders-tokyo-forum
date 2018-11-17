@@ -4,25 +4,37 @@ html
 			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 			<link rel="stylesheet" href="/styles/style.css">
 		body
-
-		nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-				a.logo-link(href='/')
-					img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
-				a.coders-tokyo.ml-2(href='/') Coders.Tokyo
-				#navbarNavAltMarkup.collapse.navbar-collapse
-						.navbar-nav
-							a.nav-item.nav-link(href='/users').ml-3.pl-4.pr-3 Admin
-							a.nav-item.nav-link(href='/rank').pl-3.pr-3 Rank
-							a.nav-item.nav-link(href='/stream').pl-3.pr-3 Stream
-							a.nav-item.nav-link.closet(href='/users/' + userId + '/books').pl-3.pr-3 Closet
-							if user
-								a.nav-item.nav-link.user-name= user.name
-								img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
-						if user
-							a.nav-item.nav-link.log-out(href='/logout').pl-3.pr-3 Log out
-						else
-							a.nav-item.nav-link.log-out(href='/auth/login').pl-3.pr-3 Login
-
+		
+		nav.nav.fixed-top
+			ul
+				li.logo-item
+					a.logo-link-item(href='#')
+						img.logo(src='/images/logo.png', alt='')
+				li
+					a.coders-tokyo(href='/') Coders.Tokyo
+				li
+					a(href='/users') Admin
+				li
+					a(href='/rank') Rank
+				li
+					a(href='/stream') Stream
+				if !user
+					li(style='flex-grow:1')
+						a(href='/users/' + userId + '/books') Closet
+				else 
+					li
+						a(href='/users/' + userId + '/books') Closet
+				if user
+					li.user-name
+						a.user-name(style='color: #fff')= user.name
+					li(style='flex-grow: 1')
+						img.user-logo(src=user.avatar, alt='avatar', class="rounded-circle")
+				if user
+					li
+						a.login(href='/logout') Log out
+				else 
+					li
+						a.login(href='./auth/login') Login
 
 		.container.pt-4.main(style='height: auto')
 			block content
@@ -45,7 +57,7 @@ html
 												.user-closet.border-right
 													.header.pl-2.pt-3
 														a(href='/products/' + user.id + '/books')
-															img.rounded-circle.ml-2(src=user.avatar, style="max-width: 20%")
+															img.rounded-circle.ml-2(src=user.avatar, style="width: 40px; height: 40px;border: 2px solid #bbb")
 														a(href='/products/' + user.id + '/books', style="color: #000; text-decoration: none")
 															h6.d-inline.pl-2= user.name
 													.body.mt-3
@@ -91,7 +103,7 @@ html
 													if index < 1 
 														.product(style="width: 150px").d-flex.flex-column.align-items-center
 															a(href='')
-																img(src=book.cover style="width: 100px; height: 110px")
+																img(src=book.cover)(style="width: 100px; height: 110px;")
 															span.mt-1.text-center= book.name
 												// Lay ra quyen sach dau tien cua moi user/ sau se la most view book
 

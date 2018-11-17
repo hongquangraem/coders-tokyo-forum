@@ -4,23 +4,30 @@ html
         <link rel="stylesheet" href="/styles/style.css">
     body
 
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light
-        a.logo-link(href='/')
-            img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
-        a.coders-tokyo.ml-2(href='/') Coders.Tokyo
-        #navbarNavAltMarkup.collapse.navbar-collapse
-            .navbar-nav
-                a.nav-item.nav-link.active(href='/users').ml-4.pl-3.pr-3 Admin
-                a.nav-item.nav-link(href='/rank').pl-3.pr-3 Rank
-                a.nav-item.nav-link(href='/stream').pl-3.pr-3 Stream
-                a.nav-item.nav-link.closet(href='/users/' + user.id + '/books').pl-3.pr-3 Closet
-                if user
-                    a.nav-item.nav-link.user-name= user.name
-                    img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
-                    //- img.user-logo(src=user.avatar, alt='avatar', class="rounded-circle")
-            a.nav-item.nav-link.log-out(href='/logout').pl-3.pr-3 Log out
+    nav.nav.fixed-top
+        ul
+            li.logo-item
+                a.logo-link-item(href='#')
+                    img.logo(src='/images/logo.png', alt='')
+            li
+                a.coders-tokyo(href='/') Coders.Tokyo
+            li
+                a(href='/users') Admin
+            li
+                a(href='/rank') Rank
+            li
+                a(href='/stream') Stream
 
-    .container.pt-4.main
+            li
+                a(href='/users/' + userId + '/books') Closet
+            li.user-name
+                a.user-name(style='color: #fff')= user.name
+            li(style='flex-grow: 1')
+                img.user-logo(src='/' + user.avatar, alt='avatar', class="rounded-circle")
+            li
+                a.login(href='/logout') Log out
+
+    .container.pt-4.mt-4.main(style='height: auto')
         block content
             .container-books.visible
                 .d-flex.align-items-center.mb-3

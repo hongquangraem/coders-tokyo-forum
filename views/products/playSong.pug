@@ -5,41 +5,52 @@ html
 			<link rel="stylesheet" href="/styles/style.css">
 		body
 
-		nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-				a.logo-link(href='/')
-					img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
-				a.coders-tokyo.ml-2(href='/') Coders.Tokyo
-				#navbarNavAltMarkup.collapse.navbar-collapse
-					.navbar-nav
-						a.nav-item.nav-link.active(href='/users').ml-4.pl-3.pr-3 Admin
-						a.nav-item.nav-link(href='/users').pl-3.pr-3 Rank
-						a.nav-item.nav-link(href='/stream').pl-3.pr-3 Stream
-						a.nav-item.nav-link.closet(href='/users/books').pl-3.pr-3 Closet
-						if userWall
-							a.nav-item.nav-link.user-name= userWall.name
-							img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
-							//- img.user-logo(src=user.avatar, alt='avatar', class="rounded-circle")
-					if userWall
-						a.nav-item.nav-link.log-out(href='/logout').pl-3.pr-3 Log out
-					else
-						a.nav-item.nav-link.log-out(href='/auth/login').pl-3.pr-3 Login
+		nav.nav.fixed-top
+			ul
+				li.logo-item
+					a.logo-link-item(href='#')
+						img.logo(src='/images/logo.png', alt='')
+				li
+					a.coders-tokyo(href='/') Coders.Tokyo
+				li
+					a(href='/users') Admin
+				li
+					a(href='/rank') Rank
+				li
+					a(href='/stream') Stream
+				if !userWall
+					li(style='flex-grow:1')
+						a(href='/users/' + userWallId + '/books') Closet
+				else 
+						li
+							a(href='/users/' + userWallId + '/books') Closet
+				if userWall
+						li.user-name
+							a.user-name(style='color: #fff')= userWall.name
+						li(style='flex-grow: 1')
+							img.user-logo(src='/' + userWall.avatar, alt='avatar', class="rounded-circle")
+				if userWall
+						li
+							a.login(href='/logout') Log out
+				else 
+						li
+							a.login(href='/auth/login') Login
 
 
 		.container.pt-4.main(style='height: auto').mt-5
 
 			block content
-				select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3
-					option() Type 
+				select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3.btn
+					option(value='../' + 'songs') Play Songs
+					option(value='../' + 'songs') Songs
 					option(value='../' + 'books') Books
 					option(value='../' + 'movies') Movies
-					option(value='../' + 'songs') Songs
 					option(value='../' + 'blogs') Blogs
 
 				if user
 					- var userId = user.id
-					h2.mb-5 Here is #{user.name} songs collection 
 					.row
-						.songPlayList#songPlayList.col-md-5
+						.songPlayList#songPlayList.col-md-5.mt-4
 							each song, index in songs
 								#song.song.border.d-flex.align-items-center.mb-5.ml-4(style='border-radius: 40px; height: 100px; width: 370px; overflow: hidden')
 									img#songBanner.songBanner(src='/' + song.cover).ml-3.rounded-circle(style='width: 50px; height: 50px')
@@ -49,16 +60,19 @@ html
 									a(href='/products/' + userId + '/playSong/' + song.id)
 										i#playBtn.btn.fas.fa-play.p-3.border.rounded-circle(style='margin-right: 50px; color: red; background-color: #fff', data-id= song.id, data-mp3file = song.mp3File, data-lyrics = song.lyrics)
 
-						.lyrics.col-md-6.ml-5.border(style='border-radius: 15px; overflow:auto; height: 560px')
+						.lyrics.col-md-6.ml-5.mt-4.border(style='border-radius: 15px; height: 560px')
 							if songToPlay
-								h2#songNameLyrics.text-center.mt-3= songToPlay.name
-								p#contentLyrics.ml-2= songToPlay.lyrics
+								h2#songNameLyrics.text-center.mt-3.mb-3= songToPlay.name
+								p(style='float: right;font-size: 15px; color: #666').mt-1.mb-1= songToPlay.singers
+								hr
+								.lyric-container
+									pre#contentLyrics.ml-2= songToPlay.lyrics
 						.player#player(style='margin: -15px 50px')
 							audio#audio(controls='' autoplay)
 								source#source(src='../../../' + songToPlay.mp3File, type='audio/ogg')
 
 
-				nav(aria-label='Page navigation example').d-flex.justify-content-center.align-items-center
+				nav(aria-label='Page navigation example').d-flex.justify-content-center.align-items-center.mt-5
 					form(action = "POST")
 						ul.pagination
 							if page <= totalPages

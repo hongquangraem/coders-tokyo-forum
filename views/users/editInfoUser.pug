@@ -43,15 +43,15 @@ html
                         form(method="POST")
                           .form-row
                             .form-group.col-md-6
-                              label(for='name' require) User Name
-                              input#inputName.form-control(name='name', type='text', value= user? user.name : "", placeholder='Name', style="width: 200%")
+                              label(for='name') User Name
+                              input#inputName.form-control(name='name', type='text', value= user? user.name : "", placeholder='Name', style="width: 200%" autofocus)
                           .form-row
                             .form-group.col-md-6
                               label(for='password') Your old password
                               input#password.form-control(name='password', type='password', placeholder='Password', , style="width: 200%")
                           .form-row
                             .form-group.col-md-6
-                              label(for='newPassword' require) New password
+                              label(for='newPassword') New password
                               input#new_password.form-control(name= 'newPassword', type='password', placeholder='New Password', style="width: 200%")
                               button#confirm.btn.btn-primary.mt-3(type="submit") Change
                             //- |Avatar: 

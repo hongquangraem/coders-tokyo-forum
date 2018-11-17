@@ -5,59 +5,68 @@ html
         <link rel="stylesheet" href="/styles/style.css">
 
     body
-
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
-        a.logo-link(href='/')
-            img.navbar-avatar(src='/images/logo.png', alt='avatar', class="rounded-circle")
-        a.coders-tokyo.ml-2(href='/') Coders.Tokyo
-        #navbarNavAltMarkup.collapse.navbar-collapse
-            .navbar-nav
-                a.nav-item.nav-link.active(href='/users').ml-4.pl-3.pr-3 Admin
-                a.nav-item.nav-link(href='/users').pl-3.pr-3 Rank
-                a.nav-item.nav-link(href='/stream').pl-3.pr-3 Stream
-                a.nav-item.nav-link.closet(href='/users/books').pl-3.pr-3 Closet
-                if userWall
-                    a.nav-item.nav-link.user-name= userWall.name
-                    img.user-logo(src='/images/logo.png', alt='avatar', class="rounded-circle")
-                    //- img.user-logo(src=user.avatar, alt='avatar', class="rounded-circle")
+    
+    nav.nav.fixed-top
+        ul
+            li.logo-item
+                a.logo-link-item(href='#')
+                    img.logo(src='/images/logo.png', alt='')
+            li
+                a.coders-tokyo(href='/') Coders.Tokyo
+            li
+                a(href='/users') Admin
+            li
+                a(href='/rank') Rank
+            li
+                a(href='/stream') Stream
+            if !user
+                    li(style='flex-grow:1')
+                        a(href='/users/' + userWallId + '/books') Closet
+            else 
+                li
+                    a(href='/users/' + userWallId + '/books') Closet
             if userWall
-                a.nav-item.nav-link.log-out(href='/logout').pl-3.pr-3 Log out
-            else
-                a.nav-item.nav-link.log-out(href='/auth/login').pl-3.pr-3 Login
+                li.user-name
+                    a.user-name(style='color: #fff')= userWall.name
+                li(style='flex-grow: 1')
+                    img.user-logo(src='/' + userWall.avatar, alt='avatar', class="rounded-circle")
+            if user
+                li
+                    a.login(href='/logout') Log out
+            else 
+                li
+                    a.login(href='./auth/login') Login
 
     .container.pt-4.main(style='height: auto').mt-5
-            select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3
-              option() Type 
+            select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3.btn
               if url.indexOf("?page") != -1
-                option(value='../' + 'books') Books
                 option(value='../' + 'movies') Movies
+                option(value='../' + 'books') Books
                 option(value='../' + 'songs') Songs
                 option(value='../' + 'blogs') Blogs
               else
-                option(value='books') Books
                 option(value='movies') Movies
+                option(value='books') Books
                 option(value='songs') Songs
                 option(value='blogs') Blogs
 
-            if user
-                h2 Here is #{user.name}'s movies collection
-
             each movie, index in movies
-                .movie-info-container.row.mt-5.ml-4(style='margin-bottom: 120px')
+                .movie-info-container.book-info-container.row.mt-5.ml-4
                     .movie-cover.pr-0.mt-0.col-md-5.d-flex.flex-column.justify-content-end.align-items-center
-                        .image-cover
-                            a.image-link(style='margin-left: 75px')(href='')
-                                img.img-cover.mb-4(src='/' + movie.cover)(style='width: 65%; box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)')
-                                .button-group.button-group-movie.d-flex.justify-content-center.align-items-center
-                                    i.btn.mr-4.ml-4.fab.fa-facebook.p-0(style='font-size: 20px;')
-                                    i.btn.mr-4.fab.fa-google.p-0(style='font-size: 20px;')
-                                    i.btn.mr-4.fab.fa-twitter.p-0(style='font-size: 20px;')
-                        a.btn.btn-primary(href='') Watch
+                        .image-cover(style='top: -30px')
+                            //- a.image-link(style='margin-left: 75px')(href='')
+                            img.img-cover.mb-4(src='/' + movie.cover)(style='width: 100%; box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); border-radius: 10px;')
+                                //- .button-group.button-group-movie.d-flex.justify-content-center.align-items-center
+                                //-     i.btn.mr-4.ml-4.fab.fa-facebook.p-0(style='font-size: 20px;')
+                                //-     i.btn.mr-4.fab.fa-google.p-0(style='font-size: 20px;')
+                                //-     i.btn.mr-4.fab.fa-twitter.p-0(style='font-size: 20px;')
+                            .overlay(style='height: 94%')
+                            a.button(href='') Watch
                     .movie-introducion.col-md-6.d-flex.flex-column.p-0(style='height: 488px')
-                        .movie-detail.pt-3.mt-5(style='overflow: auto; height: 470px;')
-                            h2.mb-1.ml-3= movie.name
+                        .movie-detail.mt-5
+                            h2.mb-1.ml-3.text-center= movie.name
                             hr.mt-2(style='width: 500px; margin-left: 15px;')
-                            h3.ml-3.mb-4 Actors: #{movie.actors}
+                            h3.ml-3.mb-4(style='font-size: 15px;') Actors: #{movie.actors}
                             p.ml-3(style='font-style: italic; font-size: 16px; color: #888')= movie.preview
             
             

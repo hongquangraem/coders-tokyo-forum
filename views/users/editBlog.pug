@@ -20,19 +20,41 @@ block content
                           .card-footer.bg-transparent.border-success Blog detail
 
                     .col-md-6
-                        form(method="POST")
+                        form(method="POST" enctype="multipart/form-data")
                           .form-row
                             .form-group.col-md-6
-                              label(for='title' require) Title
-                              input#inputTitle.form-control(name='title', type='text', value= blog? blog.title : "", style="width: 200%")
+                              label(for='title') Title
+                              input#inputTitle.form-control(name='title', type='text', value= blog? blog.title : "", style="width: 200%" autofocus)
                           .form-row
                             .form-group.col-md-6
                               label(for='author') Writer
-                              input#author.form-control(name='author', type='text', value= blog? blog.author : "" require, style="width: 200%")
+                              input#author.form-control(name='author', type='text', value= blog? blog.author : "", style="width: 200%")
                           .form-row
                             .form-group.col-md-12
-                                label(for='description') Description
-                                textarea#description.form-control.z-depth-1(name="description" rows='3') #{blog.description}
-                            button#confirm.btn.btn-primary.mt-2.ml-1(type="submit") Change
+                              .head.d-flex
+                                label(for='description')(style='flex-grow:1; margin: 0') Description
+                                p#countCharOutput(style='margin: 0')
+                              textarea#description.form-control.z-depth-1(name="description" rows='3', placeholder='Write description for your book') #{blog.description}
+                          .form-row
+                            .form-group.col-md-12
+                              label(for='cover') Cover
+                              .input-group-prepend
+                                span.input-group-text Upload
+                                .custom-file
+                                  input.custom-file-input(name='cover', type='file')
+                                  label.custom-file-label(for='chooseFile') Choose file
+                          button#confirm.btn.btn-primary.mt-2.ml-1(type="submit") Change
                             //- |Avatar: 
                                 //- img.user-logo(src='../images/logo.png', alt='avatar', class="rounded-circle")
+    
+    script.
+      var textarea = document.getElementById('description');
+      var countCharOutPut = document.getElementById('countCharOutput');
+      window.onload = function() {
+        let countChar = textarea.value.split(' ').join('').trim().length;
+        countCharOutPut.innerHTML = countChar;
+      }
+      textarea.addEventListener('keyup', function() {
+      let countChar = textarea.value.trim().split(' ').length;
+      countChar === 1 ? countCharOutPut.innerHTML = countChar + ' word' : countCharOutPut.innerHTML = countChar + ' words';
+      })

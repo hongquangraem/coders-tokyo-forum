@@ -1,6 +1,6 @@
 extends books.pug
 block content
-    select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3
+    select(onchange='this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);').mb-3.btn
       option(value='movies') Movies
       option(value='books') Books
       option(value='songs') Songs
