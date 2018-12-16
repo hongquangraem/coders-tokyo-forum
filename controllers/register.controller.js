@@ -15,6 +15,9 @@ module.exports.postCreateUser = (req, res) => {
 											{ "blogs" : [] }
 										];
 	req.body.password = md5(req.body.password);
+	req.body.usersVotedUp = [];
+	req.body.usersVotedDown = [];
+	req.body.star = 0;
 	if (Object.keys(req).indexOf('file') === -1) {
 		req.body.avatar = 'upload/2261c205c93b9aa7059d9c3fe7febdd4'
 	} else {

@@ -38,6 +38,9 @@ html
         
     .container.pt-4.main.pr-0.pl-0(style='height: auto;')
         block content
+
+
+
             .forum-container
                 h3 what you can do
                 .forum(style='margin-top: 30px')
@@ -54,7 +57,7 @@ html
                       .movies.choice
                       .overlay
                         p.description Watch the best movies reviewed
-                    a.link.blogs(href='products/' + randomUserId + '/movies')
+                    a.link.blogs(href='products/' + randomUserId + '/blogs')
                       .blogs.choice
                       .overlay
                         p.description Read the best blogs
@@ -91,10 +94,55 @@ html
                       .youtube.choice
                       .overlay-introduce
                         p.description Follow us on youtube
-            .video-creators
-              p Video creators
+            .video-creators-container
+              h1.text-center Video Creators
+              .video-creators
+                .thinh-creator.creator
+                  .avatar
+                    img(src='/images/thinhpham.jpg', alt='')
+                  .detail
+                    ul
+                      li Name: Thinh Pham
+                      li Coders-Tokyo Founder
+                      li City: Tokyo - Japan
+                      li Web/App Craftsman
+                      li.mt-3
+                        a.video-btn(href='') Video
+                .dat-creator.creator
+                  .avatar
+                    img(src='/images/matidat.jpg', alt='')
+                  .detail
+                    ul
+                      li Name: Thinh Pham
+                      li Coders-Tokyo Founder
+                      li City: Tokyo - Japan
+                      li Web/App Craftsman
+                      li.mt-3
+                        a.video-btn(href='') Video
+                .thong-creator.creator
+                  .avatar
+                    img(src='/images/thong.jpg', alt='')
+                  .detail
+                    ul
+                      li Name: Thinh Pham
+                      li Coders-Tokyo Founder
+                      li City: Tokyo - Japan
+                      li Web/App Craftsman
+                      li.mt-3
+                        a.video-btn(href='') Video
+                .chau-creator.creator
+                  .avatar
+                    img(src='/images/chau.jpg', alt='')
+                  .detail
+                    ul
+                      li Name: Thinh Pham
+                      li Coders-Tokyo Founder
+                      li City: Tokyo - Japan
+                      li Web/App Craftsman
+                      li.mt-3
+                        a.video-btn(href='') Video
 
-            .carousel-container(style='margin-top: 30px; padding: 120px')
+            .carousel-container(style='margin-top: 30px; padding: 50px 200px')
                 h3.text-center City's group
                 #secondCarousel.carousel.slide.bg-inverse.ml-auto.mr-auto.mt-5(data-ride='carousel', data-interval='5000')   
                       ol.carousel-indicators
@@ -105,27 +153,27 @@ html
                         li(data-target='#secondCarousel', data-slide-to='4')
                       .carousel-inner(role='listbox')
                         .carousel-item.active
-                          img.d-block.w-100(src='/images/coderstokyohanoi.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='First slide', style='width: 1000px;')
+                          img.d-block.w-100(src='/images/coderstokyohanoi.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='First slide')(style='height: 500px')
                           .carousel-caption
                             h3 Coders.Tokyo Ha Noi
                             p Join with us
                         .carousel-item
-                          img.d-block.w-100(src='/images/coderstokyohochiminh.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Seconde slide', style='width: 1000px')
+                          img.d-block.w-100(src='/images/coderstokyohochiminh.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Seconde slide')(style='height: 500px')
                           .carousel-caption
                             h3 Coders.Tokyo Ho Chi Minh
                             p Join with us
                         .carousel-item
-                          img.d-block.w-100(src='/images/coderstokyonhatrang.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px')
+                          img.d-block.w-100(src='/images/coderstokyonhatrang.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide')(style='height: 500px')
                           .carousel-caption
                             h3 Coders.Tokyo Nha Trang
                             p Join with us
                         .carousel-item
-                          img.d-block.w-100(src='/images/coderstokyodanang.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px')
+                          img.d-block.w-100(src='/images/coderstokyodanang.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide')(style='height: 500px')
                           .carousel-caption
                             h3 Coders.Tokyo Da Nang
                             p Join with us
                         .carousel-item
-                          img.d-block.w-100(src='/images/coderstokyocantho.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide', style='width: 1000px;')
+                          img.d-block.w-100(src='/images/coderstokyocantho.jpg?auto=yes&bg=555&fg=333&text=Third slide', alt='Third slide')(style='height: 500px')
                           .carousel-caption
                             h3 Coders.Tokyo Can Tho
                             p Join with us
@@ -194,3 +242,4 @@ html
             script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl', crossorigin='anonymous')
 
 
+.

@@ -36,7 +36,7 @@ html
 					li
 						a.login(href='./auth/login') Login
 
-		.container.pt-4.main.rank-page(style='height: 800px;').mt-4
+		.container.pt-4.main.rank-page(style='height: 800px;')
 			block content
 				h3.mb-4.mt-5.text-center(style='color: #fff') Top 10 Coders-Tokyo&apos;s member
 				.table-rank
@@ -66,28 +66,3 @@ html
 								.f.star=user.star
 							- rank++
 
-			//- table.table.table-bordered.mt-4(style='width: 875px; margin-left: 115px')
-					//- 	thead
-					//- 		tr.bg-success
-					//- 			th(scope='col')(sbackground-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);tyle='width: 10px;') #
-					//- 			th(scope='col' colspan='3').text-center Top 10 Coders.Tokyo's members
-					//- 			th(scope='col')(style='width: 15px;') 
-					//- 				i.fas.fa-star(style='color: yellow')
-					//- 	tbody.text-center
-					//- 		- var rank = 1;  // ko lay index vi co user chua dc vote se van dc cho vao danh sach
-					//- 	each user in users
-					//- 		if (!user.star)
-					//- 			break
-					//- 		else 
-					//- 			tr
-					//- 				th(colspan='1').text-center.mt-2(scope='row')(style='padding-top: 19px')= rank
-					//- 				td(colspan='2' style='padding-top: 19px; width: 410px')= user.name
-					//- 				td(colspan='2').d-flex
-					//- 					a(href='products/' + user.id + '/books').mt-2(style='margin-left: 15px')
-					//- 						i.far.fa-eye
-					//- 					a(href='')(style='text-decoration: none').ml-3.mr-3
-					//- 						p.m-0.border(style='width: 235px; padding: 5px; border-radius: 20px; text-align: center;') Mess me
-					//- 					a(href='products/' + user.id + '/books').mt-2
-					//- 						i.far.fa-eye
-					//- 				td(colspan='1').text-center(style='padding-top: 19px')= user.star
-					//- 			- rank += 1
